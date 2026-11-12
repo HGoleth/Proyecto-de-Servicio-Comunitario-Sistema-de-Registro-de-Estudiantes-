@@ -1,0 +1,45 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Production build outputs
+dist/
+dist-ssr/
+out/
+build/
+
+# Local history & IDE files
+.history/
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Operating system files
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Large installer binaries & archives accidentally placed in public
+public/*.exe
+public/*.zip
+public/*.rar
+*.exe
+*.zip
+*.rar
+
+# SQLite / Local temp DBs
+*.sqlite
+*.sqlite3
+*.db-journal
