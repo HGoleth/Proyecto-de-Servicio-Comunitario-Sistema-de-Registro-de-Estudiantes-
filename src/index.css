@@ -2,8 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-no-repeat bg-cover bg-center min-h-screen;
-  background-image: url("/wallpaper.png");
-  color: #ffff;
+/* Para permitir arrastrar ventana desde zonas designadas */
+[style*="WebkitAppRegion: drag"] {
+  -webkit-app-region: drag;
+}
+[style*="WebkitAppRegion: no-drag"] {
+  -webkit-app-region: no-drag;
+}
+
+/* ==========================================================================
+   OPTIMIZACIONES DE RENDERIZADO Y PREVENCIÓN DE CORTES/RAYAS EN EL SCROLL
+   ========================================================================== */
+
+/* Suavizado tipográfico uniforme y renderizado nítido */
+html, body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Contenedores con scroll acelerados por hardware sin desgarro ni micro-cortes */
+main,
+.overflow-y-auto,
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Estabilizar tablas y listas para evitar cortes horizontales por subpíxeles */
+table {
+  -webkit-font-smoothing: antialiased;
+}
+
+table tr {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Scrollbar personalizado estético y de bajo costo de renderizado */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.65);
 }

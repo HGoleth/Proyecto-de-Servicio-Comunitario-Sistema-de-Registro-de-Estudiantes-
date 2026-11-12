@@ -1,0 +1,31 @@
+.input-field {
+  @apply border border-gray-300 p-3 rounded-lg w-full shadow-sm transition-all;
+}
+
+.input-field:focus {
+  @apply ring-2 ring-green-600 border-green-600 outline-none shadow-md;
+}
+
+/* --- Contenedores elegantes --- */
+
+.section-title {
+  @apply text-2xl font-semibold text-green-700 mb-6 text-center;
+}
+
+.section-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4 mb-6;
+}
+
+/* --- Foto del representante --- */
+
+.photo-box {
+  @apply relative w-32 h-40 rounded-xl border-4 border-green-600 bg-white overflow-hidden shadow-lg transition-all;
+}
+
+.photo-box img {
+  @apply object-cover w-full h-full;
+}
+
+.photo-box:hover {
+  @apply scale-105 shadow-xl;
+}
