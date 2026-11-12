@@ -1,50 +1,107 @@
-# React + TypeScript + Vite
+# Sistema de Registro de Estudiantes SC 🎓
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema institucional de gestión escolar, registro académico y emisión automatizada de documentos para la **Unidad Educativa "República de Chile"** (El Espinal - Municipio Díaz - Estado Nueva Esparta, Código DEA: OD01461703).
 
-Currently, two official plugins are available:
+Desarrollado como proyecto de **Servicio Comunitario (PSM)** por **HGoleth**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Características Principales
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 1. 🔐 Autenticación y Perfiles
+- Inicio de sesión seguro con roles administrativos y de dirección.
+- Interfaz interactiva y moderna con personalización de perfil de usuario en tiempo real.
 
-- Configure the top-level `parserOptions` property like this:
+### 2. 📊 Panel de Control (Dashboard)
+- Métricas e indicadores en tiempo real: total de estudiantes, docentes, representantes y constancias emitidas.
+- Gráficas estadísticas de matrícula por nivel (Inicial, Primaria y Secundaria).
+- Sincronización instantánea del período escolar activo en todo el sistema.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 3. 📝 Gestión de Estudiantes y Representantes
+- **Inscripción modular**: Registro por niveles (Inicial, Primaria, Secundaria) con datos médicos, académicos y familiares.
+- **Expediente digital**: Consulta del historial completo, notas y condición académica del alumno.
+- **Directorio de Representantes**: Búsqueda inteligente por nombre o cédula y vinculación directa con estudiantes matriculados.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 4. 👨‍🏫 Control Docente y Calificaciones
+- Registro de profesores con cédula, título, especialidad y asignaciones académicas.
+- Distribución de materias por grado y sección.
+- Registro de calificaciones cuantitativas (0-20) y cualitativas (A, B, C, D, E) con cálculo de promedios.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 5. 📄 Generador Automático de Documentos y Gestor de Plantillas
+- **Emisión en un clic**: Generación instantánea de Constancias de Estudio, Cartas de Buena Conducta y Justificativos con datos reales del alumno.
+- **Variables dinámicas**: Inserción de palabras clave inteligentes (`[Nombre Completo]`, `[Cédula Alumno]`, `[Grado y Sección]`, `[Periodo Escolar]`, etc.).
+- **Membrete institucional personalizable**:
+  - Posicionamiento libre de logotipos (Izquierda, Centro, Derecha o arrastre libre con puntero).
+  - Escala libre y **ajuste de hitbox ceñido** (`height: auto`) al contorno real del logotipo para evitar solapamientos.
+  - Subida y reemplazo personalizado de logotipos (MPPE / Escudo e Institución).
+- **Múltiples firmas configurables**: Distribución de firmas a la izquierda, centro o derecha.
+- **Formatos de hoja**: Carta (Letter), Oficio (Legal) y A4.
+- **Exportación versátil**: Descarga directa en **Word editable (.DOCX)** y **PDF** con previsualización de impresión idéntica.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Entorno de Escritorio**: [Electron](https://www.electronjs.org/) (con aceleración por GPU y renderizado de alto rendimiento).
+- **Frontend**: [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vitejs.dev/).
+- **Estilos y Animaciones**: [TailwindCSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/).
+- **Componentes e Iconografía**: [Lucide React](https://lucide.dev/), [React Icons](https://react-icons.github.io/react-icons/), Headless UI.
+- **Generación de Documentos**: [docx](https://docx.js.org/), [jspdf](https://parall.ax/products/jspdf), html2canvas.
+- **Persistencia de Datos**: [Lowdb](https://github.com/typicode/lowdb) (almacenamiento local JSON estructurado en AppData) y compatibilidad MySQL.
+
+---
+
+## 📦 Instalación y Puesta en Marcha
+
+### Prerrequisitos
+- [Node.js](https://nodejs.org/) (versión 18 o superior).
+- npm (incluido con Node.js).
+
+### Pasos
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/HGoleth/Sistema-de-Registro-de-Estudiantes-SC.git
+   cd Sistema-de-Registro-de-Estudiantes-SC
+   ```
+
+2. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
+
+3. **(Opcional) Poblar la base de datos con datos de prueba**:
+   ```bash
+   npm run seed
+   ```
+
+4. **Ejecutar en modo escritorio (Electron + React)**:
+   ```bash
+   npm run electron:dev
+   ```
+
+5. **O ejecutar solo en modo web**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 📜 Scripts Disponibles
+
+| Comando | Descripción |
+| :--- | :--- |
+| `npm run dev` | Inicia el servidor de desarrollo Vite |
+| `npm run build` | Compila la aplicación frontend con TypeScript y Vite |
+| `npm run electron` | Abre la aplicación de escritorio en Electron |
+| `npm run electron:dev` | Compila y lanza la aplicación Electron en caliente |
+| `npm run seed` | Carga estudiantes, docentes, representantes y notas ficticias |
+| `npm run lint` | Ejecuta el linter ESLint |
+| `npm run package` | Empaqueta la aplicación para distribución con Electron Forge |
+
+---
+
+## 👤 Autor
+
+- **HGoleth** - [GitHub](https://github.com/HGoleth)
+- Servicio Comunitario PSM - Unidad Educativa "República de Chile"
