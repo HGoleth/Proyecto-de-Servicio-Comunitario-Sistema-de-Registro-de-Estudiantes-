@@ -13,7 +13,8 @@ import {
   Calculator,
   GraduationCap,
   School,
-  FileCog
+  FileCog,
+  Baby
 } from "lucide-react";
 
 const fadeIn = {
@@ -29,7 +30,7 @@ const FormatosValores = () => {
   const [guardandoEncabezado, setGuardandoEncabezado] = useState(false);
 
   // ✅ ESTADOS PARA NOTAS Y CALCULADORA (3 LAPSOS FIJOS)
-  const [nivel, setNivel] = useState<"primaria" | "secundaria">("primaria");
+  const [nivel, setNivel] = useState<"inicial" | "primaria" | "secundaria">("primaria");
   const [listaNotas, setListaNotas] = useState(["", "", ""]);
 
   // ✅ ESTADO DEL MEMBRETE UNIFICADO
@@ -67,7 +68,7 @@ const FormatosValores = () => {
 
   // ✅ LÓGICA DE LA CALCULADORA QUE CAMBIA SEGÚN EL NIVEL
   const calcularPromedio = () => {
-    if (nivel === "primaria") {
+    if (nivel === "primaria" || nivel === "inicial") {
       // Mapeo cualitativo para promediar literales
       const equivalencias: { [key: string]: number } = { A: 5, B: 4, C: 3, D: 2, E: 1 };
       const puntos = listaNotas
@@ -95,7 +96,7 @@ const FormatosValores = () => {
   // ✅ MANEJADOR DE ENTRADA CON VALIDACIÓN
   const handleInputChange = (index: number, value: string) => {
     const nuevasNotas = [...listaNotas];
-    if (nivel === "primaria") {
+    if (nivel === "primaria" || nivel === "inicial") {
       const letra = value.toUpperCase().trim().slice(-1);
       if (["A", "B", "C", "D", "E", ""].includes(letra)) {
         nuevasNotas[index] = letra;
@@ -285,7 +286,7 @@ const FormatosValores = () => {
                         <div>
                             <h2 className="text-2xl font-black text-gray-800 uppercase tracking-tight">Escalas de Rendimiento</h2>
                             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                              {nivel === "primaria" ? "Evaluación Cualitativa (Literales)" : "Evaluación Cuantitativa (01-20)"}
+                              {(nivel === "primaria" || nivel === "inicial") ? "Evaluación Cualitativa (Literales)" : "Evaluación Cuantitativa (01-20)"}
                             </p>
                         </div>
                     </div>
@@ -293,8 +294,25 @@ const FormatosValores = () => {
                     {/* Selector de Nivel con Animación Deslizante layoutId */}
                     <div className="flex bg-gray-100 p-1.5 rounded-2xl w-full md:w-fit border border-gray-200 relative overflow-hidden">
                       <button 
+                        onClick={() => { setNivel("inicial"); setListaNotas(["", "", ""]); }}
+                        className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-[10px] font-black transition-colors duration-300 z-10 ${
+                          nivel === "inicial" ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
+                        }`}
+                      >
+                        <Baby size={16} /> 
+                        <span className="relative z-20">INICIAL (MATERNAL)</span>
+                        {nivel === "inicial" && (
+                          <motion.div 
+                            layoutId="activeTab"
+                            className="absolute inset-0 bg-white rounded-xl shadow-sm border border-gray-100 z-0"
+                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                          />
+                        )}
+                      </button>
+
+                      <button 
                         onClick={() => { setNivel("primaria"); setListaNotas(["", "", ""]); }}
-                        className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black transition-colors duration-300 z-10 ${
+                        className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-[10px] font-black transition-colors duration-300 z-10 ${
                           nivel === "primaria" ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
                         }`}
                       >
@@ -311,7 +329,7 @@ const FormatosValores = () => {
 
                       <button 
                         onClick={() => { setNivel("secundaria"); setListaNotas(["", "", ""]); }}
-                        className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black transition-colors duration-300 z-10 ${
+                        className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-[10px] font-black transition-colors duration-300 z-10 ${
                           nivel === "secundaria" ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
                         }`}
                       >
@@ -337,7 +355,7 @@ const FormatosValores = () => {
                     transition={{ duration: 0.3 }}
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                   >
-                    {nivel === "primaria" ? (
+                    {(nivel === "primaria" || nivel === "inicial") ? (
                       <>
                         <CardNota letra="A" titulo="Excelente" color="green" desc='"Consolidó todos los objetivos propuestos de manera sobresaliente."' />
                         <CardNota letra="B" titulo="Muy Bueno" color="blue" desc='"Consolidó la mayoría de los objetivos con muy buen desempeño."' />
@@ -359,7 +377,7 @@ const FormatosValores = () => {
                   <div className="bg-gray-50 p-8 rounded-[3rem] border-2 border-dashed border-gray-200 mt-10 text-center">
                     <div className="flex items-center justify-center gap-3 mb-8">
                         <Calculator className="text-blue-500" size={22}/>
-                        <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest">Simulador de {nivel === "primaria" ? "Literales" : "Notas"}</h3>
+                        <h3 className="text-sm font-black text-gray-700 uppercase tracking-widest">Simulador de {(nivel === "primaria" || nivel === "inicial") ? "Literales" : "Notas"}</h3>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -367,10 +385,10 @@ const FormatosValores = () => {
                         <div key={index} className="space-y-3 text-left">
                           <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2">Lapso {index + 1}</label>
                           <input 
-                            type={nivel === "primaria" ? "text" : "number"}
+                            type={(nivel === "primaria" || nivel === "inicial") ? "text" : "number"}
                             value={nota}
                             onChange={(e) => handleInputChange(index, e.target.value)}
-                            placeholder={nivel === "primaria" ? "A-E" : "01-20"}
+                            placeholder={(nivel === "primaria" || nivel === "inicial") ? "A-E" : "01-20"}
                             className="w-full bg-white border-2 border-gray-100 rounded-3xl p-5 text-center text-2xl font-black text-gray-800 focus:border-blue-500 focus:outline-none transition-all shadow-sm"
                           />
                         </div>

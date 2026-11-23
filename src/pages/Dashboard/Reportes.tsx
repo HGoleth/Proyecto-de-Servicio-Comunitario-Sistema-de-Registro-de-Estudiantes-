@@ -2,10 +2,34 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Printer, ArrowLeft, GraduationCap, 
-  School, Eye, FileDown
+  School, Eye, FileDown, Baby
 } from "lucide-react";
 
 const PLAN_ESTUDIOS_FALLBACK: Record<string, { codigo: string; nombre: string }[]> = {
+  "Maternal": [
+    { codigo: "FPS-MAT", nombre: "Formación Personal, Social y Comunicación" },
+    { codigo: "RCA-MAT", nombre: "Relación entre los Componentes del Ambiente" },
+    { codigo: "EPC-MAT", nombre: "Expresión Plástica, Corporal y Musical" },
+    { codigo: "EFM-MAT", nombre: "Educación Física y Recreación Motriz" }
+  ],
+  "1er Grupo": [
+    { codigo: "FPS-1GR", nombre: "Formación Personal, Social y Comunicación" },
+    { codigo: "RCA-1GR", nombre: "Relación entre los Componentes del Ambiente" },
+    { codigo: "EPC-1GR", nombre: "Expresión Plástica, Corporal y Musical" },
+    { codigo: "EFM-1GR", nombre: "Educación Física y Recreación Motriz" }
+  ],
+  "2do Grupo": [
+    { codigo: "FPS-2GR", nombre: "Formación Personal, Social y Comunicación" },
+    { codigo: "RCA-2GR", nombre: "Relación entre los Componentes del Ambiente" },
+    { codigo: "EPC-2GR", nombre: "Expresión Plástica, Corporal y Musical" },
+    { codigo: "EFM-2GR", nombre: "Educación Física y Recreación Motriz" }
+  ],
+  "3er Grupo": [
+    { codigo: "FPS-3GR", nombre: "Formación Personal, Social y Comunicación" },
+    { codigo: "RCA-3GR", nombre: "Relación entre los Componentes del Ambiente" },
+    { codigo: "EPC-3GR", nombre: "Expresión Plástica, Corporal y Musical" },
+    { codigo: "EFM-3GR", nombre: "Educación Física y Recreación Motriz" }
+  ],
   "1ero": [
     { codigo: "CAS-1ERO", nombre: "Castellano y Literatura" },
     { codigo: "MAT-1ERO", nombre: "Matemáticas para la Vida" },
@@ -119,7 +143,7 @@ const PLAN_ESTUDIOS_FALLBACK: Record<string, { codigo: string; nombre: string }[
 
 const Reportes = () => {
   const [paso, setPaso] = useState<"niveles" | "grados" | "secciones" | "preview">("niveles");
-  const [nivel, setNivel] = useState<"Primaria" | "Secundaria">("Primaria");
+  const [nivel, setNivel] = useState<"Inicial" | "Primaria" | "Secundaria">("Primaria");
   const [gradoSel, setGradoSel] = useState<string | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
   const [estudiantes, setEstudiantes] = useState<any[]>([]);
@@ -185,7 +209,7 @@ const Reportes = () => {
         materiasPlan.map(async (mat) => {
           const data = await (window as any).electron.obtenerNotasSeccion(seccionId, mat.nombre);
           if (data && data.planificacion) {
-            if (nivEst === "Primaria") {
+            if (nivEst === "Primaria" || nivEst === "Inicial") {
               const equiv: Record<string, number> = { A: 20, B: 16, C: 12, D: 8, E: 4 };
               const calcLapsoLiteral = (l: number) => {
                 const evs = data.planificacion[l] || [];
@@ -242,7 +266,9 @@ const Reportes = () => {
     }
   };
 
-  const listaGrados = nivel === "Primaria" 
+  const listaGrados = nivel === "Inicial"
+    ? ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo"]
+    : nivel === "Primaria" 
     ? ["1ero", "2do", "3ero", "4to", "5to", "6to"]
     : ["1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
 
@@ -293,7 +319,7 @@ const Reportes = () => {
 
     // Promedio general cuantitativo o cualitativo
     const resumenGeneral = (() => {
-      if (nivel === "Primaria") {
+      if (nivel === "Primaria" || nivel === "Inicial") {
         const defs = materiasGrado.map(m => {
           const n = notasEstudiante[m.nombre] || { L1: "-", L2: "-", L3: "-" };
           return promediarLiterales(n.L1, n.L2, n.L3);
@@ -367,7 +393,7 @@ const Reportes = () => {
               <tbody>
                 {materiasGrado.map((mat) => {
                   const n = notasEstudiante[mat.nombre] || { codigo: mat.codigo, L1: "-", L2: "-", L3: "-" };
-                  const def = nivel === "Primaria"
+                  const def = (nivel === "Primaria" || nivel === "Inicial")
                     ? promediarLiterales(n.L1, n.L2, n.L3)
                     : (typeof n.L1 === "number" && typeof n.L2 === "number" && typeof n.L3 === "number")
                     ? ((n.L1 + n.L2 + n.L3) / 3).toFixed(1)
@@ -392,7 +418,7 @@ const Reportes = () => {
             <div className="border border-black p-2.5 rounded-sm text-left">
               <p className="font-bold text-[8px] border-b border-black pb-1 mb-1.5 uppercase">Resumen Académico</p>
               <p className="text-[7px] uppercase text-gray-600 font-bold">Modalidad:</p>
-              <p className="text-[8px] font-black mb-2">Evaluación {nivel === "Primaria" ? "Cualitativa" : "Cuantitativa"}</p>
+              <p className="text-[8px] font-black mb-2">Evaluación {(nivel === "Primaria" || nivel === "Inicial") ? "Cualitativa" : "Cuantitativa"}</p>
               <p className="text-[7px] uppercase text-gray-600 font-bold">Promedio Anual:</p>
               <p className="text-[10px] font-black text-black">{resumenGeneral}</p>
             </div>
@@ -439,7 +465,12 @@ const Reportes = () => {
 
       <AnimatePresence mode="wait">
         {paso === "niveles" && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+             <button onClick={() => { setNivel("Inicial"); setPaso("grados"); }} className="group p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm hover:border-amber-500 hover:shadow-2xl transition-all text-left">
+                <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-all mb-6 shadow-inner text-left"><Baby size={32}/></div>
+                <h3 className="text-2xl font-black text-gray-800 uppercase italic">Educación Inicial</h3>
+                <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest leading-none">Maternal, 1er, 2do y 3er Grupo</p>
+             </button>
              <button onClick={() => { setNivel("Primaria"); setPaso("grados"); }} className="group p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm hover:border-green-500 hover:shadow-2xl transition-all text-left">
                 <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all mb-6 shadow-inner text-left"><School size={32}/></div>
                 <h3 className="text-2xl font-black text-gray-800 uppercase italic">Educación Primaria</h3>

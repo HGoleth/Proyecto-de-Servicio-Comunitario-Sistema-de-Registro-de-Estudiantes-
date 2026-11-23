@@ -532,7 +532,7 @@ const DashboardHome = () => {
               </div>
               
               <div className="flex bg-white p-1 rounded-2xl border border-gray-100 shadow-sm">
-                {["Todos", "Primaria", "Secundaria"].map((f) => (
+                {["Todos", "Inicial", "Primaria", "Secundaria"].map((f) => (
                   <button
                     key={f}
                     onClick={() => setActiveFilters((prev: any) => ({...prev, nivelCard: f}))}
@@ -569,7 +569,11 @@ const DashboardHome = () => {
                       >
                         <div className="flex justify-between items-start mb-4">
                           <span className={`text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${
-                            sec.nivel === "Primaria" ? "bg-green-50 text-green-600" : "bg-blue-50 text-blue-600"
+                            sec.nivel === "Inicial"
+                              ? "bg-amber-50 text-amber-600"
+                              : sec.nivel === "Primaria"
+                              ? "bg-green-50 text-green-600"
+                              : "bg-blue-50 text-blue-600"
                           }`}>
                             {sec.nivel}
                           </span>

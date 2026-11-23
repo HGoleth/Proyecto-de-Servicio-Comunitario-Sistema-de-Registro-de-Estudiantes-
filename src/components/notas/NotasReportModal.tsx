@@ -19,7 +19,7 @@ interface NotasReportModalProps {
   evaluacionesPorLapso: Record<number, any[]>;
   estudiantesFiltrados: any[];
   notasAlumnos: Record<string, Record<number, number>>;
-  nivel: "Primaria" | "Secundaria";
+  nivel: "Inicial" | "Primaria" | "Secundaria";
   calcularNotaFinalLapso: (alumnoId: string, lapsoNum: number) => string;
   calcularPromedioCiclo?: (alumnoId: string) => string;
   codigoMateria?: string;
@@ -172,7 +172,7 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
                               key={ev.id}
                               className="border border-black text-center p-1 font-mono text-[12px] font-black bg-white"
                             >
-                              {nivel === "Primaria"
+                              {(nivel === "Primaria" || nivel === "Inicial")
                                 ? (() => {
                                     const v: any = notasAlumnos[est.id]?.[ev.id];
                                     if (typeof v === "string" && ["A", "B", "C", "D", "E"].includes(v.toUpperCase().trim())) {
@@ -196,9 +196,7 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
                       <td className="border-2 border-black text-center p-1 font-black bg-gray-200 text-sm italic">
                         {calcularPromedioCiclo
                           ? calcularPromedioCiclo(est.id)
-                          : (nivel === "Primaria"
-                              ? "-"
-                              : "-")}
+                          : "-"}
                       </td>
                     </tr>
                   ))}

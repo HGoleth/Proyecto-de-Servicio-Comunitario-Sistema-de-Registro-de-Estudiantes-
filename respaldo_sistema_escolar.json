@@ -2,7 +2,7 @@
   "meta": {
     "sistema": "Sistema de Registro de Estudiantes SC",
     "version": "2.0.0",
-    "fecha_respaldo": "2026-11-23T16:39:36.773Z",
+    "fecha_respaldo": "2026-11-23T17:11:59.283Z",
     "periodo_activo": "2026-2027",
     "descripcion": "Respaldo integral con 150 estudiantes (5 por cada grado, año y sección A y B), 75 representantes, 103 materias con código único (PK) y 174 planillas de calificaciones.",
     "estadisticas": {
@@ -11,7 +11,7 @@
       "total_secciones": 30,
       "total_representantes": 75,
       "total_materias": 103,
-      "total_secciones_notas": 174,
+      "total_secciones_notas": 206,
       "total_plantillas": 5
     }
   },
@@ -27327,6 +27327,4710 @@
   ],
   "registro_notas": [
     {
+      "id": "Maternal-A-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "Maternal-A-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2001": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2002": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2003": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2004": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2005": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.087Z"
+    },
+    {
+      "id": "Maternal-A-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "Maternal-A-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2001": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2002": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2003": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2004": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2005": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.097Z"
+    },
+    {
+      "id": "Maternal-A-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "Maternal-A-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2001": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2002": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2003": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2004": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2005": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.107Z"
+    },
+    {
+      "id": "Maternal-A-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "Maternal-A-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2001": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2002": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2003": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2004": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2005": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.117Z"
+    },
+    {
+      "id": "Maternal-B-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "Maternal-B-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2006": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2007": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2008": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2009": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2010": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.127Z"
+    },
+    {
+      "id": "Maternal-B-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "Maternal-B-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2006": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2007": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2008": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2009": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2010": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.137Z"
+    },
+    {
+      "id": "Maternal-B-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "Maternal-B-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2006": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2007": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2008": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2009": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2010": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.147Z"
+    },
+    {
+      "id": "Maternal-B-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "Maternal-B-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-MAT",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2006": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2007": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2008": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2009": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2010": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.157Z"
+    },
+    {
+      "id": "1er Grupo-A-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "1er Grupo-A-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2011": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2012": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2013": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2014": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2015": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.167Z"
+    },
+    {
+      "id": "1er Grupo-A-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "1er Grupo-A-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2011": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2012": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2013": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2014": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2015": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.183Z"
+    },
+    {
+      "id": "1er Grupo-A-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "1er Grupo-A-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2011": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2012": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2013": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2014": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2015": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.198Z"
+    },
+    {
+      "id": "1er Grupo-A-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "1er Grupo-A-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2011": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2012": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2013": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2014": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2015": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.207Z"
+    },
+    {
+      "id": "1er Grupo-B-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "1er Grupo-B-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2016": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2017": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2018": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2019": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2020": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.217Z"
+    },
+    {
+      "id": "1er Grupo-B-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "1er Grupo-B-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2016": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2017": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2018": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2019": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2020": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.227Z"
+    },
+    {
+      "id": "1er Grupo-B-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "1er Grupo-B-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2016": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2017": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2018": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2019": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2020": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.237Z"
+    },
+    {
+      "id": "1er Grupo-B-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "1er Grupo-B-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-1GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2016": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2017": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2018": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2019": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2020": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.247Z"
+    },
+    {
+      "id": "2do Grupo-A-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "2do Grupo-A-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2021": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2022": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2023": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2024": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2025": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.257Z"
+    },
+    {
+      "id": "2do Grupo-A-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "2do Grupo-A-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2021": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2022": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2023": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2024": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2025": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.267Z"
+    },
+    {
+      "id": "2do Grupo-A-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "2do Grupo-A-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2021": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2022": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2023": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2024": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2025": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.277Z"
+    },
+    {
+      "id": "2do Grupo-A-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "2do Grupo-A-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2021": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2022": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2023": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2024": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2025": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.292Z"
+    },
+    {
+      "id": "2do Grupo-B-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "2do Grupo-B-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2026": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2027": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2028": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2029": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2030": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.307Z"
+    },
+    {
+      "id": "2do Grupo-B-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "2do Grupo-B-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2026": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2027": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2028": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2029": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2030": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.317Z"
+    },
+    {
+      "id": "2do Grupo-B-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "2do Grupo-B-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2026": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2027": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2028": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2029": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2030": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.327Z"
+    },
+    {
+      "id": "2do Grupo-B-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "2do Grupo-B-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-2GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2026": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2027": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2028": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2029": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2030": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.337Z"
+    },
+    {
+      "id": "3er Grupo-A-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "3er Grupo-A-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2031": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2032": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2033": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2034": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2035": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.347Z"
+    },
+    {
+      "id": "3er Grupo-A-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "3er Grupo-A-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2031": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2032": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2033": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2034": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2035": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.357Z"
+    },
+    {
+      "id": "3er Grupo-A-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "3er Grupo-A-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2031": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2032": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2033": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2034": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2035": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.367Z"
+    },
+    {
+      "id": "3er Grupo-A-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "3er Grupo-A-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2031": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2032": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2033": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2034": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2035": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.378Z"
+    },
+    {
+      "id": "3er Grupo-B-Inicial_Formación Personal, Social y Comunicación",
+      "seccionId": "3er Grupo-B-Inicial",
+      "materia": "Formación Personal, Social y Comunicación",
+      "codigoMateria": "FPS-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2036": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2037": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2038": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2039": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2040": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.387Z"
+    },
+    {
+      "id": "3er Grupo-B-Inicial_Relación entre los Componentes del Ambiente",
+      "seccionId": "3er Grupo-B-Inicial",
+      "materia": "Relación entre los Componentes del Ambiente",
+      "codigoMateria": "RCA-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2036": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2037": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2038": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2039": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2040": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.397Z"
+    },
+    {
+      "id": "3er Grupo-B-Inicial_Expresión Plástica, Corporal y Musical",
+      "seccionId": "3er Grupo-B-Inicial",
+      "materia": "Expresión Plástica, Corporal y Musical",
+      "codigoMateria": "EPC-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2036": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2037": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2038": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2039": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2040": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.407Z"
+    },
+    {
+      "id": "3er Grupo-B-Inicial_Educación Física y Recreación Motriz",
+      "seccionId": "3er Grupo-B-Inicial",
+      "materia": "Educación Física y Recreación Motriz",
+      "codigoMateria": "EFM-3GR",
+      "planificacion": {
+        "1": [
+          {
+            "id": 101,
+            "peso": 25,
+            "nombre": "Evaluación Escrita / Taller Práctico"
+          },
+          {
+            "id": 102,
+            "peso": 25,
+            "nombre": "Exposición y Defensa de Proyecto"
+          },
+          {
+            "id": 103,
+            "peso": 25,
+            "nombre": "Producción Escrita y Cuaderno"
+          },
+          {
+            "id": 104,
+            "peso": 25,
+            "nombre": "Rasgos Personales y Convivencia"
+          }
+        ],
+        "2": [
+          {
+            "id": 201,
+            "peso": 25,
+            "nombre": "Investigación Documental"
+          },
+          {
+            "id": 202,
+            "peso": 25,
+            "nombre": "Prueba Objetiva Integral"
+          },
+          {
+            "id": 203,
+            "peso": 25,
+            "nombre": "Laboratorio / Demostración Pedagógica"
+          },
+          {
+            "id": 204,
+            "peso": 25,
+            "nombre": "Participación y Responsabilidad"
+          }
+        ],
+        "3": [
+          {
+            "id": 301,
+            "peso": 25,
+            "nombre": "Seminario / Ensayo Analítico"
+          },
+          {
+            "id": 302,
+            "peso": 25,
+            "nombre": "Cierre de Proyecto de Aprendizaje"
+          },
+          {
+            "id": 303,
+            "peso": 25,
+            "nombre": "Evaluación Final de Lapso"
+          },
+          {
+            "id": 304,
+            "peso": 25,
+            "nombre": "Autoevaluación y Coevaluación"
+          }
+        ]
+      },
+      "notas": {
+        "EST-2026-2036": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2037": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "A",
+          "303": "B",
+          "304": "A"
+        },
+        "EST-2026-2038": {
+          "101": "A",
+          "102": "A",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "A",
+          "203": "A",
+          "204": "A",
+          "301": "A",
+          "302": "B",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2039": {
+          "101": "A",
+          "102": "A",
+          "103": "B",
+          "104": "A",
+          "201": "B",
+          "202": "A",
+          "203": "B",
+          "204": "A",
+          "301": "A",
+          "302": "A",
+          "303": "A",
+          "304": "A"
+        },
+        "EST-2026-2040": {
+          "101": "B",
+          "102": "B",
+          "103": "A",
+          "104": "A",
+          "201": "A",
+          "202": "B",
+          "203": "A",
+          "204": "A",
+          "301": "B",
+          "302": "B",
+          "303": "B",
+          "304": "A"
+        }
+      },
+      "ultima_modificacion": "2026-11-23T17:11:57.417Z"
+    },
+    {
       "id": "1ero-A-Primaria_Castellano y Literatura",
       "seccionId": "1ero-A-Primaria",
       "materia": "Castellano y Literatura",
@@ -27471,7 +32175,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.917Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.427Z"
     },
     {
       "id": "1ero-A-Primaria_Matemáticas para la Vida",
@@ -27618,7 +32322,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.932Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.437Z"
     },
     {
       "id": "1ero-A-Primaria_Ciencias Naturales y Salud",
@@ -27765,7 +32469,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.942Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.447Z"
     },
     {
       "id": "1ero-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -27912,7 +32616,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.952Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.457Z"
     },
     {
       "id": "1ero-A-Primaria_Educación Estética y Cultura",
@@ -28059,7 +32763,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.962Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.467Z"
     },
     {
       "id": "1ero-A-Primaria_Educación Física, Deporte y Recreación",
@@ -28206,7 +32910,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.972Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.477Z"
     },
     {
       "id": "1ero-B-Primaria_Castellano y Literatura",
@@ -28353,7 +33057,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.982Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.492Z"
     },
     {
       "id": "1ero-B-Primaria_Matemáticas para la Vida",
@@ -28500,7 +33204,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:34.992Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.502Z"
     },
     {
       "id": "1ero-B-Primaria_Ciencias Naturales y Salud",
@@ -28647,7 +33351,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.003Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.512Z"
     },
     {
       "id": "1ero-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -28794,7 +33498,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.012Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.522Z"
     },
     {
       "id": "1ero-B-Primaria_Educación Estética y Cultura",
@@ -28941,7 +33645,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.023Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.532Z"
     },
     {
       "id": "1ero-B-Primaria_Educación Física, Deporte y Recreación",
@@ -29088,7 +33792,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.032Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.542Z"
     },
     {
       "id": "2do-A-Primaria_Castellano y Literatura",
@@ -29235,7 +33939,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.042Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.557Z"
     },
     {
       "id": "2do-A-Primaria_Matemáticas para la Vida",
@@ -29382,7 +34086,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.052Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.567Z"
     },
     {
       "id": "2do-A-Primaria_Ciencias Naturales y Salud",
@@ -29529,7 +34233,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.062Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.577Z"
     },
     {
       "id": "2do-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -29676,7 +34380,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.072Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.587Z"
     },
     {
       "id": "2do-A-Primaria_Educación Estética y Cultura",
@@ -29823,7 +34527,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.088Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.597Z"
     },
     {
       "id": "2do-A-Primaria_Educación Física, Deporte y Recreación",
@@ -29970,7 +34674,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.097Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.607Z"
     },
     {
       "id": "2do-B-Primaria_Castellano y Literatura",
@@ -30117,7 +34821,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.112Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.617Z"
     },
     {
       "id": "2do-B-Primaria_Matemáticas para la Vida",
@@ -30264,7 +34968,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.122Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.627Z"
     },
     {
       "id": "2do-B-Primaria_Ciencias Naturales y Salud",
@@ -30411,7 +35115,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.132Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.637Z"
     },
     {
       "id": "2do-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -30558,7 +35262,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.142Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.652Z"
     },
     {
       "id": "2do-B-Primaria_Educación Estética y Cultura",
@@ -30705,7 +35409,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.153Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.662Z"
     },
     {
       "id": "2do-B-Primaria_Educación Física, Deporte y Recreación",
@@ -30852,7 +35556,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.162Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.672Z"
     },
     {
       "id": "3ero-A-Primaria_Castellano y Literatura",
@@ -30999,7 +35703,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.167Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.694Z"
     },
     {
       "id": "3ero-A-Primaria_Matemáticas para la Vida",
@@ -31146,7 +35850,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.173Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.702Z"
     },
     {
       "id": "3ero-A-Primaria_Ciencias Naturales y Salud",
@@ -31293,7 +35997,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.198Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.712Z"
     },
     {
       "id": "3ero-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -31440,7 +36144,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.213Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.722Z"
     },
     {
       "id": "3ero-A-Primaria_Educación Estética y Cultura",
@@ -31587,7 +36291,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.223Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.732Z"
     },
     {
       "id": "3ero-A-Primaria_Educación Física, Deporte y Recreación",
@@ -31734,7 +36438,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.233Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.742Z"
     },
     {
       "id": "3ero-B-Primaria_Castellano y Literatura",
@@ -31881,7 +36585,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.243Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.752Z"
     },
     {
       "id": "3ero-B-Primaria_Matemáticas para la Vida",
@@ -32028,7 +36732,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.253Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.762Z"
     },
     {
       "id": "3ero-B-Primaria_Ciencias Naturales y Salud",
@@ -32175,7 +36879,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.263Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.772Z"
     },
     {
       "id": "3ero-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -32322,7 +37026,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.273Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.782Z"
     },
     {
       "id": "3ero-B-Primaria_Educación Estética y Cultura",
@@ -32469,7 +37173,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.308Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.792Z"
     },
     {
       "id": "3ero-B-Primaria_Educación Física, Deporte y Recreación",
@@ -32616,7 +37320,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.318Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.808Z"
     },
     {
       "id": "4to-A-Primaria_Castellano y Literatura",
@@ -32763,7 +37467,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.328Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.817Z"
     },
     {
       "id": "4to-A-Primaria_Matemáticas para la Vida",
@@ -32910,7 +37614,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.338Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.827Z"
     },
     {
       "id": "4to-A-Primaria_Ciencias Naturales y Salud",
@@ -33057,7 +37761,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.353Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.838Z"
     },
     {
       "id": "4to-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -33204,7 +37908,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.363Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.847Z"
     },
     {
       "id": "4to-A-Primaria_Educación Estética y Cultura",
@@ -33351,7 +38055,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.373Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.857Z"
     },
     {
       "id": "4to-A-Primaria_Educación Física, Deporte y Recreación",
@@ -33498,7 +38202,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.383Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.868Z"
     },
     {
       "id": "4to-B-Primaria_Castellano y Literatura",
@@ -33645,7 +38349,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.393Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.877Z"
     },
     {
       "id": "4to-B-Primaria_Matemáticas para la Vida",
@@ -33792,7 +38496,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.403Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.887Z"
     },
     {
       "id": "4to-B-Primaria_Ciencias Naturales y Salud",
@@ -33939,7 +38643,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.413Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.897Z"
     },
     {
       "id": "4to-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -34086,7 +38790,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.423Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.907Z"
     },
     {
       "id": "4to-B-Primaria_Educación Estética y Cultura",
@@ -34233,7 +38937,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.433Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.917Z"
     },
     {
       "id": "4to-B-Primaria_Educación Física, Deporte y Recreación",
@@ -34380,7 +39084,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.443Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.932Z"
     },
     {
       "id": "5to-A-Primaria_Castellano y Literatura",
@@ -34527,7 +39231,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.453Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.947Z"
     },
     {
       "id": "5to-A-Primaria_Matemáticas para la Vida",
@@ -34674,7 +39378,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.463Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.957Z"
     },
     {
       "id": "5to-A-Primaria_Ciencias Naturales y Salud",
@@ -34821,7 +39525,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.473Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.967Z"
     },
     {
       "id": "5to-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -34968,7 +39672,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.483Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.988Z"
     },
     {
       "id": "5to-A-Primaria_Educación Estética y Cultura",
@@ -35115,7 +39819,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.493Z"
+      "ultima_modificacion": "2026-11-23T17:11:57.998Z"
     },
     {
       "id": "5to-A-Primaria_Educación Física, Deporte y Recreación",
@@ -35262,7 +39966,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.503Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.007Z"
     },
     {
       "id": "5to-B-Primaria_Castellano y Literatura",
@@ -35409,7 +40113,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.513Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.022Z"
     },
     {
       "id": "5to-B-Primaria_Matemáticas para la Vida",
@@ -35556,7 +40260,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.523Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.032Z"
     },
     {
       "id": "5to-B-Primaria_Ciencias Naturales y Salud",
@@ -35703,7 +40407,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.533Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.042Z"
     },
     {
       "id": "5to-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -35850,7 +40554,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.543Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.052Z"
     },
     {
       "id": "5to-B-Primaria_Educación Estética y Cultura",
@@ -35997,7 +40701,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.553Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.062Z"
     },
     {
       "id": "5to-B-Primaria_Educación Física, Deporte y Recreación",
@@ -36144,7 +40848,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.563Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.072Z"
     },
     {
       "id": "6to-A-Primaria_Castellano y Literatura",
@@ -36291,7 +40995,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.573Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.082Z"
     },
     {
       "id": "6to-A-Primaria_Matemáticas para la Vida",
@@ -36438,7 +41142,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.583Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.092Z"
     },
     {
       "id": "6to-A-Primaria_Ciencias Naturales y Salud",
@@ -36585,7 +41289,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.593Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.103Z"
     },
     {
       "id": "6to-A-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -36732,7 +41436,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.608Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.118Z"
     },
     {
       "id": "6to-A-Primaria_Educación Estética y Cultura",
@@ -36879,7 +41583,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.618Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.133Z"
     },
     {
       "id": "6to-A-Primaria_Educación Física, Deporte y Recreación",
@@ -37026,7 +41730,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.628Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.143Z"
     },
     {
       "id": "6to-B-Primaria_Castellano y Literatura",
@@ -37173,7 +41877,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.638Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.153Z"
     },
     {
       "id": "6to-B-Primaria_Matemáticas para la Vida",
@@ -37320,7 +42024,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.648Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.163Z"
     },
     {
       "id": "6to-B-Primaria_Ciencias Naturales y Salud",
@@ -37467,7 +42171,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.658Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.173Z"
     },
     {
       "id": "6to-B-Primaria_Ciencias Sociales, Identidad y Soberanía",
@@ -37614,7 +42318,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.668Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.183Z"
     },
     {
       "id": "6to-B-Primaria_Educación Estética y Cultura",
@@ -37761,7 +42465,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.678Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.193Z"
     },
     {
       "id": "6to-B-Primaria_Educación Física, Deporte y Recreación",
@@ -37908,7 +42612,7 @@
           "304": "A"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.688Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.203Z"
     },
     {
       "id": "1er Año-A-Secundaria_Castellano",
@@ -38055,7 +42759,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.698Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.213Z"
     },
     {
       "id": "1er Año-A-Secundaria_Inglés y Otras Lenguas",
@@ -38202,7 +42906,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.708Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.223Z"
     },
     {
       "id": "1er Año-A-Secundaria_Matemáticas",
@@ -38349,7 +43053,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.718Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.233Z"
     },
     {
       "id": "1er Año-A-Secundaria_Educación Física",
@@ -38496,7 +43200,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.728Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.243Z"
     },
     {
       "id": "1er Año-A-Secundaria_Arte y Patrimonio",
@@ -38643,7 +43347,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.739Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.253Z"
     },
     {
       "id": "1er Año-A-Secundaria_Ciencias Naturales",
@@ -38790,7 +43494,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.748Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.263Z"
     },
     {
       "id": "1er Año-A-Secundaria_Geografía, Historia y Ciudadanía",
@@ -38937,7 +43641,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.763Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.273Z"
     },
     {
       "id": "1er Año-A-Secundaria_Orientación y Convivencia",
@@ -39084,7 +43788,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.773Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.283Z"
     },
     {
       "id": "1er Año-A-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -39231,7 +43935,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.783Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.293Z"
     },
     {
       "id": "1er Año-B-Secundaria_Castellano",
@@ -39378,7 +44082,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.793Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.303Z"
     },
     {
       "id": "1er Año-B-Secundaria_Inglés y Otras Lenguas",
@@ -39525,7 +44229,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.803Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.313Z"
     },
     {
       "id": "1er Año-B-Secundaria_Matemáticas",
@@ -39672,7 +44376,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.818Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.323Z"
     },
     {
       "id": "1er Año-B-Secundaria_Educación Física",
@@ -39819,7 +44523,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.828Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.333Z"
     },
     {
       "id": "1er Año-B-Secundaria_Arte y Patrimonio",
@@ -39966,7 +44670,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.838Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.343Z"
     },
     {
       "id": "1er Año-B-Secundaria_Ciencias Naturales",
@@ -40113,7 +44817,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.848Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.353Z"
     },
     {
       "id": "1er Año-B-Secundaria_Geografía, Historia y Ciudadanía",
@@ -40260,7 +44964,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.858Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.363Z"
     },
     {
       "id": "1er Año-B-Secundaria_Orientación y Convivencia",
@@ -40407,7 +45111,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.868Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.373Z"
     },
     {
       "id": "1er Año-B-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -40554,7 +45258,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.878Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.383Z"
     },
     {
       "id": "2do Año-A-Secundaria_Castellano",
@@ -40701,7 +45405,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.888Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.398Z"
     },
     {
       "id": "2do Año-A-Secundaria_Inglés y Otras Lenguas",
@@ -40848,7 +45552,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.898Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.413Z"
     },
     {
       "id": "2do Año-A-Secundaria_Matemáticas",
@@ -40995,7 +45699,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.919Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.423Z"
     },
     {
       "id": "2do Año-A-Secundaria_Educación Física",
@@ -41142,7 +45846,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.928Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.433Z"
     },
     {
       "id": "2do Año-A-Secundaria_Arte y Patrimonio",
@@ -41289,7 +45993,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.943Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.443Z"
     },
     {
       "id": "2do Año-A-Secundaria_Ciencias Naturales",
@@ -41436,7 +46140,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.953Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.453Z"
     },
     {
       "id": "2do Año-A-Secundaria_Geografía, Historia y Ciudadanía",
@@ -41583,7 +46287,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.963Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.463Z"
     },
     {
       "id": "2do Año-A-Secundaria_Orientación y Convivencia",
@@ -41730,7 +46434,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.973Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.473Z"
     },
     {
       "id": "2do Año-A-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -41877,7 +46581,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.983Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.483Z"
     },
     {
       "id": "2do Año-B-Secundaria_Castellano",
@@ -42024,7 +46728,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:35.993Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.493Z"
     },
     {
       "id": "2do Año-B-Secundaria_Inglés y Otras Lenguas",
@@ -42171,7 +46875,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.003Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.503Z"
     },
     {
       "id": "2do Año-B-Secundaria_Matemáticas",
@@ -42318,7 +47022,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.013Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.513Z"
     },
     {
       "id": "2do Año-B-Secundaria_Educación Física",
@@ -42465,7 +47169,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.023Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.523Z"
     },
     {
       "id": "2do Año-B-Secundaria_Arte y Patrimonio",
@@ -42612,7 +47316,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.033Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.533Z"
     },
     {
       "id": "2do Año-B-Secundaria_Ciencias Naturales",
@@ -42759,7 +47463,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.043Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.543Z"
     },
     {
       "id": "2do Año-B-Secundaria_Geografía, Historia y Ciudadanía",
@@ -42906,7 +47610,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.053Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.553Z"
     },
     {
       "id": "2do Año-B-Secundaria_Orientación y Convivencia",
@@ -43053,7 +47757,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.063Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.563Z"
     },
     {
       "id": "2do Año-B-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -43200,7 +47904,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.073Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.573Z"
     },
     {
       "id": "3er Año-A-Secundaria_Castellano",
@@ -43347,7 +48051,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.083Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.583Z"
     },
     {
       "id": "3er Año-A-Secundaria_Inglés y Otras Lenguas",
@@ -43494,7 +48198,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.098Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.593Z"
     },
     {
       "id": "3er Año-A-Secundaria_Matemáticas",
@@ -43641,7 +48345,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.113Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.603Z"
     },
     {
       "id": "3er Año-A-Secundaria_Educación Física",
@@ -43788,7 +48492,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.123Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.613Z"
     },
     {
       "id": "3er Año-A-Secundaria_Física",
@@ -43935,7 +48639,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.133Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.623Z"
     },
     {
       "id": "3er Año-A-Secundaria_Química",
@@ -44082,7 +48786,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.143Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.633Z"
     },
     {
       "id": "3er Año-A-Secundaria_Biología",
@@ -44229,7 +48933,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.153Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.643Z"
     },
     {
       "id": "3er Año-A-Secundaria_Geografía, Historia y Ciudadanía",
@@ -44376,7 +49080,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.163Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.653Z"
     },
     {
       "id": "3er Año-A-Secundaria_Orientación y Convivencia",
@@ -44523,7 +49227,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.173Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.663Z"
     },
     {
       "id": "3er Año-A-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -44670,7 +49374,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.183Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.679Z"
     },
     {
       "id": "3er Año-B-Secundaria_Castellano",
@@ -44817,7 +49521,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.193Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.688Z"
     },
     {
       "id": "3er Año-B-Secundaria_Inglés y Otras Lenguas",
@@ -44964,7 +49668,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.203Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.703Z"
     },
     {
       "id": "3er Año-B-Secundaria_Matemáticas",
@@ -45111,7 +49815,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.213Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.713Z"
     },
     {
       "id": "3er Año-B-Secundaria_Educación Física",
@@ -45258,7 +49962,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.223Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.723Z"
     },
     {
       "id": "3er Año-B-Secundaria_Física",
@@ -45405,7 +50109,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.238Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.733Z"
     },
     {
       "id": "3er Año-B-Secundaria_Química",
@@ -45552,7 +50256,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.253Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.743Z"
     },
     {
       "id": "3er Año-B-Secundaria_Biología",
@@ -45699,7 +50403,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.268Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.753Z"
     },
     {
       "id": "3er Año-B-Secundaria_Geografía, Historia y Ciudadanía",
@@ -45846,7 +50550,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.278Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.763Z"
     },
     {
       "id": "3er Año-B-Secundaria_Orientación y Convivencia",
@@ -45993,7 +50697,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.288Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.773Z"
     },
     {
       "id": "3er Año-B-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -46140,7 +50844,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.298Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.783Z"
     },
     {
       "id": "4to Año-A-Secundaria_Castellano",
@@ -46287,7 +50991,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.308Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.793Z"
     },
     {
       "id": "4to Año-A-Secundaria_Inglés y Otras Lenguas",
@@ -46434,7 +51138,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.318Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.803Z"
     },
     {
       "id": "4to Año-A-Secundaria_Matemáticas",
@@ -46581,7 +51285,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.328Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.818Z"
     },
     {
       "id": "4to Año-A-Secundaria_Educación Física",
@@ -46728,7 +51432,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.338Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.828Z"
     },
     {
       "id": "4to Año-A-Secundaria_Física",
@@ -46875,7 +51579,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.348Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.838Z"
     },
     {
       "id": "4to Año-A-Secundaria_Química",
@@ -47022,7 +51726,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.358Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.848Z"
     },
     {
       "id": "4to Año-A-Secundaria_Biología",
@@ -47169,7 +51873,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.368Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.873Z"
     },
     {
       "id": "4to Año-A-Secundaria_Geografía, Historia y Ciudadanía",
@@ -47316,7 +52020,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.378Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.888Z"
     },
     {
       "id": "4to Año-A-Secundaria_Formación para la Soberanía Nacional",
@@ -47463,7 +52167,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.388Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.898Z"
     },
     {
       "id": "4to Año-A-Secundaria_Orientación y Convivencia",
@@ -47610,7 +52314,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.398Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.908Z"
     },
     {
       "id": "4to Año-A-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -47757,7 +52461,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.408Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.918Z"
     },
     {
       "id": "4to Año-B-Secundaria_Castellano",
@@ -47904,7 +52608,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.418Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.928Z"
     },
     {
       "id": "4to Año-B-Secundaria_Inglés y Otras Lenguas",
@@ -48051,7 +52755,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.428Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.943Z"
     },
     {
       "id": "4to Año-B-Secundaria_Matemáticas",
@@ -48198,7 +52902,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.438Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.958Z"
     },
     {
       "id": "4to Año-B-Secundaria_Educación Física",
@@ -48345,7 +53049,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.448Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.968Z"
     },
     {
       "id": "4to Año-B-Secundaria_Física",
@@ -48492,7 +53196,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.464Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.978Z"
     },
     {
       "id": "4to Año-B-Secundaria_Química",
@@ -48639,7 +53343,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.473Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.988Z"
     },
     {
       "id": "4to Año-B-Secundaria_Biología",
@@ -48786,7 +53490,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.483Z"
+      "ultima_modificacion": "2026-11-23T17:11:58.998Z"
     },
     {
       "id": "4to Año-B-Secundaria_Geografía, Historia y Ciudadanía",
@@ -48933,7 +53637,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.493Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.008Z"
     },
     {
       "id": "4to Año-B-Secundaria_Formación para la Soberanía Nacional",
@@ -49080,7 +53784,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.503Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.018Z"
     },
     {
       "id": "4to Año-B-Secundaria_Orientación y Convivencia",
@@ -49227,7 +53931,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.513Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.028Z"
     },
     {
       "id": "4to Año-B-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -49374,7 +54078,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.523Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.038Z"
     },
     {
       "id": "5to Año-A-Secundaria_Castellano",
@@ -49521,7 +54225,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.533Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.048Z"
     },
     {
       "id": "5to Año-A-Secundaria_Inglés y Otras Lenguas",
@@ -49668,7 +54372,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.543Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.058Z"
     },
     {
       "id": "5to Año-A-Secundaria_Matemáticas",
@@ -49815,7 +54519,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.553Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.068Z"
     },
     {
       "id": "5to Año-A-Secundaria_Educación Física",
@@ -49962,7 +54666,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.563Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.078Z"
     },
     {
       "id": "5to Año-A-Secundaria_Física",
@@ -50109,7 +54813,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.573Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.088Z"
     },
     {
       "id": "5to Año-A-Secundaria_Química",
@@ -50256,7 +54960,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.583Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.098Z"
     },
     {
       "id": "5to Año-A-Secundaria_Biología",
@@ -50403,7 +55107,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.598Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.108Z"
     },
     {
       "id": "5to Año-A-Secundaria_Ciencias de la Tierra",
@@ -50550,7 +55254,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.608Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.118Z"
     },
     {
       "id": "5to Año-A-Secundaria_Geografía, Historia y Ciudadanía",
@@ -50697,7 +55401,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.618Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.128Z"
     },
     {
       "id": "5to Año-A-Secundaria_Formación para la Soberanía Nacional",
@@ -50844,7 +55548,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.628Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.138Z"
     },
     {
       "id": "5to Año-A-Secundaria_Orientación y Convivencia",
@@ -50991,7 +55695,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.638Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.148Z"
     },
     {
       "id": "5to Año-A-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -51138,7 +55842,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.648Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.158Z"
     },
     {
       "id": "5to Año-B-Secundaria_Castellano",
@@ -51285,7 +55989,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.658Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.168Z"
     },
     {
       "id": "5to Año-B-Secundaria_Inglés y Otras Lenguas",
@@ -51432,7 +56136,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.668Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.178Z"
     },
     {
       "id": "5to Año-B-Secundaria_Matemáticas",
@@ -51579,7 +56283,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.678Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.188Z"
     },
     {
       "id": "5to Año-B-Secundaria_Educación Física",
@@ -51726,7 +56430,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.688Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.198Z"
     },
     {
       "id": "5to Año-B-Secundaria_Física",
@@ -51873,7 +56577,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.703Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.208Z"
     },
     {
       "id": "5to Año-B-Secundaria_Química",
@@ -52020,7 +56724,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.714Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.223Z"
     },
     {
       "id": "5to Año-B-Secundaria_Biología",
@@ -52167,7 +56871,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.723Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.233Z"
     },
     {
       "id": "5to Año-B-Secundaria_Ciencias de la Tierra",
@@ -52314,7 +57018,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.733Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.243Z"
     },
     {
       "id": "5to Año-B-Secundaria_Geografía, Historia y Ciudadanía",
@@ -52461,7 +57165,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.743Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.253Z"
     },
     {
       "id": "5to Año-B-Secundaria_Formación para la Soberanía Nacional",
@@ -52608,7 +57312,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.753Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.263Z"
     },
     {
       "id": "5to Año-B-Secundaria_Orientación y Convivencia",
@@ -52755,7 +57459,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.763Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.273Z"
     },
     {
       "id": "5to Año-B-Secundaria_Grupos de Creación, Recreación y Producción",
@@ -52902,7 +57606,7 @@
           "304": "20"
         }
       },
-      "ultima_modificacion": "2026-11-23T16:39:36.773Z"
+      "ultima_modificacion": "2026-11-23T17:11:59.283Z"
     }
   ],
   "plantillas": [
@@ -52916,7 +57620,7 @@
       "titulo": "CONSTANCIA DE ESTUDIO",
       "cuerpo": "Quien suscribe, Director(a) de la Unidad Educativa \"República de Chile\", ubicada en El Espinal, Municipio Díaz del Estado Nueva Esparta, por medio de la presente hace constar que el (la) estudiante: [Nombre Completo], titular de la Cédula de Identidad / ID Escolar N° [Cédula Alumno], nacido(a) en fecha [Fecha Nacimiento], cursa en esta institución el [Grado y Sección] de Educación [Nivel Académico], durante el Año Escolar [Periodo Escolar], demostrando puntual asistencia, disciplina y dedicación a sus actividades escolares.\n\nConstancia que se expide a petición de la parte interesada para los fines legales que estime pertinentes, en la ciudad de El Espinal, a los [Día Actual] días del mes de [Mes Actual] del año [Año Actual].",
       "piePagina": "_____________________________\n[Nombre Director]\nDirector(a) del Plantel\nUnidad Educativa \"República de Chile\"\n(Sello Institucional)",
-      "creadoEn": "2026-11-23T16:39:36.773Z"
+      "creadoEn": "2026-11-23T17:11:59.283Z"
     },
     {
       "id": "tpl_buena_conducta",
@@ -52928,7 +57632,7 @@
       "titulo": "CARTA DE BUENA CONDUCTA",
       "cuerpo": "Quien suscribe, Director(a) de la Unidad Educativa \"República de Chile\", hace constar por medio de la presente que el (la) estudiante: [Nombre Completo], titular de la Cédula de Identidad / ID Escolar N° [Cédula Alumno], cursante del [Grado y Sección] de Educación [Nivel Académico] durante el periodo lectivo [Periodo Escolar], ha observado durante su permanencia en esta institución una INTACHABLE CONDUCTA, caracterizándose por su alto sentido de responsabilidad, respeto a las autoridades educativas, compañerismo y apego a las normas de convivencia escolar.\n\nConstancia que se expide a solicitud de su representante legal, ciudadano(a) [Nombre Representante], portador(a) de la C.I. N° [Cédula Representante], para los fines legales que considere convenientes, en El Espinal a los [Día Actual] días del mes de [Mes Actual] de [Año Actual].",
       "piePagina": "_____________________________\n[Nombre Director]\nDirector(a) del Plantel\nUnidad Educativa \"República de Chile\"\n(Sello Institucional)",
-      "creadoEn": "2026-11-23T16:39:36.773Z"
+      "creadoEn": "2026-11-23T17:11:59.283Z"
     },
     {
       "id": "tpl_inscripcion_prosecucion",
@@ -52940,7 +57644,7 @@
       "titulo": "CONSTANCIA DE INSCRIPCIÓN Y PROSECUCIÓN ESCOLAR",
       "cuerpo": "La Dirección de la Unidad Educativa \"República de Chile\", por medio del presente documento deja constancia formal de que el (la) alumno(a) [Nombre Completo], con Cédula de Identidad / ID Escolar N° [Cédula Alumno], ha formalizado con éxito su proceso de INSCRIPCIÓN Y PROSECUCIÓN para cursar el [Grado y Sección] de Educación [Nivel Académico] correspondiente al Periodo Escolar [Periodo Escolar].\n\nConsta en nuestros expedientes que su representante legal es el (la) ciudadano(a) [Nombre Representante], titular de la C.I. N° [Cédula Representante], con teléfono de contacto [Teléfono Representante] y domicilio declarado en [Dirección Alumno].\n\nDocumento oficial que se expide para los fines consiguientes en El Espinal, en fecha [Fecha Actual].",
       "piePagina": "_____________________________\n[Nombre Director]\nDirector(a) del Plantel\nUnidad Educativa \"República de Chile\"\n(Sello Institucional)",
-      "creadoEn": "2026-11-23T16:39:36.773Z"
+      "creadoEn": "2026-11-23T17:11:59.283Z"
     },
     {
       "id": "tpl_retiro_traslado",
@@ -52952,7 +57656,7 @@
       "titulo": "CONSTANCIA DE RETIRO Y TRASLADO",
       "cuerpo": "Por medio de la presente se hace constar formalmente el RETIRO de esta institución educativa del (la) estudiante: [Nombre Completo], titular de la Cédula / ID Escolar N° [Cédula Alumno], quien se encontraba matriculado(a) en el [Grado y Sección] de Educación [Nivel Académico] durante el año escolar [Periodo Escolar].\n\nDicho retiro se efectúa a solicitud de su representante legal, ciudadano(a) [Nombre Representante], portador(a) de la C.I. N° [Cédula Representante], por motivo de traslado de domicilio / cambio de plantel.\n\nSe deja constancia de que el estudiante se encuentra solvente en sus obligaciones administrativas y académicas ante este centro educativo.\n\nExpedida en El Espinal, Municipio Díaz, a los [Día Actual] días del mes de [Mes Actual] de [Año Actual].",
       "piePagina": "_____________________________\n[Nombre Director]\nDirector(a) del Plantel\nUnidad Educativa \"República de Chile\"\n(Sello Institucional)",
-      "creadoEn": "2026-11-23T16:39:36.773Z"
+      "creadoEn": "2026-11-23T17:11:59.283Z"
     },
     {
       "id": "tpl_citacion_representante",
@@ -52964,7 +57668,7 @@
       "titulo": "CITACIÓN AL REPRESENTANTE",
       "cuerpo": "Se convoca con carácter formal al (a la) ciudadano(a): [Nombre Representante], titular de la Cédula de Identidad N° [Cédula Representante], en su condición de representante legal del (la) estudiante: [Nombre Completo], cursante del [Grado y Sección] de Educación [Nivel Académico].\n\nMotivo de la citación: Tratar asuntos inherentes al rendimiento académico, asistencia y desenvolvimiento escolar de su representado(a).\n\nLugar y Horario: Sede de la institución, en horario de atención matutina (8:00 AM a 12:00 PM) ante la Dirección o Coordinación Pedagógica.\n\nAgradeciendo de antemano su puntual y obligatoria asistencia en cumplimiento de la corresponsabilidad en el proceso educativo.\n\nEmitida en El Espinal, en fecha [Fecha Actual].",
       "piePagina": "_____________________________\n[Nombre Director]\nDirector(a) del Plantel\nFirma del Representante: _____________________\nC.I.: _____________________ Fecha: ___/___/______",
-      "creadoEn": "2026-11-23T16:39:36.773Z"
+      "creadoEn": "2026-11-23T17:11:59.283Z"
     }
   ]
 }

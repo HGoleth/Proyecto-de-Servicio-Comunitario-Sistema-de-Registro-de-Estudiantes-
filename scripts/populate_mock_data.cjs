@@ -733,7 +733,7 @@ async function run() {
   };
 
   const registrosNotas = [];
-  const seccionesCalificables = SECCIONES_ESCOLARES.filter(s => s.nivel === "Primaria" || s.nivel === "Secundaria");
+  const seccionesCalificables = SECCIONES_ESCOLARES;
 
   for (const sec of seccionesCalificables) {
     const seccionId = `${sec.grado}-${sec.seccion}-${sec.nivel}`;
@@ -749,7 +749,7 @@ async function run() {
       const notasObj = {};
 
       estsSeccion.forEach((est, eIdx) => {
-        if (sec.nivel === "Primaria") {
+        if (sec.nivel === "Primaria" || sec.nivel === "Inicial") {
           const letras = ["A", "A", "B", "A", "B", "C"];
           const l1 = letras[(eIdx + mIdx) % 5];
           const l2 = letras[(eIdx + mIdx + 1) % 5];

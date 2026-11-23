@@ -24,6 +24,10 @@ interface CustomElectron {
 }
 
 const PLAN_ESTUDIOS_FALLBACK: Record<string, string[]> = {
+  "Maternal": ["Formación Personal, Social y Comunicación", "Relación entre los Componentes del Ambiente", "Expresión Plástica, Corporal y Musical", "Educación Física y Recreación Motriz"],
+  "1er Grupo": ["Formación Personal, Social y Comunicación", "Relación entre los Componentes del Ambiente", "Expresión Plástica, Corporal y Musical", "Educación Física y Recreación Motriz"],
+  "2do Grupo": ["Formación Personal, Social y Comunicación", "Relación entre los Componentes del Ambiente", "Expresión Plástica, Corporal y Musical", "Educación Física y Recreación Motriz"],
+  "3er Grupo": ["Formación Personal, Social y Comunicación", "Relación entre los Componentes del Ambiente", "Expresión Plástica, Corporal y Musical", "Educación Física y Recreación Motriz"],
   "1er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
   "2do Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
   "3er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
@@ -61,7 +65,7 @@ const DEFAULT_EVALUACIONES: Record<number, any[]> = {
 const Notas: React.FC = () => {
   const navigate = useNavigate();
 
-  const [nivel, setNivel] = useState<"Primaria" | "Secundaria">("Secundaria");
+  const [nivel, setNivel] = useState<"Inicial" | "Primaria" | "Secundaria">("Secundaria");
   const [paso, setPaso] = useState<"secciones" | "materias" | "estudiantes">("secciones");
   const [seccionSel, setSeccionSel] = useState<any>(null);
   const [materiaSel, setMateriaSel] = useState<string | null>(null);
@@ -130,9 +134,9 @@ const Notas: React.FC = () => {
         // Construir catálogo de secciones basadas en estudiantes reales
         const seccionesMap = new Map<string, any>();
         (sts || []).forEach((s: any) => {
-          const g = s.grade || (s.nivel === "Primaria" ? "1ero" : "1er Año");
+          const g = s.grade || (s.nivel === "Inicial" ? "Maternal" : s.nivel === "Primaria" ? "1ero" : "1er Año");
           const rawSec = s.section && s.section !== "N/A" ? s.section : "A";
-          const niv = s.nivel || (g.includes("Año") ? "Secundaria" : "Primaria");
+          const niv = s.nivel || s.level || (g.includes("Año") ? "Secundaria" : ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo"].includes(g) ? "Inicial" : "Primaria");
           const key = `${g}-${rawSec}-${niv}`;
 
           if (!seccionesMap.has(key)) {
@@ -148,6 +152,12 @@ const Notas: React.FC = () => {
 
         // Garantizar al menos secciones A y B por cada grado si la base está vacía
         if (seccionesMap.size === 0) {
+          ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo"].forEach(g => {
+            ["A", "B"].forEach(sec => {
+              const key = `${g}-${sec}-Inicial`;
+              seccionesMap.set(key, { id: key, nombre: `Sección ${sec}`, año: g, nivel: "Inicial", seccion: sec });
+            });
+          });
           ["1er Año", "2do Año", "3er Año", "4to Año", "5to Año"].forEach(g => {
             ["A", "B"].forEach(sec => {
               const key = `${g}-${sec}-Secundaria`;
@@ -162,7 +172,7 @@ const Notas: React.FC = () => {
           });
         }
 
-        const ORDEN_GRADOS = ["1ero", "2do", "3ero", "4to", "5to", "6to", "1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
+        const ORDEN_GRADOS = ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo", "1ero", "2do", "3ero", "4to", "5to", "6to", "1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
         const listaOrdenada = Array.from(seccionesMap.values()).sort((a, b) => {
           const idxA = ORDEN_GRADOS.indexOf(a.año);
           const idxB = ORDEN_GRADOS.indexOf(b.año);
@@ -273,7 +283,7 @@ const Notas: React.FC = () => {
 
   // Manejo de cambio de notas cuantitativas y cualitativas (SIN BUGS DE SELECCIÓN NI DE DECIMALES)
   const manejarCambioNota = (estId: string, evId: number | string, valor: string) => {
-    if (nivel === "Primaria") {
+    if (nivel === "Primaria" || nivel === "Inicial") {
       const valUpper = valor.toUpperCase().trim();
       if (valUpper === "") {
         setNotasAlumnos(prev => {
@@ -360,7 +370,7 @@ const Notas: React.FC = () => {
     });
     if (evsConNota.length === 0) return "—";
 
-    if (nivel === "Primaria") {
+    if (nivel === "Primaria" || nivel === "Inicial") {
       const equiv: Record<string, number> = { A: 20, B: 16, C: 12, D: 8, E: 4 };
       let acum = 0;
       evs.forEach(ev => {
@@ -389,7 +399,7 @@ const Notas: React.FC = () => {
 
   // Cálculo del promedio acumulado del ciclo lectivo
   const calcularPromedioCiclo = (estId: string): string => {
-    if (nivel === "Primaria") {
+    if (nivel === "Primaria" || nivel === "Inicial") {
       const l1 = calcularNotaFinalLapso(estId, 1);
       const l2 = calcularNotaFinalLapso(estId, 2);
       const l3 = calcularNotaFinalLapso(estId, 3);
@@ -456,11 +466,8 @@ const Notas: React.FC = () => {
   // Lista de materias para el año seleccionado
   const materiasDisponibles = useMemo(() => {
     if (!seccionSel) return [];
-    if (nivel === "Primaria") {
-      return ["Aula Regular", "Educación Física", "Arte y Patrimonio"];
-    }
     const materiasPensumGrado = pensumMaterias
-      .filter((m: any) => m.grado === seccionSel.año && m.nivel === "Secundaria")
+      .filter((m: any) => m.grado === seccionSel.año && m.nivel === nivel)
       .map((m: any) => m.nombre);
     
     if (materiasPensumGrado.length > 0) {
@@ -534,7 +541,16 @@ const Notas: React.FC = () => {
         <div className="flex bg-white/20 p-1 rounded-full backdrop-blur-md">
           <button 
             type="button"
-            onClick={() => { setNivel("Primaria"); setPaso("secciones"); }} 
+            onClick={() => { setNivel("Inicial"); setFiltroAño("Todos"); setPaso("secciones"); }} 
+            className={`px-6 py-2 rounded-full text-xs font-black uppercase transition-all ${
+              nivel === "Inicial" ? "bg-white text-[#5564eb] shadow-md" : "text-white/80 hover:text-white"
+            }`}
+          >
+            Inicial (Maternal)
+          </button>
+          <button 
+            type="button"
+            onClick={() => { setNivel("Primaria"); setFiltroAño("Todos"); setPaso("secciones"); }} 
             className={`px-6 py-2 rounded-full text-xs font-black uppercase transition-all ${
               nivel === "Primaria" ? "bg-white text-[#5564eb] shadow-md" : "text-white/80 hover:text-white"
             }`}
@@ -543,7 +559,7 @@ const Notas: React.FC = () => {
           </button>
           <button 
             type="button"
-            onClick={() => { setNivel("Secundaria"); setPaso("secciones"); }} 
+            onClick={() => { setNivel("Secundaria"); setFiltroAño("Todos"); setPaso("secciones"); }} 
             className={`px-6 py-2 rounded-full text-xs font-black uppercase transition-all ${
               nivel === "Secundaria" ? "bg-white text-[#5564eb] shadow-md" : "text-white/80 hover:text-white"
             }`}
@@ -581,7 +597,12 @@ const Notas: React.FC = () => {
           <motion.div key="secciones" className="space-y-4 pt-1 text-left px-2 no-print">
             {/* Filtros de Grado / Año */}
             <div className="flex flex-wrap gap-2 justify-center">
-              {(nivel === "Secundaria" ? ["Todos", "1er Año", "2do Año", "3er Año", "4to Año", "5to Año"] : ["Todos", "1ero", "2do", "3ero", "4to", "5to", "6to"]).map((opt: string) => (
+              {(nivel === "Inicial"
+                ? ["Todos", "Maternal", "1er Grupo", "2do Grupo", "3er Grupo"]
+                : nivel === "Secundaria"
+                ? ["Todos", "1er Año", "2do Año", "3er Año", "4to Año", "5to Año"]
+                : ["Todos", "1ero", "2do", "3ero", "4to", "5to", "6to"]
+              ).map((opt: string) => (
                 <button 
                   key={opt} 
                   type="button"
