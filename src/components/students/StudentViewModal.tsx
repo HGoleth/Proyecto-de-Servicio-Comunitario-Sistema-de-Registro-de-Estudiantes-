@@ -346,9 +346,31 @@ export const StudentViewModal: React.FC<StudentViewModalProps> = ({
                     <FileText size={16} /> ESTATUS DE EXPEDIENTE DIGITAL
                   </h3>
                   <div className="space-y-2 max-h-[250px] overflow-y-auto pr-2 custom-scrollbar">
-                    {docsObligatorios.map((doc) => {
-                      const file = student.inscriptionFiles?.find((f) =>
-                        f.path.toLowerCase().includes(doc.id.toLowerCase())
+                    {(() => {
+                      const baseIds = new Set(docsObligatorios.map((d) => d.id.toLowerCase()));
+                      const extraDocs: { id: string; label: string }[] = [];
+                      (student.inscriptionFiles || []).forEach((f: any) => {
+                        const fId = (f.id || (f.name || "").split("_")[0] || "").trim();
+                        const matchesBase = Array.from(baseIds).some(
+                          (bId) =>
+                            fId.toLowerCase() === bId ||
+                            (f.name || "").toLowerCase().startsWith(bId) ||
+                            (f.path || "").toLowerCase().includes(bId)
+                        );
+                        if (!matchesBase && fId) {
+                          extraDocs.push({
+                            id: fId,
+                            label: f.label || f.name || fId,
+                          });
+                        }
+                      });
+                      return [...docsObligatorios, ...extraDocs];
+                    })().map((doc) => {
+                      const file = student.inscriptionFiles?.find(
+                        (f: any) =>
+                          (f.id && f.id.toLowerCase() === doc.id.toLowerCase()) ||
+                          (f.name || "").toLowerCase().startsWith(doc.id.toLowerCase()) ||
+                          (f.path || "").toLowerCase().includes(doc.id.toLowerCase())
                       );
 
                       return (

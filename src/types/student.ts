@@ -66,7 +66,7 @@ export interface Student {
   pantsSize?: string; 
   shoeSize?: string;
   
-  inscriptionFiles?: { name: string; path: string }[];
+  inscriptionFiles?: { id?: string; label?: string; name: string; path: string }[];
   transferFiles?: { name: string; path: string }[];
   studentPhoto?: string;
   repPhoto?: string;

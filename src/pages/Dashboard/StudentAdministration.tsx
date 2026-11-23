@@ -133,12 +133,12 @@ export const StudentAdministration: React.FC = () => {
       const fileName = `${docId}_${file.name}`;
       const res = await (window as any).electron.uploadStudentDoc({
         studentId: selectedStudent.id,
-        fileData: { name: fileName, data: reader.result },
+        fileData: { docId, label: docLabel, name: fileName, data: reader.result },
       });
 
       if (res.success) {
         showToast("success", `${docLabel} actualizado.`);
-        const nuevoDoc = { name: fileName, path: res.path };
+        const nuevoDoc = { id: docId, label: docLabel, name: fileName, path: res.path };
         setSelectedStudent((prev: any) => ({
           ...prev,
           inscriptionFiles: [

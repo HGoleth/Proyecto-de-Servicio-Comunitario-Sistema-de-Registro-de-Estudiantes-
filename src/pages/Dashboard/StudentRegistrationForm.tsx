@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom"; 
 import { 
   ArrowLeft, ArrowRight, CheckCircle, CameraIcon, X, 
-  UploadCloud, FileText, GraduationCap, ShieldCheck, AlertTriangle 
+  UploadCloud, FileText, GraduationCap, ShieldCheck, AlertTriangle, Plus, Trash2 
 } from "lucide-react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { fileToBase64 } from "../../utils/fileHelpers";
@@ -56,6 +56,11 @@ const StudentRegistrationForm: React.FC<StudentRegistrationFormProps> = ({ nivel
     action: "next" | "jump" | "submit";
     targetStep?: number;
   }>({ open: false, message: "", action: "next" });
+
+  // Documentos adicionales personalizados (solo con título)
+  const [customDocs, setCustomDocs] = useState<{ id: string; label: string; category?: string; isCustom?: boolean }[]>([]);
+  const [newDocTitle, setNewDocTitle] = useState("");
+  const [showAddDocInput, setShowAddDocInput] = useState(false);
 
   const initialForm = {
     nivel: nivel,
@@ -391,12 +396,18 @@ const validateStep = (currentStep: number) => {
         const studentPhotoB64 = form.studentPhoto ? await fileToBase64(form.studentPhoto) : null;
         const repPhotoB64 = form.repPhoto ? await fileToBase64(form.repPhoto) : null;
 
-        // 3. Conversión de documentos de inscripción a Base64
+        // 3. Conversión de documentos de inscripción a Base64 (incluyendo documentos personalizados con su título)
         const inscriptionFilesB64 = await Promise.all(
-            form.inscriptionFiles.map(async (file) => ({
-                name: file.name,
-                data: await fileToBase64(file)
-            }))
+            form.inscriptionFiles.map(async (file) => {
+                const [docId] = file.name.split("_");
+                const matchedDoc = [...REQUIRED_DOCUMENTS, ...customDocs].find(d => d.id === docId);
+                return {
+                    id: docId,
+                    label: matchedDoc?.label || docId,
+                    name: file.name,
+                    data: await fileToBase64(file)
+                };
+            })
         );
 
         // 4. Conversión de documentos de traslado a Base64
@@ -432,6 +443,9 @@ const validateStep = (currentStep: number) => {
             setPreviewModalOpen(false);
             setSuccessModalOpen(true);
             setForm({ ...initialForm }); // Limpia el formulario para un nuevo registro
+            setCustomDocs([]);
+            setNewDocTitle("");
+            setShowAddDocInput(false);
             setStep(1); // Regresa al inicio del formulario
             scrollToTop();
         } else {
@@ -481,6 +495,36 @@ const validateStep = (currentStep: number) => {
       return true;
     });
   }, [nivel]);
+
+  const allDocsForLevel = useMemo(() => {
+    return [...requiredDocsForLevel, ...customDocs];
+  }, [requiredDocsForLevel, customDocs]);
+
+  const handleAddCustomDoc = () => {
+    const cleanTitle = newDocTitle.trim();
+    if (!cleanTitle) {
+      showToast("error", "Ingrese el título del documento.");
+      return;
+    }
+    const slug = cleanTitle
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "")
+      .slice(0, 20);
+    const customId = `customDoc-${slug || "doc"}-${Date.now()}`;
+    setCustomDocs(prev => [...prev, { id: customId, label: cleanTitle, category: "", isCustom: true }]);
+    setNewDocTitle("");
+    setShowAddDocInput(false);
+  };
+
+  const handleDeleteCustomDocSlot = (docId: string) => {
+    setCustomDocs(prev => prev.filter(d => d.id !== docId));
+    setForm(prev => ({
+      ...prev,
+      inscriptionFiles: prev.inscriptionFiles.filter(f => !f.name.startsWith(docId))
+    }));
+  };
 
 
   return (
@@ -1271,12 +1315,62 @@ const validateStep = (currentStep: number) => {
 
       {/* ✅ EXPEDIENTE DIGITAL CON ANIMACIÓN DE CARGA, HOVER Y ACCIONES */}
       <div className="mt-8 pt-6 border-t border-gray-100 text-left">
-        <h3 className="text-sm font-bold text-green-700 uppercase mb-4 tracking-widest flex items-center gap-2">
-          <FileText size={18}/> Expediente Digital Obligatorio
-        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <h3 className="text-sm font-bold text-green-700 uppercase tracking-widest flex items-center gap-2">
+            <FileText size={18}/> Expediente Digital Obligatorio
+          </h3>
+
+          {!showAddDocInput ? (
+            <button
+              type="button"
+              onClick={() => setShowAddDocInput(true)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-50 text-[#5564eb] hover:bg-[#5564eb] hover:text-white border border-blue-200 font-black text-[10px] uppercase tracking-wider transition-all shadow-sm w-fit"
+            >
+              <Plus size={14} /> Agregar Documento
+            </button>
+          ) : (
+            <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-2xl border border-gray-200 shadow-inner">
+              <input
+                type="text"
+                value={newDocTitle}
+                onChange={(e) => setNewDocTitle(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddCustomDoc();
+                  } else if (e.key === "Escape") {
+                    setShowAddDocInput(false);
+                    setNewDocTitle("");
+                  }
+                }}
+                placeholder="Título del documento..."
+                autoFocus
+                className="px-3 py-1.5 bg-white rounded-xl border border-gray-200 text-xs font-bold text-gray-700 outline-none focus:border-[#5564eb] w-52"
+              />
+              <button
+                type="button"
+                onClick={handleAddCustomDoc}
+                className="px-3.5 py-1.5 rounded-xl bg-[#5564eb] text-white font-black text-[10px] uppercase tracking-wider hover:bg-[#4352d4] transition shadow-sm"
+              >
+                Crear
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddDocInput(false);
+                  setNewDocTitle("");
+                }}
+                className="p-1.5 text-gray-400 hover:text-red-500 rounded-lg transition"
+                title="Cancelar"
+              >
+                <X size={15} />
+              </button>
+            </div>
+          )}
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {requiredDocsForLevel.map((doc) => {
+          {allDocsForLevel.map((doc: any) => {
             const file = form.inscriptionFiles.find(f => f.name.startsWith(doc.id));
             const isUploaded = !!file;
 
@@ -1327,9 +1421,11 @@ const validateStep = (currentStep: number) => {
                   </AnimatePresence>
 
                   <div className="min-w-0">
-                    <p className={`text-[9px] font-black uppercase mb-0.5 tracking-tighter ${isUploaded ? 'text-green-600/70' : 'text-gray-400'}`}>
-                      {doc.category}
-                    </p>
+                    {doc.category && (
+                      <p className={`text-[9px] font-black uppercase mb-0.5 tracking-tighter ${isUploaded ? 'text-green-600/70' : 'text-gray-400'}`}>
+                        {doc.category}
+                      </p>
+                    )}
                     <p className="text-xs font-bold text-gray-700 truncate group-hover:text-green-900 transition-colors">
                       {doc.label}
                     </p>
@@ -1364,11 +1460,22 @@ const validateStep = (currentStep: number) => {
                         type="button"
                         onClick={handleRemove}
                         className="p-2 rounded-lg bg-white border border-red-200 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                        title="Eliminar"
+                        title="Eliminar archivo"
                       >
                         <X size={14}/>
                       </button>
                     </div>
+                  )}
+
+                  {doc.isCustom && !isUploaded && (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteCustomDocSlot(doc.id)}
+                      className="p-2 rounded-lg bg-white border border-gray-200 text-gray-400 hover:border-red-200 hover:text-red-500 transition-all shadow-sm"
+                      title="Quitar documento"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   )}
 
                   <div className="relative">
@@ -1623,7 +1730,7 @@ const validateStep = (currentStep: number) => {
             <div className="w-1.5 h-4 bg-gray-400 rounded-full"/> Estatus de Expediente Digital
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {requiredDocsForLevel.map((doc) => {
+            {allDocsForLevel.map((doc) => {
               const file = form.inscriptionFiles.find(f => f.name.startsWith(doc.id));
               const isUploaded = !!file;
               return (

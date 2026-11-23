@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -64,6 +64,54 @@ export const StudentEditModal: React.FC<StudentEditModalProps> = ({
   bloodTypes,
   docsObligatorios = DEFAULT_DOCS,
 }) => {
+  const [customDocs, setCustomDocs] = useState<{ id: string; label: string }[]>([]);
+  const [newDocTitle, setNewDocTitle] = useState("");
+  const [showAddDocInput, setShowAddDocInput] = useState(false);
+
+  const allDocs = useMemo(() => {
+    const baseIds = new Set(docsObligatorios.map((d) => d.id.toLowerCase()));
+    const extraFromStudent: { id: string; label: string }[] = [];
+
+    (student?.inscriptionFiles || []).forEach((f: any) => {
+      const fId = (f.id || (f.name || "").split("_")[0] || "").trim();
+      const matchesBase = Array.from(baseIds).some(
+        (bId) =>
+          fId.toLowerCase() === bId ||
+          (f.name || "").toLowerCase().startsWith(bId) ||
+          (f.path || "").toLowerCase().includes(bId)
+      );
+      if (!matchesBase && fId) {
+        extraFromStudent.push({
+          id: fId,
+          label: f.label || f.name || fId,
+        });
+      }
+    });
+
+    const combined = [...docsObligatorios, ...extraFromStudent];
+    customDocs.forEach((cd) => {
+      if (!combined.some((c) => c.id.toLowerCase() === cd.id.toLowerCase())) {
+        combined.push(cd);
+      }
+    });
+    return combined;
+  }, [docsObligatorios, student?.inscriptionFiles, customDocs]);
+
+  const handleAddCustomDoc = () => {
+    const cleanTitle = newDocTitle.trim();
+    if (!cleanTitle) return;
+    const slug = cleanTitle
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "")
+      .slice(0, 20);
+    const customId = `customDoc-${slug || "doc"}-${Date.now()}`;
+    setCustomDocs((prev) => [...prev, { id: customId, label: cleanTitle }]);
+    setNewDocTitle("");
+    setShowAddDocInput(false);
+  };
+
   if (!student) return null;
 
   return (
@@ -843,19 +891,70 @@ export const StudentEditModal: React.FC<StudentEditModalProps> = ({
 
                 {/* EXPEDIENTE DIGITAL */}
                 <div className="bg-gray-50/50 p-8 rounded-[2.5rem] border border-gray-100">
-                  <div className="flex items-center gap-3 mb-6">
-                    <FileText size={18} className="text-blue-500" />
-                    <h4 className="text-xs font-black text-gray-700 uppercase tracking-widest">
-                      EXPEDIENTE DIGITAL (ARCHIVOS ASOCIADOS)
-                    </h4>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div className="flex items-center gap-3">
+                      <FileText size={18} className="text-blue-500" />
+                      <h4 className="text-xs font-black text-gray-700 uppercase tracking-widest">
+                        EXPEDIENTE DIGITAL (ARCHIVOS ASOCIADOS)
+                      </h4>
+                    </div>
+
+                    {!showAddDocInput ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowAddDocInput(true)}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-200 font-black text-[10px] uppercase tracking-wider transition-all shadow-sm w-fit"
+                      >
+                        <Plus size={14} /> Agregar Documento
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-gray-200 shadow-sm">
+                        <input
+                          type="text"
+                          value={newDocTitle}
+                          onChange={(e) => setNewDocTitle(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleAddCustomDoc();
+                            } else if (e.key === "Escape") {
+                              setShowAddDocInput(false);
+                              setNewDocTitle("");
+                            }
+                          }}
+                          placeholder="Título del documento..."
+                          autoFocus
+                          className="px-3 py-1.5 bg-gray-50 rounded-xl border border-gray-200 text-xs font-bold text-gray-700 outline-none focus:border-blue-500 w-52 normal-case"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleAddCustomDoc}
+                          className="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-black text-[10px] uppercase tracking-wider hover:bg-blue-700 transition shadow-sm"
+                        >
+                          Crear
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowAddDocInput(false);
+                            setNewDocTitle("");
+                          }}
+                          className="p-1.5 text-gray-400 hover:text-red-500 rounded-lg transition"
+                          title="Cancelar"
+                        >
+                          <X size={15} />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {docsObligatorios.map((doc) => {
+                    {allDocs.map((doc) => {
                       const file = student.inscriptionFiles?.find(
                         (f: any) =>
-                          f.name.toLowerCase().startsWith(doc.id.toLowerCase()) ||
-                          f.path.toLowerCase().includes(doc.id.toLowerCase())
+                          (f.id && f.id.toLowerCase() === doc.id.toLowerCase()) ||
+                          (f.name || "").toLowerCase().startsWith(doc.id.toLowerCase()) ||
+                          (f.path || "").toLowerCase().includes(doc.id.toLowerCase())
                       );
 
                       return (

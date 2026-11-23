@@ -363,12 +363,14 @@ ipcMain.handle('register-student', async (event, studentData) => {
 
         // 4. Procesamiento de documentos de inscripción individualizados
         const docsInsc = (studentData.inscriptionFiles || []).map((doc) => {
-          // Extraemos el ID del documento (ej: birthCertificate) del nombre temporal del archivo
+          // Extraemos el ID del documento (ej: birthCertificate o customDoc-...) del nombre temporal del archivo
           const [docId, ...rest] = (doc.name || '').split('_');
           const originalName = rest.length > 0 ? rest.join('_') : (doc.name || 'documento');
 
           return {
-            name: originalName, 
+            id: doc.id || docId,
+            label: doc.label || null,
+            name: doc.name || originalName, 
             path: doc.data ? guardarArchivoFisico(doc.data, docId, carpetaEstudiante) : doc.path 
           };
         });
@@ -454,10 +456,16 @@ ipcMain.handle('upload-student-doc', async (event, { studentId, fileData }) => {
       // ✅ Lógica de limpieza: Si ya existe un documento de este tipo, lo filtramos antes de añadir el nuevo
       // Esto evita que se acumulen múltiples "Cédulas" o "Partidas" en la lista de la base de datos
       const nuevosDocs = (estudiante.inscriptionFiles || []).filter(d => 
-        !d.name.toLowerCase().startsWith(docId.toLowerCase())
+        !(d.name || '').toLowerCase().startsWith(docId.toLowerCase()) &&
+        !(d.id || '').toLowerCase().startsWith(docId.toLowerCase())
       );
       
-      nuevosDocs.push({ name: fileData.name, path: pathRef });
+      nuevosDocs.push({
+        id: fileData.docId || docId,
+        label: fileData.label || null,
+        name: fileData.name,
+        path: pathRef
+      });
       
       // Persistimos el cambio en la base de datos
       await db.actualizarEstudiante(studentId, { inscriptionFiles: nuevosDocs });
