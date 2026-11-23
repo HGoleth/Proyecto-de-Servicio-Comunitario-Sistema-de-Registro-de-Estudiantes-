@@ -44,7 +44,34 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[150] flex items-start justify-center bg-black/80 backdrop-blur-xl p-4 md:p-10 overflow-y-auto no-print">
+        <div
+          className="fixed inset-0 z-[150] flex items-start justify-center bg-black/80 backdrop-blur-xl p-4 md:p-10 overflow-y-auto no-print"
+          style={{ WebkitAppRegion: "no-drag" as any }}
+        >
+          <div
+            className="fixed top-12 right-8 flex gap-3 z-[200] no-print"
+            style={{ WebkitAppRegion: "no-drag" as any }}
+          >
+            <button
+              type="button"
+              onClick={() => window.print()}
+              style={{ WebkitAppRegion: "no-drag" as any }}
+              className="w-14 h-14 flex items-center justify-center bg-[#5564eb] text-white rounded-full shadow-2xl hover:bg-[#4353d8] transition-all active:scale-90 cursor-pointer"
+              title="Imprimir Planilla"
+            >
+              <Printer size={26} className="pointer-events-none" />
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{ WebkitAppRegion: "no-drag" as any }}
+              className="w-14 h-14 flex items-center justify-center bg-gray-900 text-white rounded-full shadow-2xl hover:bg-red-600 transition-all active:scale-90 cursor-pointer"
+              title="Cerrar Vista Previa"
+            >
+              <X size={26} className="pointer-events-none" />
+            </button>
+          </div>
+
           <motion.div
             id="reporte-oficial"
             initial={{ y: 100, opacity: 0 }}
@@ -52,24 +79,6 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
             exit={{ y: 100, opacity: 0 }}
             className="bg-white w-full max-w-[28cm] shadow-2xl p-[1.5cm] flex flex-col font-serif text-black min-h-[21.59cm] relative rounded-sm border border-gray-100"
           >
-            <div className="fixed top-6 right-6 flex gap-3 z-[160] no-print">
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="p-4 bg-[#5564eb] text-white rounded-full shadow-2xl hover:bg-[#4353d8] transition-all active:scale-90"
-                title="Imprimir Planilla"
-              >
-                <Printer size={28} />
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="p-4 bg-gray-900 text-white rounded-full shadow-2xl hover:bg-red-600 transition-all active:scale-90"
-                title="Cerrar Vista Previa"
-              >
-                <X size={28} />
-              </button>
-            </div>
 
             <div className="flex items-start gap-8 border-b-2 border-black pb-4 mb-6">
               <img src="./logo.png" className="w-20 h-20 object-contain grayscale" alt="Logo" />

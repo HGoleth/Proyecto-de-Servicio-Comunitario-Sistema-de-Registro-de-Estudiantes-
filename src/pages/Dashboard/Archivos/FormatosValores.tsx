@@ -415,7 +415,20 @@ const FormatosValores = () => {
         {/* MODAL DE VISTA PREVIA PDF */}
         <AnimatePresence>
           {showPDFPreview && (
-            <div className="fixed inset-0 z-[150] flex items-start justify-center bg-black/70 backdrop-blur-md p-4 md:p-10 overflow-y-auto">
+            <div
+              className="fixed inset-0 z-[150] flex items-start justify-center bg-black/70 backdrop-blur-md p-4 md:p-10 overflow-y-auto"
+              style={{ WebkitAppRegion: "no-drag" as any }}
+            >
+              <button 
+                type="button"
+                onClick={() => setShowPDFPreview(false)} 
+                style={{ WebkitAppRegion: "no-drag" as any }}
+                className="fixed top-12 right-8 w-14 h-14 flex items-center justify-center bg-red-600 rounded-full text-white shadow-2xl hover:bg-red-700 transition-all z-[200] active:scale-90 cursor-pointer"
+                title="Cerrar Vista Previa"
+              >
+                <X size={26} className="pointer-events-none" />
+              </button>
+
               <motion.div 
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -423,12 +436,6 @@ const FormatosValores = () => {
                 className="bg-white w-full max-w-[800px] shadow-2xl relative p-[1.5cm] md:p-[2.5cm] flex flex-col font-serif text-black my-auto rounded-sm origin-top"
                 style={{ minHeight: '11in' }} 
               >
-                <button 
-                  onClick={() => setShowPDFPreview(false)} 
-                  className="fixed top-6 right-6 p-3 bg-red-600 rounded-full text-white shadow-2xl hover:bg-red-700 transition-all z-[160] active:scale-90"
-                >
-                  <X size={28} />
-                </button>
 
                 <div className="flex items-start gap-5 leading-none mb-10 text-left">
                   <img src="./logo.png" className="w-16 h-16 object-contain grayscale" alt="Logo" />

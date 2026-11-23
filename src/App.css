@@ -29,3 +29,14 @@
 .photo-box:hover {
   @apply scale-105 shadow-xl;
 }
+
+/* Asegurar que todos los controles interactivos y modales tengan su hitbox completa sin interferencia del área de arrastre de ventana de Electron */
+button,
+a,
+input,
+select,
+textarea,
+label,
+[role="dialog"] {
+  -webkit-app-region: no-drag;
+}
