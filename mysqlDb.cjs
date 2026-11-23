@@ -171,6 +171,7 @@ class MySQLDatabase {
   async actualizarUsuario(id, datosNuevos) {
     if (!this.isConnected) return { success: false };
     try {
+      const targetId = id || datosNuevos.usuario || 'admin';
       const updates = [];
       const values = [];
       if (datosNuevos.nombre) { updates.push("nombre = ?"); values.push(datosNuevos.nombre); }
@@ -179,8 +180,11 @@ class MySQLDatabase {
       if (datosNuevos.rol) { updates.push("rol = ?"); values.push(datosNuevos.rol); }
 
       if (updates.length === 0) return { success: true };
-      values.push(id);
-      await this.pool.query(`UPDATE usuarios SET ${updates.join(', ')} WHERE id = ?`, values);
+      values.push(targetId, targetId, targetId);
+      await this.pool.query(
+        `UPDATE usuarios SET ${updates.join(', ')} WHERE id = ? OR username = ? OR email = ?`,
+        values
+      );
       return { success: true };
     } catch (e) {
       console.error("Error en actualizarUsuario MySQL:", e);

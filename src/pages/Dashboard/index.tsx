@@ -18,7 +18,7 @@ import {
   MdHistoryEdu,
   MdMenuBook
 } from "react-icons/md";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import Loader from "../../components/Loader";
 import WindowControls from "../../components/common/WindowControls";
 
@@ -33,7 +33,7 @@ interface UserData {
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   
   // --- ESTADOS DEL PERFIL ---
   const [profileOpen, setProfileOpen] = useState(false);
@@ -41,6 +41,7 @@ const Dashboard = () => {
   const profileRef = useRef<HTMLDivElement>(null); 
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // ✅ MENÚ LATERAL ACTUALIZADO: SIN EXPEDIENTES NI REPORTES
   const menuItems = [
@@ -71,12 +72,12 @@ const Dashboard = () => {
       try {
         setCurrentUser(JSON.parse(storedUser));
       } catch {
-        const defaultUser = { usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
+        const defaultUser = { id: "usr_admin", usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
         setCurrentUser(defaultUser);
         localStorage.setItem("usuario_actual", JSON.stringify(defaultUser));
       }
     } else {
-      const defaultUser = { usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
+      const defaultUser = { id: "usr_admin", usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
       setCurrentUser(defaultUser);
       localStorage.setItem("usuario_actual", JSON.stringify(defaultUser));
     }
@@ -94,9 +95,8 @@ const Dashboard = () => {
     window.addEventListener("user_updated", handleUserUpdate);
     window.addEventListener("storage", handleUserUpdate);
 
-    const timer = setTimeout(() => setLoading(false), 500);
+    setLoading(false);
     return () => {
-      clearTimeout(timer);
       window.removeEventListener("user_updated", handleUserUpdate);
       window.removeEventListener("storage", handleUserUpdate);
     };
@@ -146,37 +146,45 @@ const Dashboard = () => {
         </motion.div>
 
         <nav className="flex-1 mt-3 overflow-y-auto overflow-x-hidden scrollbar-hide px-3">
-          {menuItems.map((item, i) => (
-            <div key={i} className="relative group">
-              <motion.div
-                onClick={() => navigate(item.path)}
-                whileHover={{ scale: 1.02, x: 4, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
-                className="flex items-center gap-3 p-3 my-1 rounded-xl cursor-pointer transition-all duration-200"
-              >
-                <div className="text-xl min-w-[24px] flex justify-center text-white">
-                  {item.icon}
-                </div>
+          {menuItems.map((item, i) => {
+            const isActive = item.path === "/dashboard"
+              ? location.pathname === "/dashboard"
+              : location.pathname.startsWith(item.path);
+            return (
+              <div key={i} className="relative group">
+                <motion.div
+                  onClick={() => navigate(item.path)}
+                  whileHover={{ scale: 1.02, x: 4 }}
+                  className={`flex items-center gap-3 p-3 my-1 rounded-xl cursor-pointer transition-all duration-200 ${
+                    isActive
+                      ? "bg-white/25 shadow-sm ring-1 ring-white/30"
+                      : "hover:bg-white/15"
+                  }`}
+                >
+                  <div className="text-xl min-w-[24px] flex justify-center text-white">
+                    {item.icon}
+                  </div>
 
-                {sidebarOpen && (
-                  <motion.span
-                    animate={{ opacity: 1 }}
-                    initial={{ opacity: 0 }}
-                    className="text-sm font-medium whitespace-nowrap truncate text-white"
-                  >
+                  {sidebarOpen && (
+                    <motion.span
+                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0 }}
+                      className="text-sm font-medium whitespace-nowrap truncate text-white"
+                    >
+                      {item.name}
+                    </motion.span>
+                  )}
+                </motion.div>
+
+                {!sidebarOpen && (
+                  <div className="fixed left-[90px] mt-[-45px] bg-white text-green-800 text-[11px] font-black py-2 px-4 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.2)] opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap z-[100] pointer-events-none border border-green-100 uppercase tracking-tighter transform scale-90 group-hover:scale-100">
                     {item.name}
-                  </motion.span>
+                    <div className="absolute top-1/2 -left-1.5 -mt-1.5 w-3 h-3 bg-white transform rotate-45 border-l border-b border-green-100"></div>
+                  </div>
                 )}
-              </motion.div>
-
-              {/* ✅ MENSAJE FLOTANTE (TOOLTIP) CORREGIDO CON POSICIÓN FIXED */}
-              {!sidebarOpen && (
-                <div className="fixed left-[90px] mt-[-45px] bg-white text-green-800 text-[11px] font-black py-2 px-4 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.2)] opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap z-[100] pointer-events-none border border-green-100 uppercase tracking-tighter transform scale-90 group-hover:scale-100">
-                  {item.name}
-                  <div className="absolute top-1/2 -left-1.5 -mt-1.5 w-3 h-3 bg-white transform rotate-45 border-l border-b border-green-100"></div>
-                </div>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </nav>
       </motion.aside>
 

@@ -311,7 +311,14 @@ ipcMain.handle('login-request', async (event, credentials) => {
     const userFound = await db.getUsuario(usuario);
     if (!userFound) return { success: false, mensaje: 'Usuario no encontrado' };
     if (String(userFound.password).trim() === String(password).trim()) {
-      return { success: true, rol: userFound.rol, usuario: userFound.username };
+      return {
+        success: true,
+        id: userFound.id || 'usr_admin',
+        rol: userFound.rol,
+        usuario: userFound.username,
+        nombre: userFound.nombre || 'Administrador',
+        email: userFound.email || 'admin@escuela.com'
+      };
     }
     return { success: false, mensaje: 'Contraseña incorrecta' };
 });
@@ -327,7 +334,7 @@ ipcMain.handle('recover-password', async (event, email) => {
 });
 
 ipcMain.handle('update-user', async (event, data) => {
-    return db.actualizarUsuario(data.id, data);
+    return db.actualizarUsuario(data.id || data.usuario || 'admin', data);
 });
 
 // --- 4. GESTIÓN DE ESTUDIANTES ---

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { 
   Users, 
   School, 
-  LayoutGrid, 
   ChevronRight, 
   X, 
   CheckCircle, 
@@ -18,7 +17,12 @@ import {
   UserCheck,
   PieChart,
   ArrowUpRight,
-  LayoutDashboard
+  LayoutDashboard,
+  ArrowLeft,
+  FileCog,
+  MapPin,
+  Mail,
+  Building2
 } from "lucide-react";
 
 const fadeIn: Variants = {
@@ -31,6 +35,7 @@ const ArchivosGenerales = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [representantes, setRepresentantes] = useState<any[]>([]);
   const [estudiantes, setEstudiantes] = useState<any[]>([]); 
+  const [configPlantel, setConfigPlantel] = useState<any>({});
   const [repSeleccionado, setRepSeleccionado] = useState<any | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   
@@ -53,8 +58,12 @@ const ArchivosGenerales = () => {
 
   const cargarDatosGlobales = async () => {
     try {
-      const ests = await (window as any).electron.getStudents();
+      const [ests, cfg] = await Promise.all([
+        (window as any).electron?.getStudents?.() || [],
+        (window as any).electron?.getConfig?.() || {}
+      ]);
       setEstudiantes(ests || []); 
+      if (cfg) setConfigPlantel(cfg);
       
       if (ests && Array.isArray(ests)) {
         procesarRepresentantes(ests);
@@ -120,16 +129,21 @@ const ArchivosGenerales = () => {
     setRepresentantes(Object.values(mapaRepresentantes));
   };
 
-  const resumenDistribucion = useMemo(() => {
+  const { resumenDistribucion, totalSecciones } = useMemo(() => {
     const grupos: Record<string, any> = {};
     estudiantes.forEach(est => {
-      const key = `${est.nivel}-${est.grade}-${est.section}`;
+      const niv = est.nivel || est.level || "Primaria";
+      const key = `${niv}-${est.grade}-${est.section}`;
       if (!grupos[key]) {
-        grupos[key] = { nivel: est.nivel, grado: est.grade, seccion: est.section, matricula: 0 };
+        grupos[key] = { nivel: niv, grado: est.grade, seccion: est.section, matricula: 0 };
       }
       grupos[key].matricula++;
     });
-    return Object.values(grupos).slice(0, 6); 
+    const todos = Object.values(grupos);
+    return {
+      resumenDistribucion: todos.slice(0, 8),
+      totalSecciones: todos.length
+    };
   }, [estudiantes]);
   
   const menuItems = [
@@ -191,6 +205,22 @@ const ArchivosGenerales = () => {
         )}
       </AnimatePresence>
 
+      <div className="flex items-center gap-4 mb-6">
+        <button onClick={() => navigate("/dashboard")} className="flex items-center gap-2 text-gray-400 hover:text-green-600 transition-all group">
+          <div className="p-2 bg-white rounded-xl shadow-sm group-hover:shadow-md border border-gray-100 transition-all">
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-widest leading-none">Volver al Home</span>
+        </button>
+        <div className="h-4 w-px bg-gray-300" />
+        <button onClick={() => navigate("/dashboard/archivos")} className="flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-all group">
+          <div className="p-2 bg-white rounded-xl shadow-sm group-hover:shadow-md border border-gray-100 transition-all">
+            <FileCog size={16} className="group-hover:rotate-12 transition-transform text-blue-500" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-widest leading-none">Volver a Archivos</span>
+        </button>
+      </div>
+
       <div className="mb-10 text-left">
         <h1 className="text-4xl font-black text-green-700 tracking-tight uppercase tracking-tighter">Archivos Generales</h1>
         <p className="mt-2 text-gray-500 text-lg font-medium">Administración de entidades globales y recursos del sistema.</p>
@@ -248,6 +278,7 @@ const ArchivosGenerales = () => {
                   onClick={() => {
                     if (selected === "representantes") navigate("/dashboard/representantes");
                     else if (selected === "distribucion") navigate("/dashboard/archivos/distribucion");
+                    else if (selected === "planteles") navigate("/dashboard/archivos/sistema");
                   }}
                   className="bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-700 transition-all shadow-xl flex items-center gap-2 font-black text-[10px] uppercase tracking-widest active:scale-95"
                 >
@@ -294,8 +325,8 @@ const ArchivosGenerales = () => {
                   </div>
                   <div className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-[2.5rem] border border-orange-100 shadow-sm relative overflow-hidden group text-left">
                     <PieChart size={64} className="absolute -right-4 -bottom-4 text-orange-100 opacity-50 group-hover:scale-110 transition-transform"/>
-                    <p className="text-[10px] font-black text-orange-600 uppercase mb-2 tracking-widest">Secciones</p>
-                    <h3 className="text-4xl font-black text-orange-800">{resumenDistribucion.length}+ <span className="text-sm font-bold text-gray-400">Grupos</span></h3>
+                    <p className="text-[10px] font-black text-orange-600 uppercase mb-2 tracking-widest">Secciones Activas</p>
+                    <h3 className="text-4xl font-black text-orange-800">{totalSecciones} <span className="text-sm font-bold text-gray-400">Grupos</span></h3>
                   </div>
                 </div>
 
@@ -329,10 +360,46 @@ const ArchivosGenerales = () => {
                 </div>
               </div>
             ) : (
-              <div className="py-24 text-center text-gray-400 italic border-2 border-dashed border-gray-100 rounded-[2.5rem] bg-gray-50/50">
-                <LayoutGrid size={64} className="mx-auto mb-4 opacity-10" />
-                <p className="text-lg font-bold uppercase tracking-[0.2em]">Módulo en Mantenimiento</p>
-                <p className="text-xs font-medium text-gray-400 mt-2">Esta sección está siendo optimizada por el equipo técnico.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                <div className="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 bg-green-100 text-green-700 rounded-2xl">
+                      <Building2 size={24} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-green-600 uppercase tracking-widest">Sede Principal</p>
+                      <h4 className="text-xl font-black text-gray-800 uppercase">
+                        {configPlantel.nombre_colegio || 'Complejo Educativo U.E. "República de Chile"'}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="space-y-2.5 pt-2 text-xs text-gray-600 font-bold">
+                    <p>Código DEA: <span className="font-mono text-gray-900">{configPlantel.codigo_dea || configPlantel.codigo_plantel || "OD01461703"}</span></p>
+                    <p>Período Escolar Activo: <span className="text-green-700 font-black">{configPlantel.periodo || "2026-2027"}</span></p>
+                    <p>Director(a): <span className="text-gray-900">{configPlantel.director || configPlantel.director_nombre || "MSc. Beatriz Elena Velásquez"}</span></p>
+                    <p className="flex items-center gap-2"><Phone size={14} className="text-green-600" /> {configPlantel.telefono || "0295-2871420"}</p>
+                    <p className="flex items-center gap-2"><Mail size={14} className="text-green-600" /> {configPlantel.email || "direccion.republicadechile@educacion.gob.ve"}</p>
+                    <p className="flex items-start gap-2"><MapPin size={14} className="text-green-600 mt-0.5 shrink-0" /> {configPlantel.direccion || "El Espinal, Municipio Díaz, Estado Nueva Esparta"}</p>
+                  </div>
+                </div>
+
+                <div className="p-8 bg-gray-50 rounded-[2.5rem] border border-gray-100 flex flex-col justify-between">
+                  <div>
+                    <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2">Cobertura Curricular</p>
+                    <h4 className="text-xl font-black text-gray-800 uppercase mb-4">Niveles y Matrícula por Subsistema</h4>
+                    <div className="space-y-3">
+                      {(["Inicial", "Primaria", "Secundaria"] as const).map(niv => {
+                        const totalNiv = estudiantes.filter(e => (e.nivel || e.level) === niv).length;
+                        return (
+                          <div key={niv} className="flex items-center justify-between bg-white p-3.5 rounded-2xl border border-gray-100">
+                            <span className="text-xs font-black text-gray-700 uppercase">Educación {niv}</span>
+                            <span className="text-xs font-black text-green-700 bg-green-50 px-3 py-1 rounded-full">{totalNiv} Estudiantes</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </motion.div>

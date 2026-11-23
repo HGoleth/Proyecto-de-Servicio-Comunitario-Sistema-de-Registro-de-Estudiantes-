@@ -60,7 +60,8 @@ const ProfileSettings = () => {
 
     try {
       const resultado = await (window as any).electron.updateUser({
-        id: user.id, 
+        id: user?.id || user?.usuario || "admin",
+        usuario: user?.usuario || "admin",
         nombre,
         email,
         password 
