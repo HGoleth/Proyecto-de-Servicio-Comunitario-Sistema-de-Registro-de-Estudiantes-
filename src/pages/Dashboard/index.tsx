@@ -51,6 +51,15 @@ const Dashboard = () => {
     }
   };
 
+  // Determinar únicamente el ítem del menú con la coincidencia más específica (evita que dos botones se marquen activos a la vez)
+  const activeMenuPath = menuItems
+    .filter(
+      (m) =>
+        location.pathname === m.path ||
+        location.pathname.startsWith(m.path + "/")
+    )
+    .sort((a, b) => b.path.length - a.path.length)[0]?.path || "/dashboard";
+
   if (loading) return <Loader />;
 
   return (
@@ -63,30 +72,28 @@ const Dashboard = () => {
       >
         <motion.div
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="flex flex-col items-center justify-center mt-10 mb-6 cursor-pointer relative"
+          className="flex flex-col items-center justify-center mt-6 mb-3 cursor-pointer relative shrink-0"
         >
           <div className="relative text-center">
             <div className="absolute inset-0 rounded-full blur-xl bg-green-400/60 animate-pulse" />
             <motion.img
               src="./logo.png"
               alt="Logo"
-              className="relative w-16 h-16 object-contain hover:scale-110 transition-transform duration-300"
+              className="relative w-14 h-14 object-contain hover:scale-110 transition-transform duration-300"
               whileTap={{ scale: 0.9 }}
             />
           </div>
         </motion.div>
 
-        <nav className="flex-1 mt-3 overflow-y-auto overflow-x-hidden scrollbar-hide px-3">
+        <nav className="flex-1 mt-1 pb-4 overflow-y-auto overflow-x-hidden scrollbar-hide px-3 space-y-1">
           {menuItems.map((item, i) => {
-            const isActive = item.path === "/dashboard"
-              ? location.pathname === "/dashboard"
-              : location.pathname.startsWith(item.path);
+            const isActive = item.path === activeMenuPath;
             return (
               <div key={i} className="relative group">
                 <motion.div
                   onClick={() => navigate(item.path)}
                   whileHover={{ scale: 1.02, x: 4 }}
-                  className={`flex items-center gap-3 p-3 my-1 rounded-xl cursor-pointer transition-all duration-200 ${
+                  className={`flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all duration-200 ${
                     isActive
                       ? "bg-white/25 shadow-sm ring-1 ring-white/30"
                       : "hover:bg-white/15"
