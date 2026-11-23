@@ -1,10 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
-
-  FaBell,
-  FaSignOutAlt,
-  FaUserCog,
   FaUserGraduate,
   FaUsers,
   FaFileSignature
@@ -22,28 +18,13 @@ import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import Loader from "../../components/Loader";
 import WindowControls from "../../components/common/WindowControls";
 
-// Interfaz para los datos del usuario
-interface UserData {
-  usuario: string; // username
-  rol: string;
-  nombre?: string;
-  email?: string;
-  id?: string;
-}
-
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  // --- ESTADOS DEL PERFIL ---
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<UserData | null>(null);
-  const profileRef = useRef<HTMLDivElement>(null); 
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ MENÚ LATERAL ACTUALIZADO: SIN EXPEDIENTES NI REPORTES
   const menuItems = [
     { name: "Inicio", icon: <MdDashboard />, path: "/dashboard" },
     { name: "Inscripción", icon: <FaUserGraduate />, path: "/dashboard/estudiantes" },
@@ -57,60 +38,10 @@ const Dashboard = () => {
     { name: "Configuración Sistema", icon: <MdSettings />, path: "/dashboard/archivos" },
   ];
 
-  const handleLogout = () => {
-    if (window.electron?.close) {
-      window.electron.close();
-    } else {
-      navigate("/dashboard");
-    }
-  };
-
   useEffect(() => {
     if (window.electron) window.electron.setClickThrough(false);
-    const storedUser = localStorage.getItem("usuario_actual");
-    if (storedUser) {
-      try {
-        setCurrentUser(JSON.parse(storedUser));
-      } catch {
-        const defaultUser = { id: "usr_admin", usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
-        setCurrentUser(defaultUser);
-        localStorage.setItem("usuario_actual", JSON.stringify(defaultUser));
-      }
-    } else {
-      const defaultUser = { id: "usr_admin", usuario: "admin", rol: "director", nombre: "Administrador", email: "admin@escuela.com" };
-      setCurrentUser(defaultUser);
-      localStorage.setItem("usuario_actual", JSON.stringify(defaultUser));
-    }
-    
-    const handleUserUpdate = () => {
-      const stored = localStorage.getItem("usuario_actual");
-      if (stored) {
-        try {
-          setCurrentUser(JSON.parse(stored));
-        } catch (e) {
-          console.error("Error sincronizando usuario:", e);
-        }
-      }
-    };
-    window.addEventListener("user_updated", handleUserUpdate);
-    window.addEventListener("storage", handleUserUpdate);
-
     setLoading(false);
-    return () => {
-      window.removeEventListener("user_updated", handleUserUpdate);
-      window.removeEventListener("storage", handleUserUpdate);
-    };
   }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (profileOpen && profileRef.current && !profileRef.current.contains(event.target as Node)) {
-        setProfileOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [profileOpen]);
 
   // Doble clic en cabecera para alternar maximizar / restaurar
   const handleHeaderDoubleClick = (e: React.MouseEvent) => {
@@ -193,95 +124,10 @@ const Dashboard = () => {
         
         <header
           onDoubleClick={handleHeaderDoubleClick}
-          className="flex justify-between items-center bg-white shadow-sm px-8 py-3.5 z-40 relative select-none"
+          className="flex justify-end items-center bg-white shadow-sm px-8 py-3 z-40 relative select-none"
           style={{ WebkitAppRegion: "drag" as any }}
         >
           <div className="flex items-center gap-4 text-left" style={{ WebkitAppRegion: "no-drag" as any }}>
-          </div>
-
-          <div className="flex items-center gap-4 text-left" style={{ WebkitAppRegion: "no-drag" as any }}>
-            <button className="relative text-gray-400 hover:text-green-600 transition p-2.5 rounded-xl hover:bg-gray-50 text-left">
-              <FaBell size={20} />
-              <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white text-left"></span>
-            </button>
-
-            <div className="relative text-left" ref={profileRef}>
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation(); 
-                  setProfileOpen(!profileOpen);
-                }}
-                className="flex items-center gap-3 focus:outline-none group p-1.5 rounded-2xl hover:bg-gray-50 transition border border-transparent hover:border-gray-100 text-left"
-              >
-                <div className="text-right hidden md:block text-left">
-                  <p className="text-xs font-black text-gray-700 group-hover:text-green-700 transition uppercase tracking-tighter text-left">
-                    {currentUser?.usuario || "Admin"}
-                  </p>
-                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-none text-left">
-                    {currentUser?.rol || "Director"}
-                  </p>
-                </div>
-                
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-green-600 to-green-400 flex items-center justify-center text-white font-black shadow-lg ring-2 ring-transparent group-hover:ring-green-100 transition-all italic text-lg text-left">
-                  {currentUser?.nombre ? currentUser.nombre.charAt(0).toUpperCase() : "A"}
-                </div>
-              </button>
-
-              <AnimatePresence>
-                {profileOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute right-0 mt-3 w-64 bg-white rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden origin-top-right z-[100] p-2 text-left"
-                  >
-                    <div className="p-5 border-b border-gray-50 bg-gray-50/50 rounded-t-[1.5rem] mb-2 text-left">
-                      <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1 text-left">Usuario Activo</p>
-                      <p className="text-sm font-bold text-gray-800 text-left">{currentUser?.usuario || "Admin"}</p>
-                      <p className="text-[10px] text-gray-500 truncate text-left">{currentUser?.email || "admin@escuela.com"}</p>
-                    </div>
-
-                    <div className="space-y-1 text-left">
-                      <button 
-                        onClick={() => {
-                          setProfileOpen(false);
-                          navigate("/dashboard/configuracion");
-                        }}
-                        className="flex items-center w-full px-4 py-3 text-sm text-gray-600 hover:bg-green-50 hover:text-green-700 rounded-2xl transition-colors gap-3 font-medium text-left"
-                      >
-                        <FaUserCog className="text-lg opacity-70" />
-                        Perfil de Usuario
-                      </button>
-
-                      <button 
-                        onClick={() => {
-                          setProfileOpen(false);
-                          navigate("/dashboard/archivos/sistema");
-                        }}
-                        className="flex items-center w-full px-4 py-3 text-sm text-gray-600 hover:bg-green-50 hover:text-green-700 rounded-2xl transition-colors gap-3 font-medium text-left"
-                      >
-                        <MdSettings className="text-lg opacity-70" />
-                        Ajustes del Sistema
-                      </button>
-                    </div>
-
-                    <div className="mt-2 pt-2 border-t border-gray-100 text-left">
-                      <button 
-                        onClick={handleLogout}
-                        className="flex items-center w-full px-4 py-3 text-sm text-red-500 hover:bg-red-50 rounded-2xl transition-colors gap-3 font-black uppercase tracking-tighter italic text-left"
-                      >
-                        <FaSignOutAlt className="text-lg" />
-                        Salir del Sistema
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* SEPARADOR Y CONTROLES DE VENTANA */}
-            <div className="h-6 w-[1px] bg-gray-200 ml-1"></div>
             <WindowControls variant="header" />
           </div>
         </header>
