@@ -15,7 +15,6 @@ const StudentRegistrationInitial = lazy(() => import("./pages/Dashboard/StudentR
 const StudentRegistrationPrimary = lazy(() => import("./pages/Dashboard/StudentRegistrationPrimary"));
 const StudentRegistrationSecondary = lazy(() => import("./pages/Dashboard/StudentRegistrationSecondary"));
 const StudentAdministration = lazy(() => import("./pages/Dashboard/StudentAdministration"));
-const Docentes = lazy(() => import("./pages/Dashboard/Docentes"));
 const Reportes = lazy(() => import("./pages/Dashboard/Reportes"));
 const ProfileSettings = lazy(() => import("./pages/Dashboard/ProfileSettings"));
 const DistribucionAcademica = lazy(() => import("./pages/Dashboard/DistribucionAcademica"));
@@ -64,9 +63,6 @@ function App() {
             
               {/* DISTRIBUCIÓN ACADÉMICA */}
               <Route path="archivos/distribucion" element={<DistribucionAcademica />} />
-
-              {/* DOCENTES */}
-              <Route path="docentes" element={<Docentes />} />
 
               {/* REPORTES */}
               <Route path="reportes" element={<Reportes />} />

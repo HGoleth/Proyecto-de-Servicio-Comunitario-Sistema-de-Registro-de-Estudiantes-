@@ -13,7 +13,7 @@ Desarrollado como proyecto de **Servicio Comunitario (PSM)** por **HGoleth**.
 - Interfaz interactiva y moderna con personalización de perfil de usuario en tiempo real.
 
 ### 2. 📊 Panel de Control (Dashboard)
-- Métricas e indicadores en tiempo real: total de estudiantes, docentes, representantes y constancias emitidas.
+- Métricas e indicadores en tiempo real: total de estudiantes, representantes, secciones activas y distribución por nivel.
 - Gráficas estadísticas de matrícula por nivel (Inicial, Primaria y Secundaria).
 - Sincronización instantánea del período escolar activo en todo el sistema.
 
@@ -22,10 +22,10 @@ Desarrollado como proyecto de **Servicio Comunitario (PSM)** por **HGoleth**.
 - **Expediente digital**: Consulta del historial completo, notas y condición académica del alumno.
 - **Directorio de Representantes**: Búsqueda inteligente por nombre o cédula y vinculación directa con estudiantes matriculados.
 
-### 4. 👨‍🏫 Control Docente y Calificaciones
-- Registro de profesores con cédula, título, especialidad y asignaciones académicas.
-- Distribución de materias por grado y sección.
-- Registro de calificaciones cuantitativas (0-20) y cualitativas (A, B, C, D, E) con cálculo de promedios.
+### 4. 📚 Pensum de Estudios, Distribución Académica y Calificaciones
+- **Pensum de Estudios**: Gestión de materias con el **Código de Materia como clave única (`PK`)**, área de formación y horas semanales.
+- **Distribución Académica**: Organización de secciones por grado y consulta de malla curricular y nómina estudiantil.
+- **Calificaciones**: Registro de evaluaciones cuantitativas (0-20) y cualitativas (A, B, C, D, E) con cálculo automático de promedios y actas oficiales.
 
 ### 5. 📄 Generador Automático de Documentos y Gestor de Plantillas
 - **Emisión en un clic**: Generación instantánea de Constancias de Estudio, Cartas de Buena Conducta y Justificativos con datos reales del alumno.
@@ -95,7 +95,7 @@ Desarrollado como proyecto de **Servicio Comunitario (PSM)** por **HGoleth**.
 | `npm run build` | Compila la aplicación frontend con TypeScript y Vite |
 | `npm run electron` | Abre la aplicación de escritorio en Electron |
 | `npm run electron:dev` | Compila y lanza la aplicación Electron en caliente |
-| `npm run seed` | Carga estudiantes, docentes, representantes y notas ficticias |
+| `npm run seed` | Carga estudiantes, representantes y notas ficticias |
 | `npm run lint` | Ejecuta el linter ESLint |
 | `npm run package` | Empaqueta la aplicación para distribución con Electron Forge |
 

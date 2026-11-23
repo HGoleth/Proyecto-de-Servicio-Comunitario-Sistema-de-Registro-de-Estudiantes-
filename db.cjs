@@ -33,8 +33,7 @@ class LocalDB {
           email: ''
         },
         usuarios: [],
-        estudiantes: [],
-        docentes: []
+        estudiantes: []
       };
       this.guardarEnDisco(defaultData);
     }
@@ -44,10 +43,10 @@ class LocalDB {
         this.data = JSON.parse(fileContent);
     } catch (error) {
         console.error(" Error al leer DB, restaurando estructura segura", error);
-        this.data = { configuracion: {}, usuarios: [], estudiantes: [], docentes: [] };
+        this.data = { configuracion: {}, usuarios: [], estudiantes: [] };
     }
 
-    if (!this.data.docentes) this.data.docentes = [];
+    if (this.data.docentes) delete this.data.docentes;
     if (!this.data.estudiantes) this.data.estudiantes = [];
     if (!this.data.usuarios) this.data.usuarios = [];
     if (!this.data.pensum) this.data.pensum = this.generarPensumBase('2025-2026');
@@ -114,7 +113,7 @@ class LocalDB {
         nombre: "Citación Formal al Representante",
         codigo: "CIT-REP",
         categoria: "Convocatoria",
-        descripcion: "Convocatoria institucional para entrevista presencial con la directiva o docentes.",
+        descripcion: "Convocatoria institucional para entrevista presencial con la directiva.",
         encabezado: "REPÚBLICA BOLIVARIANA DE VENEZUELA\nMINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN\nUNIDAD EDUCATIVA \"REPÚBLICA DE CHILE\"\nEL ESPINAL - MUNICIPIO DÍAZ - ESTADO NUEVA ESPARTA\nCÓDIGO DEA: OD01461703",
         titulo: "CITACIÓN AL REPRESENTANTE",
         cuerpo: "Se convoca con carácter formal al (a la) ciudadano(a): [Nombre Representante], titular de la Cédula de Identidad N° [Cédula Representante], en su condición de representante legal del (la) estudiante: [Nombre Completo], cursante del [Grado y Sección] de Educación [Nivel Académico].\n\nMotivo de la citación: Tratar asuntos inherentes al rendimiento académico, asistencia y desenvolvimiento escolar de su representado(a).\n\nLugar y Horario: Sede de la institución, en horario de atención matutina (8:00 AM a 12:00 PM) ante la Dirección o Coordinación Pedagógica.\n\nAgradeciendo de antemano su puntual y obligatoria asistencia en cumplimiento de la corresponsabilidad en el proceso educativo.\n\nEmitida en El Espinal, en fecha [Fecha Actual].",
@@ -126,7 +125,6 @@ class LocalDB {
 
   generarPensumBase(periodo = '2025-2026') {
     const pensum = [];
-    let idCounter = 1;
 
     // INICIAL
     const gradosInicial = ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo"];
@@ -138,10 +136,11 @@ class LocalDB {
     ];
     gradosInicial.forEach(g => {
       materiasInicial.forEach(m => {
+        const cod = `${m.codigo}-${g.replace(/\s+/g, '').substring(0, 3).toUpperCase()}`;
         pensum.push({
-          id: `pen_${idCounter++}_${Date.now()}`,
+          id: cod,
+          codigo: cod,
           nombre: m.nombre,
-          codigo: `${m.codigo}-${g.replace(/\s+/g, '').substring(0, 3).toUpperCase()}`,
           grado: g,
           nivel: "Inicial",
           periodo: periodo,
@@ -164,10 +163,11 @@ class LocalDB {
     ];
     gradosPrimaria.forEach(g => {
       materiasPrimaria.forEach(m => {
+        const cod = `${m.codigo}-${g.toUpperCase()}`;
         pensum.push({
-          id: `pen_${idCounter++}_${Date.now()}`,
+          id: cod,
+          codigo: cod,
           nombre: m.nombre,
-          codigo: `${m.codigo}-${g.toUpperCase()}`,
           grado: g,
           nivel: "Primaria",
           periodo: periodo,
@@ -192,10 +192,11 @@ class LocalDB {
     ];
     ["1er Año", "2do Año"].forEach(g => {
       secundaria1y2.forEach(m => {
+        const cod = `${m.codigo}-${g.replace(/\s+/g, '').toUpperCase()}`;
         pensum.push({
-          id: `pen_${idCounter++}_${Date.now()}`,
+          id: cod,
+          codigo: cod,
           nombre: m.nombre,
-          codigo: `${m.codigo}-${g.replace(/\s+/g, '').toUpperCase()}`,
           grado: g,
           nivel: "Secundaria",
           periodo: periodo,
@@ -220,10 +221,11 @@ class LocalDB {
       { nombre: "Grupos de Creación, Recreación y Producción", codigo: "CRP", horas: 3, area: "Producción y Cultura" }
     ];
     secundaria3.forEach(m => {
+      const cod = `${m.codigo}-3ANO`;
       pensum.push({
-        id: `pen_${idCounter++}_${Date.now()}`,
+        id: cod,
+        codigo: cod,
         nombre: m.nombre,
-        codigo: `${m.codigo}-3ANO`,
         grado: "3er Año",
         nivel: "Secundaria",
         periodo: periodo,
@@ -250,10 +252,11 @@ class LocalDB {
     ];
     ["4to Año", "5to Año"].forEach(g => {
       secundaria4y5(g).forEach(m => {
+        const cod = `${m.codigo}-${g.replace(/\s+/g, '').toUpperCase()}`;
         pensum.push({
-          id: `pen_${idCounter++}_${Date.now()}`,
+          id: cod,
+          codigo: cod,
           nombre: m.nombre,
-          codigo: `${m.codigo}-${g.replace(/\s+/g, '').toUpperCase()}`,
           grado: g,
           nivel: "Secundaria",
           periodo: periodo,
@@ -333,7 +336,7 @@ class LocalDB {
       await this.mysql.crearUsuario(nuevoUsuario);
     }
     if (!this.data) this.init();
-    const usuarioAGuardar = { id: `usr_${Date.now()}`, rol: 'docente', ...nuevoUsuario };
+    const usuarioAGuardar = { id: `usr_${Date.now()}`, rol: 'administrador', ...nuevoUsuario };
     this.data.usuarios.push(usuarioAGuardar);
     this.guardarEnDisco();
     return usuarioAGuardar;
@@ -423,64 +426,6 @@ class LocalDB {
     const inicial = this.data.estudiantes.length;
     this.data.estudiantes = this.data.estudiantes.filter(est => est.id !== id);
     if (this.data.estudiantes.length < inicial) {
-      this.guardarEnDisco();
-      return { success: true };
-    }
-    return { success: false };
-  }
-
-  async crearDocente(datosDocente) {
-    const nuevoId = datosDocente.id || `DOC-${Date.now()}`;
-    const payload = { ...datosDocente, id: nuevoId };
-    if (this.mysql.isConnected) {
-      await this.mysql.guardarDocente(payload);
-    }
-    if (!this.data) this.init();
-    const docenteGuardar = {
-      ...payload,
-      fecha_ingreso: new Date().toISOString(),
-      estatus: datosDocente.estatus || "Activo"
-    };
-    this.data.docentes.push(docenteGuardar);
-    this.guardarEnDisco();
-    return { success: true, id: nuevoId };
-  }
-
-  async obtenerDocentes() {
-    if (this.mysql.isConnected) {
-      const rows = await this.mysql.obtenerDocentes();
-      if (rows && rows.length >= 0) return rows;
-    }
-    if (!this.data) this.init();
-    return this.data.docentes || [];
-  }
-
-  async actualizarDocente(id, datosNuevos) {
-    if (this.mysql.isConnected) {
-      await this.mysql.actualizarDocente(id, datosNuevos);
-    }
-    if (!this.data) this.init();
-    const index = this.data.docentes.findIndex(d => d.id === id);
-    if (index !== -1) {
-      this.data.docentes[index] = { 
-        ...this.data.docentes[index], 
-        ...datosNuevos,
-        id: id 
-      };
-      this.guardarEnDisco();
-      return { success: true };
-    }
-    return { success: false };
-  }
-
-  async eliminarDocente(id) {
-    if (this.mysql.isConnected) {
-      await this.mysql.eliminarDocente(id);
-    }
-    if (!this.data) this.init();
-    const totalAntes = this.data.docentes.length;
-    this.data.docentes = this.data.docentes.filter(d => d.id !== id);
-    if (this.data.docentes.length < totalAntes) {
       this.guardarEnDisco();
       return { success: true };
     }
@@ -622,24 +567,38 @@ async guardarMateriaPensum(materiaData) {
   if (!this.data) this.init();
   if (!this.data.pensum) this.data.pensum = [];
 
-  if (materiaData.id) {
-    // Actualizar existente
-    const index = this.data.pensum.findIndex(m => m.id === materiaData.id);
-    if (index !== -1) {
-      this.data.pensum[index] = {
-        ...this.data.pensum[index],
-        ...materiaData,
-        actualizadoEn: new Date().toISOString()
-      };
-      this.guardarEnDisco();
-      return { success: true, materia: this.data.pensum[index] };
-    }
+  const codigoUnico = (materiaData.codigo || materiaData.id || "").trim().toUpperCase();
+  if (!codigoUnico) {
+    return { success: false, message: "El código único de la materia es obligatorio." };
   }
 
-  // Nueva materia
-  const nuevaMateria = {
+  const targetMatchKey = materiaData.previousId || codigoUnico;
+  const index = this.data.pensum.findIndex(m => 
+    ((m.codigo || m.id) === targetMatchKey || m.id === targetMatchKey) &&
+    (!materiaData.periodo || m.periodo === materiaData.periodo)
+  );
+
+  const payload = {
     ...materiaData,
-    id: materiaData.id || `mat_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+    id: codigoUnico,
+    codigo: codigoUnico
+  };
+  delete payload.previousId;
+
+  if (index !== -1) {
+    // Actualizar existente usando el código como clave única
+    this.data.pensum[index] = {
+      ...this.data.pensum[index],
+      ...payload,
+      actualizadoEn: new Date().toISOString()
+    };
+    this.guardarEnDisco();
+    return { success: true, materia: this.data.pensum[index] };
+  }
+
+  // Nueva materia con su código como clave única
+  const nuevaMateria = {
+    ...payload,
     creadoEn: new Date().toISOString()
   };
 
@@ -648,15 +607,15 @@ async guardarMateriaPensum(materiaData) {
   return { success: true, materia: nuevaMateria };
 }
 
-async eliminarMateriaPensum(id) {
+async eliminarMateriaPensum(codigoOrId) {
   if (this.mysql.isConnected) {
-    await this.mysql.eliminarMateriaPensum(id);
+    await this.mysql.eliminarMateriaPensum(codigoOrId);
   }
   if (!this.data) this.init();
   if (!this.data.pensum) return { success: false, message: "Pensum no inicializado" };
 
   const antes = this.data.pensum.length;
-  this.data.pensum = this.data.pensum.filter(m => m.id !== id);
+  this.data.pensum = this.data.pensum.filter(m => m.codigo !== codigoOrId && m.id !== codigoOrId);
   const eliminada = this.data.pensum.length < antes;
 
   if (eliminada) {
@@ -681,10 +640,11 @@ async clonarPensumPeriodo(periodoOrigen, periodoDestino) {
   // Eliminar las que ya existan en destino para evitar duplicados
   this.data.pensum = this.data.pensum.filter(m => m.periodo !== periodoDestino);
 
-  // Clonar asignando nuevo id y periodo
-  const clonadas = materiasOrigen.map((m, idx) => ({
+  // Clonar manteniendo el código único de la materia
+  const clonadas = materiasOrigen.map((m) => ({
     ...m,
-    id: `pen_clone_${Date.now()}_${idx}`,
+    id: m.codigo || m.id,
+    codigo: m.codigo || m.id,
     periodo: periodoDestino,
     creadoEn: new Date().toISOString()
   }));

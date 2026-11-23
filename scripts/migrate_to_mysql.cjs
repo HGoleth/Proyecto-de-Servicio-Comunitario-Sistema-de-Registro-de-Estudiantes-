@@ -83,48 +83,8 @@ async function migrate() {
     }
     console.log(`✅ ${usuarios.length} usuario(s) migrado(s).`);
 
-    // 3. DOCENTES
-    console.log("\n[3/6] Migrando Docentes...");
-    const docentes = data.docentes || [];
-    for (const d of docentes) {
-      await pool.query(`
-        INSERT INTO docentes (
-          id, usuario_id, ci, nombre, apellido, email, telefono, direccion,
-          nivel, grado_asignado, seccion_asignada, especialidad, es_especialista,
-          estatus, materias_json
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE
-          nombre = VALUES(nombre),
-          apellido = VALUES(apellido),
-          email = VALUES(email),
-          telefono = VALUES(telefono),
-          nivel = VALUES(nivel),
-          grado_asignado = VALUES(grado_asignado),
-          seccion_asignada = VALUES(seccion_asignada),
-          estatus = VALUES(estatus),
-          materias_json = VALUES(materias_json)
-      `, [
-        d.id,
-        d.usuario_id || null,
-        d.ci,
-        d.nombre,
-        d.apellido,
-        d.email || null,
-        d.telefono || null,
-        d.direccion || null,
-        d.nivel || 'Primaria',
-        d.grado_asignado || null,
-        d.seccion_asignada || null,
-        d.especialidad || null,
-        d.es_especialista ? 1 : 0,
-        d.estatus || 'Activo',
-        d.materias ? JSON.stringify(d.materias) : null
-      ]);
-    }
-    console.log(`✅ ${docentes.length} docente(s) migrado(s).`);
-
-    // 4. ESTUDIANTES Y REPRESENTANTES
-    console.log("\n[4/6] Migrando Estudiantes y Representantes...");
+    // 3. ESTUDIANTES Y REPRESENTANTES
+    console.log("\n[3/5] Migrando Estudiantes y Representantes...");
     const estudiantes = data.estudiantes || [];
     let repCount = 0;
 
@@ -197,7 +157,7 @@ async function migrate() {
           id, ci, id_escolar, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
           nombre_completo, fecha_nacimiento, edad, genero, lugar_nacimiento, entidad_nacimiento,
           pais_nacimiento, direccion, municipio, parroquia, sector, email,
-          nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso, docente_guia,
+          nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso,
           colegio_procedencia, codigo_dea_procedencia, repite_grado, materias_pendientes,
           es_traslado, colegio_traslado, grupo_sanguineo, estatura, peso,
           talla_camisa, talla_pantalon, talla_calzado, alergias, condicion_medica,
@@ -209,7 +169,7 @@ async function migrate() {
           ?, ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?, ?,
-          ?, ?, ?, ?, ?, ?, ?,
+          ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?,
           ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?,
@@ -256,7 +216,6 @@ async function migrate() {
         est.schoolYear || est.periodo || '2025-2026',
         est.status || est.estatus || 'Inscrito',
         fechaIngreso,
-        est.guideTeacher || null,
         est.previousSchool || 'U.E. República de Chile',
         est.deaCode || 'OD01461703',
         est.repeatsYear || 'No',
@@ -294,10 +253,11 @@ async function migrate() {
     }
     console.log(`✅ ${estudiantes.length} estudiante(s) y ${repCount} representante(s) migrado(s).`);
 
-    // 5. PENSUM
-    console.log("\n[5/6] Migrando Malla Curricular (Pensum)...");
+    // 4. PENSUM
+    console.log("\n[4/5] Migrando Malla Curricular (Pensum)...");
     const pensum = data.pensum || [];
     for (const m of pensum) {
+      const codKey = (m.codigo || m.id || 'MAT').trim().toUpperCase();
       await pool.query(`
         INSERT INTO pensum_materias (
           id, codigo, nombre, grado, nivel, periodo, horas_semanales,
@@ -314,8 +274,8 @@ async function migrate() {
           otra_area_descripcion = VALUES(otra_area_descripcion),
           descripcion = VALUES(descripcion)
       `, [
-        m.id,
-        m.codigo || 'MAT',
+        codKey,
+        codKey,
         m.nombre,
         m.grado,
         m.nivel || 'Secundaria',

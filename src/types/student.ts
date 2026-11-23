@@ -21,7 +21,6 @@ export interface Student {
   status: "Inscrito" | "Pendiente" | "Retirado";
   previousSchool?: string;
   deaCode?: string;
-  guideTeacher?: string;
   schoolYear?: string;
   admissionDate?: string;
   repeatsYear?: string;

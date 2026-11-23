@@ -138,9 +138,9 @@ class MySQLDatabase {
         nuevoUsuario.username,
         nuevoUsuario.email,
         nuevoUsuario.password,
-        nuevoUsuario.rol || 'docente'
+        nuevoUsuario.rol || 'administrador'
       ]);
-      return { id, ...nuevoUsuario, rol: nuevoUsuario.rol || 'docente' };
+      return { id, ...nuevoUsuario, rol: nuevoUsuario.rol || 'administrador' };
     } catch (e) {
       console.error("Error en crearUsuario MySQL:", e);
       return null;
@@ -214,7 +214,6 @@ class MySQLDatabase {
       status: row.estatus,
       estatus: row.estatus,
       admissionDate: row.fecha_ingreso ? (row.fecha_ingreso.toISOString ? row.fecha_ingreso.toISOString().split('T')[0] : String(row.fecha_ingreso).split('T')[0]) : '',
-      guideTeacher: row.docente_guia || '',
       previousSchool: row.colegio_procedencia || '',
       deaCode: row.codigo_dea_procedencia || '',
       repeatsYear: row.repite_grado || 'No',
@@ -345,7 +344,7 @@ class MySQLDatabase {
           id, ci, id_escolar, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
           nombre_completo, fecha_nacimiento, edad, genero, lugar_nacimiento, entidad_nacimiento,
           pais_nacimiento, direccion, municipio, parroquia, sector, email,
-          nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso, docente_guia,
+          nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso,
           colegio_procedencia, codigo_dea_procedencia, repite_grado, materias_pendientes,
           es_traslado, colegio_traslado, grupo_sanguineo, estatura, peso,
           talla_camisa, talla_pantalon, talla_calzado, alergias, condicion_medica,
@@ -357,7 +356,7 @@ class MySQLDatabase {
           ?, ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?, ?,
-          ?, ?, ?, ?, ?, ?, ?,
+          ?, ?, ?, ?, ?, ?,
           ?, ?, ?, ?,
           ?, ?, ?, ?, ?,
           ?, ?, ?, ?, ?,
@@ -383,7 +382,6 @@ class MySQLDatabase {
           seccion = VALUES(seccion),
           periodo_escolar = VALUES(periodo_escolar),
           estatus = VALUES(estatus),
-          docente_guia = VALUES(docente_guia),
           grupo_sanguineo = VALUES(grupo_sanguineo),
           estatura = VALUES(estatura),
           peso = VALUES(peso),
@@ -437,7 +435,6 @@ class MySQLDatabase {
         est.schoolYear || est.periodo || '2025-2026',
         est.status || est.estatus || 'Inscrito',
         fechaIngreso,
-        est.guideTeacher || null,
         est.previousSchool || 'U.E. República de Chile',
         est.deaCode || 'OD01461703',
         est.repeatsYear || 'No',
@@ -497,96 +494,7 @@ class MySQLDatabase {
   }
 
   // ==========================================
-  // DOCENTES
-  // ==========================================
-  async obtenerDocentes() {
-    if (!this.isConnected) return [];
-    try {
-      const [rows] = await this.pool.query("SELECT * FROM docentes ORDER BY nombre ASC");
-      return rows.map(d => ({
-        id: d.id,
-        ci: d.ci,
-        nombre: d.nombre,
-        apellido: d.apellido,
-        email: d.email || '',
-        telefono: d.telefono || '',
-        direccion: d.direccion || '',
-        nivel: d.nivel,
-        grado_asignado: d.grado_asignado || '',
-        seccion_asignada: d.seccion_asignada || '',
-        especialidad: d.especialidad || '',
-        es_especialista: Boolean(d.es_especialista),
-        estatus: d.estatus,
-        materias: typeof d.materias_json === 'string' ? JSON.parse(d.materias_json) : (d.materias_json || [])
-      }));
-    } catch (e) {
-      console.error("Error en obtenerDocentes MySQL:", e);
-      return [];
-    }
-  }
-
-  async guardarDocente(d) {
-    if (!this.isConnected) return { success: false };
-    try {
-      const id = d.id || `doc_${Date.now()}`;
-      await this.pool.query(`
-        INSERT INTO docentes (
-          id, usuario_id, ci, nombre, apellido, email, telefono, direccion,
-          nivel, grado_asignado, seccion_asignada, especialidad, es_especialista,
-          estatus, materias_json
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE
-          ci = VALUES(ci),
-          nombre = VALUES(nombre),
-          apellido = VALUES(apellido),
-          email = VALUES(email),
-          telefono = VALUES(telefono),
-          nivel = VALUES(nivel),
-          grado_asignado = VALUES(grado_asignado),
-          seccion_asignada = VALUES(seccion_asignada),
-          estatus = VALUES(estatus),
-          materias_json = VALUES(materias_json)
-      `, [
-        id,
-        d.usuario_id || null,
-        d.ci,
-        d.nombre,
-        d.apellido,
-        d.email || null,
-        d.telefono || null,
-        d.direccion || null,
-        d.nivel || 'Primaria',
-        d.grado_asignado || null,
-        d.seccion_asignada || null,
-        d.especialidad || null,
-        d.es_especialista ? 1 : 0,
-        d.estatus || 'Activo',
-        d.materias ? JSON.stringify(d.materias) : null
-      ]);
-      return { success: true, id };
-    } catch (e) {
-      console.error("Error en guardarDocente MySQL:", e);
-      return { success: false, error: e.message };
-    }
-  }
-
-  async actualizarDocente(id, datosNuevos) {
-    return this.guardarDocente({ ...datosNuevos, id });
-  }
-
-  async eliminarDocente(id) {
-    if (!this.isConnected) return { success: false };
-    try {
-      const [res] = await this.pool.query("DELETE FROM docentes WHERE id = ?", [id]);
-      return { success: res.affectedRows > 0 };
-    } catch (e) {
-      console.error("Error en eliminarDocente MySQL:", e);
-      return { success: false, error: e.message };
-    }
-  }
-
-  // ==========================================
-  // PENSUM Y MALLA CURRICULAR
+  // PENSUM Y MALLA CURRICULAR (Código de Materia como Clave Única)
   // ==========================================
   async obtenerPensum(filtro = {}) {
     if (!this.isConnected) return [];
@@ -629,7 +537,10 @@ class MySQLDatabase {
   async guardarMateriaPensum(m) {
     if (!this.isConnected) return { success: false };
     try {
-      const id = m.id || `mat_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+      const codigoUnico = (m.codigo || m.id || 'MAT').trim().toUpperCase();
+      if (m.previousId && m.previousId !== codigoUnico) {
+        await this.pool.query("DELETE FROM pensum_materias WHERE id = ? OR codigo = ?", [m.previousId, m.previousId]);
+      }
       await this.pool.query(`
         INSERT INTO pensum_materias (
           id, codigo, nombre, grado, nivel, periodo, horas_semanales,
@@ -646,8 +557,8 @@ class MySQLDatabase {
           otra_area_descripcion = VALUES(otra_area_descripcion),
           descripcion = VALUES(descripcion)
       `, [
-        id,
-        m.codigo || 'MAT',
+        codigoUnico,
+        codigoUnico,
         m.nombre,
         m.grado,
         m.nivel || 'Secundaria',
@@ -657,17 +568,17 @@ class MySQLDatabase {
         m.otraAreaDescripcion || null,
         m.descripcion || null
       ]);
-      return { success: true, materia: { ...m, id } };
+      return { success: true, materia: { ...m, id: codigoUnico, codigo: codigoUnico } };
     } catch (e) {
       console.error("Error en guardarMateriaPensum MySQL:", e);
       return { success: false, error: e.message };
     }
   }
 
-  async eliminarMateriaPensum(id) {
+  async eliminarMateriaPensum(codigoOrId) {
     if (!this.isConnected) return { success: false };
     try {
-      const [res] = await this.pool.query("DELETE FROM pensum_materias WHERE id = ?", [id]);
+      const [res] = await this.pool.query("DELETE FROM pensum_materias WHERE codigo = ? OR id = ?", [codigoOrId, codigoOrId]);
       return { success: res.affectedRows > 0 };
     } catch (e) {
       console.error("Error en eliminarMateriaPensum MySQL:", e);
@@ -690,13 +601,13 @@ class MySQLDatabase {
 
       for (let i = 0; i < origenRows.length; i++) {
         const m = origenRows[i];
-        const newId = `pen_clone_${Date.now()}_${i}`;
+        const codKey = m.codigo || m.id;
         await this.pool.query(`
           INSERT INTO pensum_materias (
             id, codigo, nombre, grado, nivel, periodo, horas_semanales, area, otra_area_descripcion, descripcion
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `, [
-          newId, m.codigo, m.nombre, m.grado, m.nivel, periodoDestino,
+          codKey, m.codigo || codKey, m.nombre, m.grado, m.nivel, periodoDestino,
           m.horas_semanales, m.area, m.otra_area_descripcion, m.descripcion
         ]);
       }

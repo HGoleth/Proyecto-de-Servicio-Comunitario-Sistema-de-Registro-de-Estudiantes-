@@ -22,7 +22,7 @@ interface NotasReportModalProps {
   nivel: "Primaria" | "Secundaria";
   calcularNotaFinalLapso: (alumnoId: string, lapsoNum: number) => string;
   calcularPromedioCiclo?: (alumnoId: string) => string;
-  getDocenteAsignado: (materia: string | null) => string;
+  codigoMateria?: string;
   periodo?: string;
 }
 
@@ -38,7 +38,7 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
   nivel,
   calcularNotaFinalLapso,
   calcularPromedioCiclo,
-  getDocenteAsignado,
+  codigoMateria,
   periodo,
 }) => {
   return (
@@ -89,7 +89,7 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
               <div className="grid grid-cols-3 gap-2 text-[11px] font-bold uppercase italic border-y-2 border-black py-3">
                 <p className="text-left">AÑO ESCOLAR: {periodo || localStorage.getItem("sistema_periodo_activo") || "2025-2026"}</p>
                 <p className="text-center font-black bg-gray-100 px-2 py-1 rounded">
-                  MATERIA: {materiaSel}
+                  MATERIA: {materiaSel} {codigoMateria ? `(${codigoMateria})` : ""}
                 </p>
                 <p className="text-right">
                   SECCIÓN: {seccionSel?.año} "{seccionSel?.nombre?.split(" ")[1]}"
@@ -208,10 +208,9 @@ export const NotasReportModal: React.FC<NotasReportModalProps> = ({
 
             <div className="mt-16 grid grid-cols-2 gap-40 text-center text-[12px] font-bold uppercase italic px-10">
               <div className="border-t-2 border-black pt-3 flex flex-col items-center">
-                <span>FIRMA DEL DOCENTE</span>
-                <span className="text-[10px] font-normal mt-1">{getDocenteAsignado(materiaSel)}</span>
-                <span className="mt-3 text-[10px] border-b border-black w-48 font-mono opacity-50">
-                  C.I.
+                <span>COORDINACIÓN DE CONTROL DE ESTUDIOS</span>
+                <span className="mt-4 text-[10px] border-b border-black w-48 font-mono opacity-50">
+                  C.I. / FIRMA
                 </span>
               </div>
               <div className="border-t-2 border-black pt-3 flex flex-col items-center text-center">

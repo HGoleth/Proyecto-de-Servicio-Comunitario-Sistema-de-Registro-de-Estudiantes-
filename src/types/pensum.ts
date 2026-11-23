@@ -2,8 +2,8 @@ import { AcademicLevel } from "../constants/academic";
 
 export interface MateriaPensum {
   id: string;
+  codigo: string; // Clave única de la materia
   nombre: string;
-  codigo?: string;
   grado: string;
   nivel: AcademicLevel;
   periodo: string;

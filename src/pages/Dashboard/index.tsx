@@ -5,7 +5,6 @@ import {
   FaBell,
   FaSignOutAlt,
   FaUserCog,
-  FaChalkboardTeacher,
   FaUserGraduate,
   FaUsers,
   FaFileSignature
@@ -49,7 +48,6 @@ const Dashboard = () => {
     { name: "Inscripción", icon: <FaUserGraduate />, path: "/dashboard/estudiantes" },
     { name: "Gestión Estudiantes", icon: <MdPeople />, path: "/dashboard/estudiantes/administracion" },
     { name: "Gestión Representantes", icon: <FaUsers />, path: "/dashboard/representantes" },
-    { name: "Gestión Docentes", icon: <FaChalkboardTeacher />, path: "/dashboard/docentes" },
     { name: "Distribución Académica", icon: <MdClass />, path: "/dashboard/archivos/distribucion" },
     { name: "Pensum y Currículo", icon: <MdMenuBook />, path: "/dashboard/pensum" },
     { name: "Control de Notas", icon: <MdHistoryEdu />, path: "/dashboard/notas" },

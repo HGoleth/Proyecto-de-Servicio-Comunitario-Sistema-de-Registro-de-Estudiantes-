@@ -14,9 +14,6 @@ import {
   BookOpen,
   ArrowUpRight,
   Globe,
-  Heart,
-  AlertCircle,
-  Info,
   Eye, 
   EyeOff,
   BarChart3,
@@ -33,9 +30,9 @@ interface ChartPoint {
   Inscritos?: number;
   Pendientes?: number;
   Retirados?: number;
+  Inicial?: number;
   Primaria?: number;
   Secundaria?: number;
-  "Aula Especial"?: number;
   [key: string]: any; 
 }
 
@@ -63,8 +60,6 @@ const DashboardHome = () => {
   const [dynamicPie, setDynamicPie] = useState<any[]>([]);
   const [seccionesCards, setSeccionesCards] = useState<any[]>([]);
   const [expanded, setExpanded] = useState(false); 
-  const [aulasHuerfanas, setAulasHuerfanas] = useState<string[]>([]);
-  const [isHovered, setIsHovered] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   // ✅ Inicializado como objeto para soportar filtros múltiples
   const [activeFilters, setActiveFilters] = useState<any>({ charts: [], nivelCard: "Todos" });
@@ -74,7 +69,6 @@ const DashboardHome = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<string>(() => localStorage.getItem("sistema_periodo_activo") || "2025-2026");
   const [availablePeriods, setAvailablePeriods] = useState<string[]>(["2025-2026", "2026-2027"]);
   const [rawStudents, setRawStudents] = useState<any[]>([]);
-  const [rawTeachers, setRawTeachers] = useState<any[]>([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -85,7 +79,6 @@ const DashboardHome = () => {
 
   const processStats = useCallback((
     studentsData: any[],
-    teachersData: any[],
     periodFilter: string,
     activeYear: string,
     mode: "students" | "academic"
@@ -152,30 +145,27 @@ const DashboardHome = () => {
       setDynamicChart(chartData);
 
     } else if (mode === "academic") {
-      const totalDocentes = teachersData.length;
-      const primaria = teachersData.filter((d: any) => d.nivel === "Primaria" && !d.es_especialista).length;
-      const secundaria = teachersData.filter((d: any) => d.nivel === "Secundaria" && !d.es_especialista).length;
-      const especial = teachersData.filter((d: any) => d.es_especialista).length;
+      const activos = filteredStudents.filter((s: any) => (s.status || "").toLowerCase().trim() !== "retirado");
+      const inicial = activos.filter((s: any) => (s.nivel || s.level) === "Inicial").length;
+      const primaria = activos.filter((s: any) => (s.nivel || s.level || "Primaria") === "Primaria").length;
+      const secundaria = activos.filter((s: any) => (s.nivel || s.level) === "Secundaria").length;
 
-      const seccionesActivas = Array.from(new Set(filteredStudents.map((s: any) => `${s.grade} ${s.section}`))).filter(Boolean);
-      const seccionesConDocente = new Set(teachersData.map((d: any) => `${d.grado_asignado} ${d.seccion_asignada}`));
-      const huerfanas = seccionesActivas.filter(aula => !seccionesConDocente.has(aula));
+      const seccionesActivas = Array.from(new Set(activos.map((s: any) => `${s.grade} ${s.section}`))).filter(Boolean);
       
-      setAulasHuerfanas(huerfanas);
-      setDbStats({ total: totalDocentes, sub1: primaria, sub2: secundaria, sub3: especial, sub4: huerfanas.length });
+      setDbStats({ total: seccionesActivas.length, sub1: inicial, sub2: primaria, sub3: secundaria, sub4: 0 });
 
       const pieData = [
         { name: "Primaria", value: primaria }, 
         { name: "Secundaria", value: secundaria }, 
-        { name: "Aula Especial", value: especial }
+        { name: "Inicial", value: inicial }
       ].sort((a, b) => b.value - a.value);
 
       setDynamicPie(pieData);
 
       // ✅ Carga de tarjetas para el modo académico con los estudiantes del período seleccionado
       const grupos: Record<string, any> = {};
-      filteredStudents.forEach(est => {
-        if (!est.grade || (est.status || "").toLowerCase().trim() === "retirado") return;
+      activos.forEach(est => {
+        if (!est.grade) return;
         const key = `${est.nivel || est.level || "Primaria"}-${est.grade}-${est.section}`;
         if (!grupos[key]) {
           grupos[key] = { 
@@ -192,18 +182,17 @@ const DashboardHome = () => {
       // Gráfico comparativo académico con los períodos reales
       const prior = getPriorPeriod(activeYear);
       setDynamicChart([
-        { label: prior, Primaria: Math.max(0, primaria - 2), Secundaria: Math.max(0, secundaria - 1), "Aula Especial": especial },
-        { label: activeYear, Primaria: primaria, Secundaria: secundaria, "Aula Especial": especial }
+        { label: prior, Primaria: Math.max(0, primaria - 2), Secundaria: Math.max(0, secundaria - 1), Inicial: Math.max(0, inicial - 1) },
+        { label: activeYear, Primaria: primaria, Secundaria: secundaria, Inicial: inicial }
       ]);
     }
   }, []);
 
   const loadRealData = useCallback(async () => {
     try {
-      const [configData, studentsData, teachersData] = await Promise.all([
+      const [configData, studentsData] = await Promise.all([
         (window as any).electron?.getConfig ? (window as any).electron.getConfig() : null,
-        (window as any).electron?.getStudents ? (window as any).electron.getStudents() : [],
-        (window as any).electron?.getDocentes ? (window as any).electron.getDocentes() : []
+        (window as any).electron?.getStudents ? (window as any).electron.getStudents() : []
       ]);
 
       const activeYear = configData?.periodo || localStorage.getItem("sistema_periodo_activo") || "2025-2026";
@@ -211,9 +200,7 @@ const DashboardHome = () => {
       localStorage.setItem("sistema_periodo_activo", activeYear);
 
       const sts = Array.isArray(studentsData) ? studentsData : [];
-      const tchs = Array.isArray(teachersData) ? teachersData : [];
       setRawStudents(sts);
-      setRawTeachers(tchs);
 
       // Construir conjunto de periodos disponibles
       const periodSet = new Set<string>();
@@ -229,7 +216,7 @@ const DashboardHome = () => {
       // Usar el período activo si no se ha seleccionado ninguno o si el seleccionado ya no existe
       setSelectedPeriod(prev => {
         const nextPeriod = (prev && (sortedPeriods.includes(prev) || prev === "TODOS")) ? prev : activeYear;
-        processStats(sts, tchs, nextPeriod, activeYear, perspective);
+        processStats(sts, nextPeriod, activeYear, perspective);
         return nextPeriod;
       });
 
@@ -271,14 +258,14 @@ const DashboardHome = () => {
 
   // Actualizar estadísticas al cambiar de perspectiva
   useEffect(() => {
-    if (rawStudents.length > 0 || rawTeachers.length > 0 || currentPeriod) {
-      processStats(rawStudents, rawTeachers, selectedPeriod, currentPeriod, perspective);
+    if (rawStudents.length > 0 || currentPeriod) {
+      processStats(rawStudents, selectedPeriod, currentPeriod, perspective);
     }
-  }, [perspective, selectedPeriod, currentPeriod, rawStudents, rawTeachers, processStats]);
+  }, [perspective, selectedPeriod, currentPeriod, rawStudents, processStats]);
 
   const handlePeriodChange = (newPeriod: string) => {
     setSelectedPeriod(newPeriod);
-    processStats(rawStudents, rawTeachers, newPeriod, currentPeriod, perspective);
+    processStats(rawStudents, newPeriod, currentPeriod, perspective);
   };
 
   const toggleFilter = (name: string) => {
@@ -308,16 +295,10 @@ const DashboardHome = () => {
     { title: "Casos Pendientes", value: dbStats.sub2, icon: <Clock size={24}/>, gradient: "from-orange-500 to-orange-300" },
     { title: "Retirados", value: dbStats.sub3, icon: <TrendingUp size={24}/>, gradient: "from-slate-700 to-slate-500" },
   ] : [
-      { 
-        title: dbStats.sub4 > 0 ? `¡${dbStats.sub4} AULAS SIN PROFE!` : "Personal Docente", 
-        value: dbStats.total, 
-        icon: dbStats.sub4 > 0 ? <AlertCircle size={24} className="animate-pulse" /> : <UserCheck size={24}/>, 
-        gradient: dbStats.sub4 > 0 ? "from-red-600 to-orange-600" : "from-blue-700 to-blue-500",
-        isAlert: dbStats.sub4 > 0 
-      },
-      { title: "Docentes Primaria", value: dbStats.sub1, icon: <LayoutGrid size={24}/>, gradient: "from-purple-600 to-purple-400" },
-      { title: "Docentes Secundaria", value: dbStats.sub2, icon: <BookOpen size={24}/>, gradient: "from-pink-600 to-pink-400" },
-      { title: "Aula Especial", value: dbStats.sub3, icon: <Heart size={24}/>, gradient: "from-indigo-600 to-indigo-400" },
+      { title: "Secciones Activas", value: dbStats.total, icon: <LayoutGrid size={24}/>, gradient: "from-blue-700 to-blue-500" },
+      { title: "Educación Inicial", value: dbStats.sub1, icon: <Users size={24}/>, gradient: "from-indigo-600 to-indigo-400" },
+      { title: "Educación Primaria", value: dbStats.sub2, icon: <BookOpen size={24}/>, gradient: "from-purple-600 to-purple-400" },
+      { title: "Media General", value: dbStats.sub3, icon: <TrendingUp size={24}/>, gradient: "from-pink-600 to-pink-400" },
     ];
 
   const modules = [
@@ -348,17 +329,17 @@ const DashboardHome = () => {
    // ✅ TARJETA DE REPORTES PARA EL MODO ACADÉMICO
     ...(perspective === "academic" ? [{
       title: "Reportes",
-      icon: <BarChart3 size={26}/>, // ✅ Usando lucide-react
+      icon: <BarChart3 size={26}/>,
       text: "Estadísticas",
       route: "/dashboard/reportes",
       color: "text-indigo-600",
       bg: "bg-indigo-50"
     }] : []),
     { 
-      title: perspective === "students" ? "Gestión Representantes" : "Gestión Docentes", 
-      icon: <UserCheck size={26}/>, 
-      text: perspective === "students" ? "Padres y Tutores" : "Personal Académico", 
-      route: perspective === "students" ? "/dashboard/representantes" : "/dashboard/docentes", 
+      title: perspective === "students" ? "Gestión Representantes" : "Pensum y Materias", 
+      icon: perspective === "students" ? <UserCheck size={26}/> : <BookOpen size={26}/>, 
+      text: perspective === "students" ? "Padres y Tutores" : "Malla Curricular", 
+      route: perspective === "students" ? "/dashboard/representantes" : "/dashboard/pensum", 
       color: "text-orange-600", 
       bg: "bg-orange-50" 
     },
@@ -448,24 +429,13 @@ const DashboardHome = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: i * 0.05 }}
-              onMouseEnter={() => stat.isAlert && setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className={`bg-gradient-to-br ${stat.gradient} rounded-[2.5rem] shadow-xl p-8 text-white group relative overflow-hidden ${stat.isAlert ? 'cursor-help' : ''}`}
+              className={`bg-gradient-to-br ${stat.gradient} rounded-[2.5rem] shadow-xl p-8 text-white group relative overflow-hidden`}
             >
               <div className="relative z-10 text-left">
                   <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-2">{stat.title}</p>
                   <h2 className="text-4xl font-black tracking-tighter mb-5 font-mono">{stat.value}</h2>
                   <div className="bg-white/20 w-fit p-3 rounded-2xl backdrop-blur-md shadow-inner">{stat.icon}</div>
               </div>
-
-              {stat.isAlert && isHovered && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="absolute inset-x-4 bottom-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-2xl z-20 border border-red-100 text-left">
-                  <div className="flex items-center gap-2 mb-2 text-red-600">
-                    <Info size={14} /><span className="text-[9px] font-black uppercase tracking-widest">Aulas Pendientes:</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">{aulasHuerfanas.map(aula => (<span key={aula} className="bg-red-50 text-red-600 px-2 py-1 rounded-lg text-[8px] font-black border border-red-100 uppercase">{aula}</span>))}</div>
-                </motion.div>
-              )}
               <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-3xl opacity-50" />
             </motion.div>
           ))}

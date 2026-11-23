@@ -1,41 +1,142 @@
-import { useState, useEffect, useMemo, useRef } from "react"; 
+import { useState, useEffect, useMemo } from "react"; 
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { 
-  ArrowLeft, Users, UserCheck, X, 
-  Contact2, GraduationCap, BookOpen, AlertCircle, Trash2, Save, CheckCircle, Plus, UserPlus2,
-  Stethoscope
+  ArrowLeft, Users, X, 
+  Contact2, BookOpen, Clock, CheckCircle
 } from "lucide-react";
 
-//  PLAN DE ESTUDIOS OFICIAL
-const PLAN_ESTUDIOS: Record<string, string[]> = {
-  "1er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "2do Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "3er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "4to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "5to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Ciencias de la Tierra", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía", "Orientación y Convivencia", "Grupos de Creación y Producción"]
+// PLAN DE ESTUDIOS DE RESPALDO CON CÓDIGO ÚNICO POR MATERIA
+const PLAN_ESTUDIOS_FALLBACK: Record<string, { codigo: string; nombre: string; horas: number; area: string }[]> = {
+  "1ero": [
+    { codigo: "CAS-1ERO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-1ERO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-1ERO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-1ERO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-1ERO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-1ERO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "2do": [
+    { codigo: "CAS-2DO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-2DO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-2DO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-2DO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-2DO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-2DO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "3ero": [
+    { codigo: "CAS-3ERO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-3ERO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-3ERO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-3ERO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-3ERO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-3ERO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "4to": [
+    { codigo: "CAS-4TO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-4TO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-4TO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-4TO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-4TO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-4TO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "5to": [
+    { codigo: "CAS-5TO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-5TO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-5TO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-5TO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-5TO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-5TO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "6to": [
+    { codigo: "CAS-6TO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
+    { codigo: "MAT-6TO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
+    { codigo: "NAT-6TO", nombre: "Ciencias Naturales y Salud", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "SOC-6TO", nombre: "Ciencias Sociales, Identidad y Soberanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "EST-6TO", nombre: "Educación Estética y Cultura", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "EDF-6TO", nombre: "Educación Física, Deporte y Recreación", horas: 3, area: "Educación Física" }
+  ],
+  "1er Año": [
+    { codigo: "CAS-1ERANO", nombre: "Castellano", horas: 4, area: "Lengua y Comunicación" },
+    { codigo: "ING-1ERANO", nombre: "Inglés y Otras Lenguas", horas: 4, area: "Lenguas Extranjeras" },
+    { codigo: "MAT-1ERANO", nombre: "Matemáticas", horas: 4, area: "Ciencias y Matemáticas" },
+    { codigo: "EDF-1ERANO", nombre: "Educación Física", horas: 3, area: "Educación Física" },
+    { codigo: "ART-1ERANO", nombre: "Arte y Patrimonio", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "NAT-1ERANO", nombre: "Ciencias Naturales", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "GHC-1ERANO", nombre: "Geografía, Historia y Ciudadanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "ORI-1ERANO", nombre: "Orientación y Convivencia", horas: 2, area: "Orientación" },
+    { codigo: "CRP-1ERANO", nombre: "Grupos de Creación y Producción", horas: 3, area: "Producción y Cultura" }
+  ],
+  "2do Año": [
+    { codigo: "CAS-2DOANO", nombre: "Castellano", horas: 4, area: "Lengua y Comunicación" },
+    { codigo: "ING-2DOANO", nombre: "Inglés y Otras Lenguas", horas: 4, area: "Lenguas Extranjeras" },
+    { codigo: "MAT-2DOANO", nombre: "Matemáticas", horas: 4, area: "Ciencias y Matemáticas" },
+    { codigo: "EDF-2DOANO", nombre: "Educación Física", horas: 3, area: "Educación Física" },
+    { codigo: "ART-2DOANO", nombre: "Arte y Patrimonio", horas: 3, area: "Arte y Patrimonio" },
+    { codigo: "NAT-2DOANO", nombre: "Ciencias Naturales", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "GHC-2DOANO", nombre: "Geografía, Historia y Ciudadanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "ORI-2DOANO", nombre: "Orientación y Convivencia", horas: 2, area: "Orientación" },
+    { codigo: "CRP-2DOANO", nombre: "Grupos de Creación y Producción", horas: 3, area: "Producción y Cultura" }
+  ],
+  "3er Año": [
+    { codigo: "CAS-3ANO", nombre: "Castellano", horas: 4, area: "Lengua y Comunicación" },
+    { codigo: "ING-3ANO", nombre: "Inglés y Otras Lenguas", horas: 4, area: "Lenguas Extranjeras" },
+    { codigo: "MAT-3ANO", nombre: "Matemáticas", horas: 4, area: "Ciencias y Matemáticas" },
+    { codigo: "EDF-3ANO", nombre: "Educación Física", horas: 3, area: "Educación Física" },
+    { codigo: "FIS-3ANO", nombre: "Física", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "QUI-3ANO", nombre: "Química", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "BIO-3ANO", nombre: "Biología", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "GHC-3ANO", nombre: "Geografía, Historia y Ciudadanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "ORI-3ANO", nombre: "Orientación y Convivencia", horas: 2, area: "Orientación" },
+    { codigo: "CRP-3ANO", nombre: "Grupos de Creación y Producción", horas: 3, area: "Producción y Cultura" }
+  ],
+  "4to Año": [
+    { codigo: "CAS-4TOANO", nombre: "Castellano", horas: 4, area: "Lengua y Comunicación" },
+    { codigo: "ING-4TOANO", nombre: "Inglés y Otras Lenguas", horas: 4, area: "Lenguas Extranjeras" },
+    { codigo: "MAT-4TOANO", nombre: "Matemáticas", horas: 4, area: "Ciencias y Matemáticas" },
+    { codigo: "EDF-4TOANO", nombre: "Educación Física", horas: 3, area: "Educación Física" },
+    { codigo: "FIS-4TOANO", nombre: "Física", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "QUI-4TOANO", nombre: "Química", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "BIO-4TOANO", nombre: "Biología", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "GHC-4TOANO", nombre: "Geografía, Historia y Ciudadanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "FSN-4TOANO", nombre: "Formación para la Soberanía", horas: 3, area: "Ciencias Sociales" },
+    { codigo: "ORI-4TOANO", nombre: "Orientación y Convivencia", horas: 2, area: "Orientación" },
+    { codigo: "CRP-4TOANO", nombre: "Grupos de Creación y Producción", horas: 3, area: "Producción y Cultura" }
+  ],
+  "5to Año": [
+    { codigo: "CAS-5TOANO", nombre: "Castellano", horas: 4, area: "Lengua y Comunicación" },
+    { codigo: "ING-5TOANO", nombre: "Inglés y Otras Lenguas", horas: 4, area: "Lenguas Extranjeras" },
+    { codigo: "MAT-5TOANO", nombre: "Matemáticas", horas: 4, area: "Ciencias y Matemáticas" },
+    { codigo: "EDF-5TOANO", nombre: "Educación Física", horas: 3, area: "Educación Física" },
+    { codigo: "FIS-5TOANO", nombre: "Física", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "QUI-5TOANO", nombre: "Química", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "BIO-5TOANO", nombre: "Biología", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "CIE-5TOANO", nombre: "Ciencias de la Tierra", horas: 4, area: "Ciencias Naturales" },
+    { codigo: "GHC-5TOANO", nombre: "Geografía, Historia y Ciudadanía", horas: 4, area: "Ciencias Sociales" },
+    { codigo: "FSN-5TOANO", nombre: "Formación para la Soberanía", horas: 3, area: "Ciencias Sociales" },
+    { codigo: "ORI-5TOANO", nombre: "Orientación y Convivencia", horas: 2, area: "Orientación" },
+    { codigo: "CRP-5TOANO", nombre: "Grupos de Creación y Producción", horas: 3, area: "Producción y Cultura" }
+  ]
 };
 
 const DistribucionAcademica = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [estudiantes, setEstudiantes] = useState<any[]>([]);
-  const [docentes, setDocentes] = useState<any[]>([]);
+  const [pensumMaterias, setPensumMaterias] = useState<any[]>([]);
   const [filtroNivel, setFiltroNivel] = useState<"Primaria" | "Secundaria">("Primaria");
   const [modalOpen, setModalOpen] = useState(false);
   const [seccionSeleccionada, setSeccionSeleccionada] = useState<any>(null);
-  const [isSaving, setIsSaving] = useState(false);
-  const [activeMateriaSelector, setActiveMateriaSelector] = useState<string | null>(null);
-
-  const materiasRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const cargarDatos = async () => {
     try {
-      const estData = await (window as any).electron.getStudents();
-      const docData = await (window as any).electron.getDocentes();
+      const estData = await (window as any).electron?.getStudents?.();
       setEstudiantes(estData || []);
-      setDocentes(docData || []);
+      if ((window as any).electron?.getPensum) {
+        const penData = await (window as any).electron.getPensum();
+        if (Array.isArray(penData)) setPensumMaterias(penData);
+      }
     } catch (error) {
       console.error("Error cargando datos:", error);
     }
@@ -53,17 +154,6 @@ const DistribucionAcademica = () => {
     }
   }, [location.state]);
 
-  useEffect(() => {
-    if (activeMateriaSelector && materiasRefs.current[activeMateriaSelector]) {
-      setTimeout(() => {
-        materiasRefs.current[activeMateriaSelector]?.scrollIntoView({
-          behavior: "smooth",
-          block: "center" 
-        });
-      }, 150); 
-    }
-  }, [activeMateriaSelector]);
-
   const gradosOrganizados = useMemo(() => {
     const estructura: any = {};
     const listaGrados = filtroNivel === "Primaria" 
@@ -72,21 +162,15 @@ const DistribucionAcademica = () => {
 
     listaGrados.forEach(grado => { estructura[grado] = { nombre: grado, secciones: {} }; });
 
-    estudiantes.filter(e => e.nivel === filtroNivel).forEach(est => {
+    estudiantes.filter(e => (e.nivel || e.level) === filtroNivel).forEach(est => {
       if (!estructura[est.grade]) return;
       if (!estructura[est.grade].secciones[est.section]) {
-        //  En Primaria buscamos el guía único asignado a este grado y sección
-        const docenteGuia = docentes.find(d => 
-          d.nivel === "Primaria" && 
-          d.grado_asignado === est.grade && 
-          d.seccion_asignada === est.section
-        );
-        estructura[est.grade].secciones[est.section] = { nombre: est.section, estudiantes: [], guia: docenteGuia || null };
+        estructura[est.grade].secciones[est.section] = { nombre: est.section, estudiantes: [] };
       }
       estructura[est.grade].secciones[est.section].estudiantes.push(est);
     });
     return Object.values(estructura);
-  }, [estudiantes, docentes, filtroNivel]);
+  }, [estudiantes, filtroNivel]);
 
   // Si se navegó indicando un grado y sección específicos, abrirlo automáticamente
   useEffect(() => {
@@ -102,77 +186,21 @@ const DistribucionAcademica = () => {
     }
   }, [gradosOrganizados, location.state]);
 
-  const actualizarAsignacion = async (materia: string | null, docenteId: string, action: "add" | "remove") => {
-    if (!seccionSeleccionada) return;
-    try {
-      const docente = docentes.find(d => d.id === docenteId);
-      if (!docente && action === "add") return;
-
-      let actualizacion;
-      if (filtroNivel === "Primaria") {
-        //  Lógica de Primaria: Asignación exclusiva de Grado y Sección
-        actualizacion = action === "add" 
-          ? { ...docente, grado_asignado: seccionSeleccionada.grado, seccion_asignada: seccionSeleccionada.nombre }
-          : { ...docentes.find(d => d.id === docenteId), grado_asignado: "", seccion_asignada: "" };
-      } else {
-        const docObj = action === "add" ? docente : docentes.find(d => d.id === docenteId);
-        if (!docObj) return;
-        const materiasActuales = Array.isArray(docObj.materiasAsignadas) ? docObj.materiasAsignadas : [];
-        actualizacion = { 
-          ...docObj, 
-          materiasAsignadas: action === "add" 
-            ? [...materiasActuales, { materia, grado: seccionSeleccionada.grado, seccion: seccionSeleccionada.nombre }] 
-            : materiasActuales.filter((m: any) => !(m.materia === materia && m.grado === seccionSeleccionada.grado && m.seccion === seccionSeleccionada.nombre))
-        };
-      }
-
-      const res = await (window as any).electron.updateDocente(actualizacion.id, actualizacion);
-      if (res.success) {
-        await cargarDatos();
-        if (action === "add") setActiveMateriaSelector(null);
-      }
-    } catch (error) { console.error("Error al actualizar:", error); }
-  };
-
-  const normalizarGradoTexto = (t: string) => {
-    return (t || "")
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/1(er|°|ro)/g, "1")
-      .replace(/2(do|°|er)/g, "2")
-      .replace(/3(er|°|ro)/g, "3")
-      .replace(/4(to|°|er)/g, "4")
-      .replace(/5(to|°|er)/g, "5")
-      .replace(/6(to|°|er)/g, "6")
-      .replace(/\s+/g, "");
-  };
-
-  const getDocentesAptos = (materia: string) => {
+  const materiasDelGradoSeleccionado = useMemo(() => {
     if (!seccionSeleccionada) return [];
-    return docentes.filter(d => {
-      if (d.nivel !== filtroNivel) return false;
-      
-      //  En Primaria, cualquier docente del nivel es apto si no tiene otra sección asignada
-      if (filtroNivel === "Primaria") {
-        return !d.grado_asignado || d.grado_asignado === "";
-      }
-
-      const normalizar = (t: string) => (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const materiaNorm = normalizar(materia);
-      const tieneMateriaHabilitada = Array.isArray(d.materias) && d.materias.some((m: string) => normalizar(m).includes(materiaNorm.split(" ")[0]));
-      const estaHabilitadoParaGrado = normalizarGradoTexto(d.grado_asignado || "") === normalizarGradoTexto(seccionSeleccionada.grado);
-      return tieneMateriaHabilitada && estaHabilitadoParaGrado;
-    });
-  };
-
-  const handleSave = async () => {
-    setIsSaving(true);
-    setTimeout(() => {
-      setIsSaving(false);
-      setModalOpen(false);
-    }, 800);
-  };
+    const fromPensum = pensumMaterias.filter(
+      (m: any) => m.grado === seccionSeleccionada.grado && m.nivel === filtroNivel
+    );
+    if (fromPensum.length > 0) {
+      return fromPensum.map((m: any) => ({
+        codigo: m.codigo || m.id,
+        nombre: m.nombre,
+        horas: m.horasSemanales || 4,
+        area: m.area || "General"
+      }));
+    }
+    return PLAN_ESTUDIOS_FALLBACK[seccionSeleccionada.grado] || [];
+  }, [seccionSeleccionada, pensumMaterias, filtroNivel]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-6 md:p-10 max-w-7xl mx-auto text-left min-h-screen bg-gray-50">
@@ -211,13 +239,6 @@ const DistribucionAcademica = () => {
                     <Users size={20} className="text-gray-300 group-hover:text-[#5564eb]" />
                   </div>
                   <p className="text-sm font-black text-gray-700">{sec.estudiantes.length} Estudiantes</p>
-                  {/*  Badge de Guía en Primaria */}
-                  {filtroNivel === "Primaria" && sec.guia && (
-                    <div className="mt-3 flex items-center gap-2">
-                       <UserCheck size={12} className="text-blue-500"/>
-                       <p className="text-[9px] font-black text-gray-400 uppercase truncate">{sec.guia.nombre}</p>
-                    </div>
-                  )}
                 </button>
               ))}
             </div>
@@ -233,102 +254,42 @@ const DistribucionAcademica = () => {
               <div className="p-8 md:p-10 bg-gray-50/50 border-b border-gray-100 flex justify-between items-center">
                 <div>
                   <h3 className="text-3xl font-black text-gray-800 uppercase tracking-tighter">{seccionSeleccionada.grado} <span className="text-[#5564eb] italic">Sección "{seccionSeleccionada.nombre}"</span></h3>
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">{filtroNivel === "Primaria" ? "Asignación de Docente de Aula" : "Configuración Académica del Grupo"}</p>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Plan de Estudios y Matrícula del Grupo</p>
                 </div>
                 <button onClick={() => setModalOpen(false)} className="p-3 bg-white shadow-sm border border-gray-100 rounded-2xl text-gray-400 hover:text-red-500 transition-all active:scale-95"><X size={24}/></button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12 custom-scrollbar">
                 
-                <div className="lg:col-span-5 space-y-8">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-100">
-                        {filtroNivel === "Primaria" ? <GraduationCap size={20}/> : <BookOpen size={20}/>}
+                <div className="lg:col-span-5 space-y-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-100">
+                        <BookOpen size={20}/>
+                      </div>
+                      <h4 className="text-sm font-black text-gray-800 uppercase tracking-widest">Asignaturas del Grado</h4>
                     </div>
-                    <h4 className="text-sm font-black text-gray-800 uppercase tracking-widest">{filtroNivel === "Primaria" ? "Docente Encargado" : "Plan de Estudios"}</h4>
+                    <span className="text-[10px] font-black bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase">
+                      {materiasDelGradoSeleccionado.length} Materias
+                    </span>
                   </div>
                   
-                  <div className="space-y-6">
-                    {(filtroNivel === "Primaria" ? ["Aula Regular"] : PLAN_ESTUDIOS[seccionSeleccionada.grado])?.map((materia) => {
-                      const doc = docentes.find(d => 
-                        filtroNivel === "Primaria" 
-                        ? (d.grado_asignado === seccionSeleccionada.grado && d.seccion_asignada === seccionSeleccionada.nombre)
-                        : (Array.isArray(d.materiasAsignadas) && d.materiasAsignadas.some((m: any) => m.materia === materia && m.grado === seccionSeleccionada.grado && m.seccion === seccionSeleccionada.nombre))
-                      );
-                      const aptos = getDocentesAptos(materia);
-                      const isSelectorOpen = activeMateriaSelector === materia;
-
-                      return (
-                        <div key={materia} ref={(el) => (materiasRefs.current[materia] = el)} className="space-y-3">
-                          {doc ? (
-                            <div className="p-5 rounded-[2rem] bg-white border-2 border-blue-100 shadow-lg shadow-blue-50 relative overflow-hidden group/card animate-in fade-in zoom-in-95 duration-300">
-                               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover/card:opacity-100 transition-opacity">
-                                  <button onClick={() => actualizarAsignacion(materia, doc.id, "remove")} className="p-2 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 shadow-sm transition-all active:scale-90"><Trash2 size={16}/></button>
-                               </div>
-                               <span className="text-[11px] font-black uppercase text-white bg-blue-600 px-4 py-1.5 rounded-full tracking-widest inline-block mb-5 shadow-md shadow-blue-100">{materia}</span>
-                               <div className="flex items-center gap-4">
-                                  <div className="w-16 h-16 rounded-[1.5rem] border-4 border-white shadow-md overflow-hidden bg-gray-50 flex-shrink-0">
-                                    {doc.foto ? <img src={doc.foto} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-600 font-black text-2xl">{doc.nombre.charAt(0)}</div>}
-                                  </div>
-                                  <div className="min-w-0 text-left">
-                                    <p className="text-base font-black text-gray-800 leading-none truncate mb-1.5">{doc.nombre} {doc.apellido}</p>
-                                    <div className="flex flex-wrap gap-2">
-                                        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-green-50 text-green-600 rounded-lg text-[8px] font-black uppercase tracking-tighter"><CheckCircle size={10}/> Docente Guía</span>
-                                        {/*  Etiqueta de Especialista en el Modal */}
-                                        {doc.es_especialista && (
-                                            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-purple-100 text-purple-700 rounded-lg text-[8px] font-black uppercase tracking-tighter border border-purple-200">
-                                                <Stethoscope size={10}/> Educación Especial
-                                            </span>
-                                        )}
-                                    </div>
-                                  </div>
-                               </div>
-                            </div>
-                          ) : (
-                            <motion.button 
-                              whileHover={{ scale: 1.01, translateY: -2 }}
-                              whileTap={{ scale: 0.98 }}
-                              onClick={() => setActiveMateriaSelector(isSelectorOpen ? null : materia)}
-                              className={`w-full relative overflow-hidden rounded-[2rem] border-2 border-dashed transition-all duration-300 ${isSelectorOpen ? 'bg-white border-blue-500 ring-4 ring-blue-50 shadow-2xl' : 'bg-gray-50/50 border-gray-200 hover:border-blue-400 hover:bg-white hover:shadow-xl'}`}
-                            >
-                               <div className="p-8 flex flex-col items-center justify-center gap-4 text-center">
-                                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${isSelectorOpen ? 'bg-red-50 text-red-500 rotate-90' : 'bg-white text-blue-600 shadow-md shadow-blue-100 group-hover:scale-110'}`}>{isSelectorOpen ? <X size={28}/> : <UserPlus2 size={28}/>}</div>
-                                  <div>
-                                     <h5 className={`text-[11px] font-black uppercase tracking-widest transition-colors ${isSelectorOpen ? 'text-red-500' : 'text-gray-400'}`}>{isSelectorOpen ? 'Cerrar Panel' : 'Asignar Docente'}</h5>
-                                     <p className="text-[12px] font-black text-blue-900 bg-blue-50/50 px-5 py-2 rounded-2xl uppercase tracking-tight border border-blue-100/50 mt-2">{materia}</p>
-                                  </div>
-                               </div>
-                            </motion.button>
-                          )}
-
-                          <AnimatePresence>
-                            {isSelectorOpen && (
-                              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                                <div className="bg-gray-50 border-x-2 border-b-2 border-blue-500 rounded-b-[2rem] p-6 space-y-3 shadow-inner">
-                                  <p className="text-[9px] font-black text-blue-600/60 uppercase mb-4 px-2 flex items-center gap-2"><GraduationCap size={14}/> Docentes Disponibles ({aptos.length})</p>
-                                  {aptos.length > 0 ? aptos.map(d => (
-                                    <button key={d.id} onClick={() => actualizarAsignacion(materia, d.id, "add")} className="w-full flex items-center gap-4 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all group shadow-sm border border-gray-100">
-                                      <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-white flex-shrink-0">{d.foto ? <img src={d.foto} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400 font-black">{d.nombre.charAt(0)}</div>}</div>
-                                      <div className="text-left flex-1 min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <p className="text-[11px] font-black truncate uppercase">{d.nombre} {d.apellido}</p>
-                                            {/*  Badge de especialista en lista de selección */}
-                                            {d.es_especialista && <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" title="Especialista"/>}
-                                        </div>
-                                        <p className="text-[9px] font-bold opacity-60 uppercase tracking-tighter">C.I. {d.ci}</p>
-                                      </div>
-                                      <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors"><Plus size={16}/></div>
-                                    </button>
-                                  )) : (
-                                    <div className="p-8 text-center bg-white/50 rounded-2xl border-2 border-dashed border-gray-200"><AlertCircle className="mx-auto text-gray-300 mb-2" size={24}/><p className="text-[10px] font-bold text-gray-400 uppercase italic">No hay docentes disponibles en este nivel</p></div>
-                                  )}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                  <div className="space-y-3">
+                    {materiasDelGradoSeleccionado.map((mat) => (
+                      <div key={mat.codigo} className="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-blue-200 transition-all flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <span className="font-mono text-[10px] font-black uppercase text-[#5564eb] bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100 inline-block mb-1">
+                            {mat.codigo}
+                          </span>
+                          <p className="text-xs font-black text-gray-800 uppercase truncate">{mat.nombre}</p>
+                          <p className="text-[10px] font-semibold text-gray-400 truncate">{mat.area}</p>
                         </div>
-                      );
-                    })}
+                        <div className="flex items-center gap-1 text-[10px] font-bold bg-gray-50 text-gray-600 px-2.5 py-1 rounded-xl border border-gray-100 shrink-0">
+                          <Clock size={12} className="text-blue-500" />
+                          <span>{mat.horas}h</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -348,10 +309,10 @@ const DistribucionAcademica = () => {
                 </div>
               </div>
 
-              <div className="p-8 bg-gray-50 border-t border-gray-100 flex justify-end gap-4 items-center text-left">
-                <p className="text-[10px] text-gray-400 font-bold uppercase mr-auto flex items-center gap-2"><CheckCircle size={14} className="text-[#5564eb]"/> Registro Sincronizado</p>
-                <button onClick={() => setModalOpen(false)} className="px-8 py-4 bg-white text-gray-400 font-black text-[11px] uppercase rounded-2xl border border-gray-200 hover:bg-gray-100 transition-all active:scale-95">Cancelar</button>
-                <button onClick={handleSave} disabled={isSaving} className="px-10 py-4 bg-[#5564eb] text-white font-black text-[11px] uppercase rounded-2xl shadow-xl shadow-blue-100 hover:bg-[#4353d8] transition-all flex items-center gap-3 disabled:opacity-70 active:scale-95">{isSaving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save size={18}/>}Guardar Cambios</button>
+              <div className="p-8 bg-gray-50 border-t border-gray-100 flex justify-end gap-4">
+                <button onClick={() => setModalOpen(false)} className="px-10 py-4 bg-[#5564eb] text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-100 hover:bg-blue-700 transition-all flex items-center gap-3 active:scale-95">
+                  <CheckCircle size={18}/> Cerrar Vista
+                </button>
               </div>
             </motion.div>
           </Dialog>

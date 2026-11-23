@@ -2620,7 +2620,7 @@ export const DocumentTemplatesGenerator: React.FC = () => {
                         </div>
 
                         <p className="text-[11px] text-gray-500 font-medium mb-3">
-                          Puedes colocar varias firmas y ordenarlas a la <b>Izquierda</b>, <b>Centro</b> o <b>Derecha</b> al igual que los logotipos (ej. Director a la izquierda y Representante o Docente a la derecha).
+                          Puedes colocar varias firmas y ordenarlas a la <b>Izquierda</b>, <b>Centro</b> o <b>Derecha</b> al igual que los logotipos (ej. Director a la izquierda y Representante a la derecha).
                         </p>
 
                         {/* Atajos rápidos de palabras clave para Pie de Página */}

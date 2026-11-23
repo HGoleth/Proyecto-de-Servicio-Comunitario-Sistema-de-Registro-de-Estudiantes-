@@ -3,7 +3,6 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useNavigate } from "react-router-dom"; 
 import { 
   Users, 
-  UserSquare2, 
   School, 
   LayoutGrid, 
   ChevronRight, 
@@ -15,8 +14,6 @@ import {
   Phone,
   Contact2,
   Edit3,
-  Mail,
-  BookOpen,
   TrendingUp,
   UserCheck,
   PieChart,
@@ -33,7 +30,6 @@ const ArchivosGenerales = () => {
   const navigate = useNavigate(); 
   const [selected, setSelected] = useState<string | null>(null);
   const [representantes, setRepresentantes] = useState<any[]>([]);
-  const [docentes, setDocentes] = useState<any[]>([]);
   const [estudiantes, setEstudiantes] = useState<any[]>([]); 
   const [repSeleccionado, setRepSeleccionado] = useState<any | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,9 +53,7 @@ const ArchivosGenerales = () => {
 
   const cargarDatosGlobales = async () => {
     try {
-      const docs = await (window as any).electron.getDocentes();
       const ests = await (window as any).electron.getStudents();
-      setDocentes(docs || []);
       setEstudiantes(ests || []); 
       
       if (ests && Array.isArray(ests)) {
@@ -139,7 +133,6 @@ const ArchivosGenerales = () => {
   }, [estudiantes]);
   
   const menuItems = [
-    { id: "docentes", label: "Personal Docente", icon: <UserSquare2 size={24} />, description: "Gestión de profesores y carga horaria." },
     { id: "representantes", label: "Base de Representantes", icon: <Users size={24} />, description: "Directorio de padres y representantes legales." },
     { id: "planteles", label: "Planteles y Enlaces", icon: <School size={24} />, description: "Registro de instituciones y circuitos." },
     { id: "distribucion", label: "Distribución Académica", icon: <LayoutDashboard size={24} />, description: "Organización de secciones y grados." }
@@ -147,7 +140,7 @@ const ArchivosGenerales = () => {
 
   const datosFiltrados = selected === "representantes" 
     ? representantes.filter(r => r.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) || r.cedula?.toString().includes(searchTerm))
-    : docentes.filter(d => d.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) || d.ci?.includes(searchTerm));
+    : [];
 
   return (
     <motion.div className="p-6 md:p-10 max-w-6xl mx-auto text-left" variants={fadeIn} initial="hidden" animate="visible">
@@ -253,8 +246,7 @@ const ArchivosGenerales = () => {
                 )}
                 <button 
                   onClick={() => {
-                    if (selected === "docentes") navigate("/dashboard/docentes");
-                    else if (selected === "representantes") navigate("/dashboard/estudiantes/administracion");
+                    if (selected === "representantes") navigate("/dashboard/representantes");
                     else if (selected === "distribucion") navigate("/dashboard/archivos/distribucion");
                   }}
                   className="bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-700 transition-all shadow-xl flex items-center gap-2 font-black text-[10px] uppercase tracking-widest active:scale-95"
@@ -287,40 +279,6 @@ const ArchivosGenerales = () => {
                   </motion.div>
                 ))}
               </div>
-            ) : selected === "docentes" ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {datosFiltrados.map((doc: any) => (
-                  <motion.div key={doc.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-gray-50 border border-gray-100 rounded-[2.5rem] p-6 shadow-sm hover:bg-white hover:shadow-xl transition-all group text-left">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 rounded-2xl bg-white text-green-600 border-2 border-green-100 flex items-center justify-center shadow-sm group-hover:bg-green-600 group-hover:text-white transition-all overflow-hidden">
-                        {doc.foto ? <img src={doc.foto} className="w-full h-full object-cover rounded-xl"/> : <UserSquare2 size={32} />}
-                      </div>
-                      <div className="truncate">
-                        <h4 className="font-black text-gray-800 truncate uppercase tracking-tighter leading-none mb-2">{doc.nombre} {doc.apellido}</h4>
-                        <div className="flex flex-wrap gap-2 items-center">
-                          <p className="text-[9px] font-black text-green-600 uppercase tracking-widest">{doc.nivel} | {doc.grado_asignado || 'Docente'}</p>
-                          {/*  ETIQUETA DE ESPECIALISTA EN VISTA PREVIA */}
-                          {doc.es_especialista && (
-                            <span className="bg-purple-100 text-purple-700 text-[8px] px-2 py-0.5 rounded-full font-black uppercase border border-purple-200">
-                                Especialista
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-2 mb-6 bg-white p-4 rounded-2xl shadow-inner border border-gray-50">
-                       <div className="flex items-center gap-2 text-xs text-gray-500 font-medium truncate"><Mail size={14} className="text-green-600 flex-shrink-0"/> {doc.email}</div>
-                       <div className="flex items-center gap-2 text-[11px] font-black text-gray-700 uppercase"><BookOpen size={14} className="text-blue-500 flex-shrink-0"/> {doc.grado_asignado || 'N/A'} - "{doc.seccion_asignada || 'N/A'}"</div>
-                    </div>
-                    <button 
-                      onClick={() => { localStorage.setItem("editDocenteID", doc.id); navigate("/dashboard/docentes"); }} 
-                      className="w-full py-3 bg-white text-gray-600 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all border border-gray-100 shadow-sm"
-                    >
-                      Gestionar Perfil
-                    </button>
-                  </motion.div>
-                ))}
-              </div>
             ) : selected === "distribucion" ? (
               <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
@@ -331,8 +289,8 @@ const ArchivosGenerales = () => {
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-[2.5rem] border border-blue-100 shadow-sm relative overflow-hidden group text-left">
                     <UserCheck size={64} className="absolute -right-4 -bottom-4 text-blue-100 opacity-50 group-hover:scale-110 transition-transform"/>
-                    <p className="text-[10px] font-black text-blue-600 uppercase mb-2 tracking-widest">Planta Docente</p>
-                    <h3 className="text-4xl font-black text-blue-800">{docentes.length} <span className="text-sm font-bold text-gray-400">Profs.</span></h3>
+                    <p className="text-[10px] font-black text-blue-600 uppercase mb-2 tracking-widest">Representantes</p>
+                    <h3 className="text-4xl font-black text-blue-800">{representantes.length} <span className="text-sm font-bold text-gray-400">Reps.</span></h3>
                   </div>
                   <div className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-[2.5rem] border border-orange-100 shadow-sm relative overflow-hidden group text-left">
                     <PieChart size={64} className="absolute -right-4 -bottom-4 text-orange-100 opacity-50 group-hover:scale-110 transition-transform"/>

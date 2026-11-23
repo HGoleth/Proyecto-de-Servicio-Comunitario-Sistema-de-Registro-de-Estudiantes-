@@ -260,7 +260,7 @@ const Reportes = () => {
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-32 pt-16 text-center text-[9px] font-bold italic uppercase px-10">
-          <div className="border-t border-black pt-1">Docente de Aula / Guía</div>
+          <div className="border-t border-black pt-1">Coordinación de Control de Estudios</div>
           <div className="border-t border-black pt-1 text-right flex flex-col items-end">
             <span>Fecha de Emisión: {new Date().toLocaleDateString()}</span>
           </div>

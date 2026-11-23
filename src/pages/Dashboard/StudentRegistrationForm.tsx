@@ -50,19 +50,6 @@ const StudentRegistrationForm: React.FC<StudentRegistrationFormProps> = ({ nivel
   
   const [cropModal, setCropModal] = useState<{ open: boolean; type: "student" | "rep" | null; src: string }>({ open: false, type: null, src: "" });
   const [notification, setNotification] = useState<ToastNotificationState>({ show: false, type: "", msg: "" });
-  const [docentes, setDocentes] = useState<any[]>([]); 
-
-  useEffect(() => {
-    const cargarDocentes = async () => {
-      try {
-        const data = await (window as any).electron.getDocentes();
-        setDocentes(data || []);
-      } catch (e) {
-        console.error("Error cargando docentes:", e);
-      }
-    };
-    cargarDocentes();
-  }, []);
 
   const initialForm = {
     nivel: nivel,
@@ -75,7 +62,7 @@ const StudentRegistrationForm: React.FC<StudentRegistrationFormProps> = ({ nivel
     repName: "", repFirstName: "", repLastName: "", repCI: "", repPhone: "0424", relationship: "",
     
     height: "", weight: "", shirtSize: "", pantsSize: "", shoeSize: "", allergies: "", medicalCondition: "", bloodType: "",
-    previousSchool: "U.E. República de Chile", deaCode: "OD01461703", grade: "", section: "", schoolYear: "2025-2026", guideTeacher: "", 
+    previousSchool: "U.E. República de Chile", deaCode: "OD01461703", grade: "", section: "", schoolYear: "2025-2026",
     admissionDate: new Date().toISOString().split('T')[0],
     pendingSubjects: '',
     
@@ -261,7 +248,7 @@ const validateStep = (currentStep: number) => {
     "repFirstName", "repLastName",       // Nuevos campos desglosados
     "motherName", "fatherName", "repName", 
     "relationship", "placeOfBirth", "entity", "country", 
-    "municipality", "parish", "sector", "allergies", "guideTeacher"
+    "municipality", "parish", "sector", "allergies"
   ];
 
   // Lógica de validación para campos numéricos
@@ -1172,73 +1159,6 @@ const validateStep = (currentStep: number) => {
               {["A", "B", "C", "D", "U"].map(s => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
-        </div>
-
-        <div className="space-y-4 text-left">
-          <label className="text-xs text-green-700 font-bold uppercase ml-1 tracking-widest flex items-center gap-2">
-            <GraduationCap size={16}/> Seleccione al Docente Guía
-          </label>
-          {(!form.grade || !form.section) ? (
-            <div className="p-10 border-2 border-dashed border-green-200 rounded-[2rem] bg-white/50 text-center">
-              <p className="text-gray-400 font-medium italic">Elija primero Grado y Sección para ver los docentes disponibles.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {(() => {
-                const filteredDocentes = docentes.filter(d => 
-                  (d.nivel === nivel || (!d.nivel && nivel === "Primaria")) && 
-                  (d.grado_asignado === form.grade || !d.grado_asignado) && 
-                  (d.seccion_asignada === form.section || !d.seccion_asignada)
-                );
-
-                if (filteredDocentes.length === 0) {
-                  return (
-                    <div className="p-6 border-2 border-dashed border-gray-200 rounded-[2rem] bg-gray-50/50 text-center col-span-2">
-                      <p className="text-gray-400 text-xs font-semibold italic">
-                        No hay docentes registrados asignados a {form.grade} "{form.section}" ({nivel}). Puede continuar la inscripción sin asignar docente guía.
-                      </p>
-                    </div>
-                  );
-                }
-
-                return filteredDocentes.map((docente: any) => {
-                  const docNombre = docente?.nombre || "";
-                  const docApellido = docente?.apellido || "";
-                  const docNombreCompleto = `${docNombre} ${docApellido}`.trim();
-                  const inicial = docNombre.charAt(0) || "D";
-                  const isSelected = form.guideTeacher === docNombreCompleto;
-
-                  return (
-                    <button
-                      key={docente.id || Math.random()}
-                      type="button"
-                      onClick={() => setForm(prev => ({ ...prev, guideTeacher: docNombreCompleto }))}
-                      className={`flex items-center gap-4 p-4 rounded-3xl border-2 transition-all text-left ${
-                        isSelected
-                          ? "bg-green-600 border-green-600 text-white shadow-lg"
-                          : "bg-white border-gray-100 text-gray-700 hover:border-green-300 shadow-sm"
-                      }`}
-                    >
-                      <div className="w-12 h-12 rounded-2xl overflow-hidden bg-gray-100 shrink-0">
-                        {docente.foto ? (
-                          <img src={docente.foto} className="w-full h-full object-cover" alt={docNombreCompleto} />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center font-black text-green-600">
-                            {inicial}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-bold truncate">{docNombreCompleto || "Docente"}</h4>
-                        <p className="text-[9px] font-black uppercase tracking-widest opacity-70">Docente Asignado</p>
-                      </div>
-                      {isSelected && <CheckCircle size={20} />}
-                    </button>
-                  );
-                });
-              })()}
-            </div>
-          )}
         </div>
       </div>
 

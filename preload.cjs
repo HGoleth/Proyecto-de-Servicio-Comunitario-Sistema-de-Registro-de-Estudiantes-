@@ -31,12 +31,6 @@ contextBridge.exposeInMainWorld('electron', {
   updateConfig: (data) => ipcRenderer.invoke('update-config', data),
   createBackup: () => ipcRenderer.invoke('create-backup'),
 
-  // MÉTODOS PARA PERSONAL DOCENTE
-  getDocentes: () => ipcRenderer.invoke('get-docentes'),
-  registerDocente: (data) => ipcRenderer.invoke('register-docente', data),
-  updateDocente: (id, data) => ipcRenderer.invoke('update-docente', id, data),
-  deleteDocente: (id) => ipcRenderer.invoke('delete-docente', id),
-
   // Control de Ventana
   minimize: () => ipcRenderer.invoke('window-minimize'),
   maximize: () => ipcRenderer.invoke('window-maximize'),

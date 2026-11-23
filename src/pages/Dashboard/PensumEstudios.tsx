@@ -167,10 +167,11 @@ export const PensumEstudios: React.FC = () => {
     return new Set(materiasDelGrado.map(m => m.area).filter(Boolean)).size;
   }, [materiasDelGrado]);
 
-  // Generador de código automático sugerido
+  // Generador de código automático sugerido (Clave Única)
   const generarCodigoSugerido = (nombre: string, gradoNombre: string) => {
-    const prefix = nombre.substring(0, 3).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const gradClean = gradoNombre.replace(/\s+/g, "").substring(0, 3).toUpperCase();
+    const cleanName = nombre.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]/g, "");
+    const prefix = cleanName.substring(0, 3) || "MAT";
+    const gradClean = gradoNombre.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "").toUpperCase();
     return `${prefix}-${gradClean}`;
   };
 
@@ -195,7 +196,7 @@ export const PensumEstudios: React.FC = () => {
     setEditingMateria(m);
     setFormMateria({
       nombre: m.nombre,
-      codigo: m.codigo || "",
+      codigo: m.codigo || m.id || "",
       horasSemanales: m.horasSemanales || 4,
       area: m.area || AREAS_FORMACION[0],
       otraAreaDescripcion: m.otraAreaDescripcion || "",
@@ -206,7 +207,7 @@ export const PensumEstudios: React.FC = () => {
     setModalOpen(true);
   };
 
-  // Guardar materia (Agregar o Editar)
+  // Guardar materia (Agregar o Editar) con el código como clave única
   const handleSaveMateria = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formMateria.nombre.trim()) {
@@ -218,13 +219,30 @@ export const PensumEstudios: React.FC = () => {
       ? formMateria.codigo.trim().toUpperCase() 
       : generarCodigoSugerido(formMateria.nombre, formMateria.grado);
 
+    if (!codigoFinal) {
+      showToast("error", "El código único de la materia es obligatorio.");
+      return;
+    }
+
+    // Validar código único (Clave Única de la Materia)
+    const codigoDuplicado = materias.some(m => 
+      m.periodo === periodo &&
+      (m.codigo || m.id || "").trim().toUpperCase() === codigoFinal &&
+      (!editingMateria || ((m.codigo || m.id) !== (editingMateria.codigo || editingMateria.id) && m.id !== editingMateria.id))
+    );
+
+    if (codigoDuplicado) {
+      showToast("error", `El código "${codigoFinal}" ya está registrado como clave única de otra materia en este periodo.`);
+      return;
+    }
+
     // Validar nombre duplicado en el mismo grado y periodo
     const esDuplicado = materias.some(m => 
       m.periodo === periodo &&
       m.grado === formMateria.grado &&
       m.nivel === formMateria.nivel &&
       m.nombre.trim().toLowerCase() === formMateria.nombre.trim().toLowerCase() &&
-      (!editingMateria || m.id !== editingMateria.id)
+      (!editingMateria || ((m.codigo || m.id) !== (editingMateria.codigo || editingMateria.id) && m.id !== editingMateria.id))
     );
 
     if (esDuplicado) {
@@ -232,10 +250,11 @@ export const PensumEstudios: React.FC = () => {
       return;
     }
 
-    const payload: MateriaPensum = {
-      id: editingMateria ? editingMateria.id : `mat_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
-      nombre: formMateria.nombre.trim(),
+    const payload: MateriaPensum & { previousId?: string } = {
+      id: codigoFinal,
       codigo: codigoFinal,
+      previousId: editingMateria ? (editingMateria.id || editingMateria.codigo) : undefined,
+      nombre: formMateria.nombre.trim(),
       horasSemanales: Number(formMateria.horasSemanales) || 1,
       area: formMateria.area,
       otraAreaDescripcion: formMateria.area === "Otra Área" ? formMateria.otraAreaDescripcion.trim() : undefined,
@@ -259,7 +278,8 @@ export const PensumEstudios: React.FC = () => {
         // Fallback local
         let updated: MateriaPensum[];
         if (editingMateria) {
-          updated = materias.map(m => m.id === editingMateria.id ? payload : m);
+          const targetKey = editingMateria.codigo || editingMateria.id;
+          updated = materias.map(m => ((m.codigo || m.id) === targetKey || m.id === editingMateria.id) ? payload : m);
         } else {
           updated = [...materias, payload];
         }
@@ -280,24 +300,25 @@ export const PensumEstudios: React.FC = () => {
     setDeleteModalOpen(true);
   };
 
-  // Confirmar eliminación
+  // Confirmar eliminación usando el código único
   const handleConfirmDelete = async () => {
     if (!materiaToDelete) return;
+    const targetKey = materiaToDelete.codigo || materiaToDelete.id;
 
     try {
       if ((window as any).electron?.deletePensumMateria) {
-        const res = await (window as any).electron.deletePensumMateria(materiaToDelete.id);
+        const res = await (window as any).electron.deletePensumMateria(targetKey);
         if (res.success) {
-          showToast("success", `Materia "${materiaToDelete.nombre}" eliminada del pensum.`);
+          showToast("success", `Materia "${materiaToDelete.nombre}" (${targetKey}) eliminada del pensum.`);
           await fetchPensum();
         } else {
           showToast("error", res.message || "No se pudo eliminar la materia.");
         }
       } else {
-        const updated = materias.filter(m => m.id !== materiaToDelete.id);
+        const updated = materias.filter(m => (m.codigo || m.id) !== targetKey && m.id !== materiaToDelete.id);
         setMaterias(updated);
         localStorage.setItem("sistema_pensum_backup", JSON.stringify(updated));
-        showToast("success", `Materia "${materiaToDelete.nombre}" eliminada.`);
+        showToast("success", `Materia "${materiaToDelete.nombre}" (${targetKey}) eliminada.`);
       }
     } catch (err) {
       console.error(err);
@@ -703,7 +724,7 @@ export const PensumEstudios: React.FC = () => {
                 <thead>
                   <tr className="bg-gray-50/90 border-b border-gray-200 text-[10px] font-black text-gray-500 uppercase tracking-wider">
                     <th className="py-3.5 px-4 w-12 text-center">#</th>
-                    <th className="py-3.5 px-4 w-32">Código</th>
+                    <th className="py-3.5 px-4 w-36">Código Único (PK)</th>
                     <th className="py-3.5 px-6">Nombre de la Asignatura</th>
                     <th className="py-3.5 px-4">Área de Formación</th>
                     <th className="py-3.5 px-4 text-center w-28">Horas / Sem</th>
@@ -714,7 +735,7 @@ export const PensumEstudios: React.FC = () => {
                 <tbody className="divide-y divide-gray-100 bg-white">
                   {materiasFiltradas.map((m, index) => (
                     <tr 
-                      key={m.id} 
+                      key={m.codigo || m.id} 
                       className="hover:bg-green-50/20 transition-colors group"
                     >
                       <td className="py-4 px-4 text-center text-xs font-bold text-gray-400">
@@ -722,8 +743,8 @@ export const PensumEstudios: React.FC = () => {
                       </td>
 
                       <td className="py-4 px-4">
-                        <span className="font-mono text-xs font-black bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg border border-gray-200">
-                          {m.codigo || "S/C"}
+                        <span className="font-mono text-xs font-black bg-green-50 text-green-800 px-2.5 py-1 rounded-lg border border-green-200">
+                          {m.codigo || m.id}
                         </span>
                       </td>
 
@@ -888,17 +909,18 @@ export const PensumEstudios: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Código */}
+                  {/* Código (Clave Única) */}
                   <div className="flex flex-col gap-1">
-                    <label className="text-xs font-bold text-gray-600 uppercase tracking-wider">
-                      Código de Materia
+                    <label className="text-xs font-bold text-green-700 uppercase tracking-wider flex justify-between">
+                      <span>Código de Materia (Clave Única) *</span>
                     </label>
                     <input
                       type="text"
-                      placeholder="Ej: MAT-1ANO"
+                      placeholder="Ej: MAT-1ERANO"
                       value={formMateria.codigo}
                       onChange={(e) => setFormMateria(prev => ({ ...prev, codigo: e.target.value.toUpperCase() }))}
                       className="border border-gray-300 rounded-xl p-3 bg-white text-xs font-mono font-bold text-gray-800 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 shadow-sm"
+                      required
                     />
                   </div>
 
@@ -1126,10 +1148,9 @@ export const PensumEstudios: React.FC = () => {
   );
 };
 
-// Generador de respaldo local
+// Generador de respaldo local (con código de materia como clave única)
 function generarPensumLocal(periodo: string): MateriaPensum[] {
   const result: MateriaPensum[] = [];
-  let count = 1;
 
   // Primaria
   ["1ero", "2do", "3ero", "4to", "5to", "6to"].forEach(g => {
@@ -1141,10 +1162,11 @@ function generarPensumLocal(periodo: string): MateriaPensum[] {
       { n: "Educación Estética y Cultura", c: "EST", h: 3, a: "Arte y Patrimonio" },
       { n: "Educación Física y Deportes", c: "EDF", h: 3, a: "Educación Física y Deporte" },
     ].forEach(m => {
+      const cod = `${m.c}-${g.toUpperCase()}`;
       result.push({
-        id: `local_${count++}`,
+        id: cod,
+        codigo: cod,
         nombre: m.n,
-        codigo: `${m.c}-${g.toUpperCase()}`,
         grado: g,
         nivel: "Primaria",
         periodo: periodo,
@@ -1167,10 +1189,11 @@ function generarPensumLocal(periodo: string): MateriaPensum[] {
       { n: "Orientación y Convivencia", c: "ORI", h: 2, a: "Orientación y Convivencia" },
       { n: "Grupos de Creación y Producción", c: "CRP", h: 3, a: "Producción y Cultura" },
     ].forEach(m => {
+      const cod = `${m.c}-${g.replace(/\s+/g, '').toUpperCase()}`;
       result.push({
-        id: `local_${count++}`,
+        id: cod,
+        codigo: cod,
         nombre: m.n,
-        codigo: `${m.c}-${g.replace(/\s+/g, '').toUpperCase()}`,
         grado: g,
         nivel: "Secundaria",
         periodo: periodo,

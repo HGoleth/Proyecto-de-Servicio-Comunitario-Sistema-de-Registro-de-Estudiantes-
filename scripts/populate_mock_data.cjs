@@ -1,4 +1,4 @@
-const mysqlDb = require('./frontend_institucion/mysqlDb.cjs');
+const mysqlDb = require('../mysqlDb.cjs');
 const fs = require('fs');
 const path = require('path');
 
@@ -52,352 +52,6 @@ const SEED_DATA = {
       ruta_archivo: "documentos/Plan_Evacuacion_Institucional.pdf",
       tamano: 1420500,
       creado_en: new Date("2026-10-10T11:00:00Z")
-    }
-  ],
-
-  docentes: [
-    // --- INICIAL ---
-    {
-      id: "DOC-INI-01",
-      ci: "V-16.782.341",
-      nombre: "Carmen Elena",
-      apellido: "Rodríguez Velásquez",
-      email: "carmen.rodriguez@chile.edu.ve",
-      telefono: "0414-8765432",
-      direccion: "Calle Principal El Espinal, Casa #14",
-      nivel: "Inicial",
-      grado_asignado: "Maternal",
-      seccion_asignada: "A",
-      especialidad: "Educación Preescolar",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Formación Personal y Social", "Relación con el Ambiente"]
-    },
-    {
-      id: "DOC-INI-02",
-      ci: "V-18.432.109",
-      nombre: "Laura Sofía",
-      apellido: "Navarro Hernández",
-      email: "laura.navarro@chile.edu.ve",
-      telefono: "0424-9123456",
-      direccion: "Sector Las Barrancas, Calle Bolívar #22",
-      nivel: "Inicial",
-      grado_asignado: "3er Grupo",
-      seccion_asignada: "A",
-      especialidad: "Educación Inicial",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Comunicación y Expresión", "Educación Física y Recreación Motriz"]
-    },
-
-    // --- PRIMARIA ---
-    {
-      id: "DOC-PRI-01",
-      ci: "V-14.852.147",
-      nombre: "María Eugenia",
-      apellido: "Gómez Salazar",
-      email: "maria.gomez@chile.edu.ve",
-      telefono: "0414-1234567",
-      direccion: "La Asunción, Calle El Sol #12",
-      nivel: "Primaria",
-      grado_asignado: "1ero",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-02",
-      ci: "V-15.632.418",
-      nombre: "Patricia Valentina",
-      apellido: "Ramos Brito",
-      email: "patricia.ramos@chile.edu.ve",
-      telefono: "0424-2345678",
-      direccion: "San Juan Bautista, Calle Comercio #5",
-      nivel: "Primaria",
-      grado_asignado: "1ero",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-03",
-      ci: "V-17.124.985",
-      nombre: "Ana Gabriela",
-      apellido: "Castillo Marcano",
-      email: "ana.castillo@chile.edu.ve",
-      telefono: "0416-3456789",
-      direccion: "El Espinal, Sector La Plaza #8",
-      nivel: "Primaria",
-      grado_asignado: "2do",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-04",
-      ci: "V-13.987.412",
-      nombre: "Carlos Eduardo",
-      apellido: "Méndez Fuentes",
-      email: "carlos.mendez@chile.edu.ve",
-      telefono: "0412-4567890",
-      direccion: "Villa Rosa, Manzana D Casa #15",
-      nivel: "Primaria",
-      grado_asignado: "2do",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-05",
-      ci: "V-18.254.789",
-      nombre: "Daniela Alejandra",
-      apellido: "Rivas Moreno",
-      email: "daniela.rivas@chile.edu.ve",
-      telefono: "0414-5678901",
-      direccion: "Cotoperiz, Urbanización Los Pinos #4",
-      nivel: "Primaria",
-      grado_asignado: "3ero",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-06",
-      ci: "V-12.874.125",
-      nombre: "José Gregorio",
-      apellido: "Hernández Gil",
-      email: "jose.hernandez@chile.edu.ve",
-      telefono: "0424-6789012",
-      direccion: "Las Barrancas, Calle La Marina #10",
-      nivel: "Primaria",
-      grado_asignado: "3ero",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-07",
-      ci: "V-16.321.458",
-      nombre: "Beatriz Coromoto",
-      apellido: "Díaz López",
-      email: "beatriz.diaz@chile.edu.ve",
-      telefono: "0416-7890123",
-      direccion: "El Valle del Espíritu Santo #33",
-      nivel: "Primaria",
-      grado_asignado: "4to",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-08",
-      ci: "V-14.258.963",
-      nombre: "Roberto Antonio",
-      apellido: "Silva Marín",
-      email: "roberto.silva@chile.edu.ve",
-      telefono: "0412-8901234",
-      direccion: "Porlamar, Av. 4 de Mayo Res. El Parque",
-      nivel: "Primaria",
-      grado_asignado: "4to",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-09",
-      ci: "V-17.896.321",
-      nombre: "Lucía Isabel",
-      apellido: "Quintero Suárez",
-      email: "lucia.quintero@chile.edu.ve",
-      telefono: "0414-9012345",
-      direccion: "El Espinal, Sector Banco Obrero Casa #7",
-      nivel: "Primaria",
-      grado_asignado: "5to",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-10",
-      ci: "V-15.412.369",
-      nombre: "Marcos Aurelio",
-      apellido: "Peña Briceño",
-      email: "marcos.pena@chile.edu.ve",
-      telefono: "0424-0123456",
-      direccion: "San Juan Bautista, Calle Sucre #19",
-      nivel: "Primaria",
-      grado_asignado: "5to",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-11",
-      ci: "V-16.985.214",
-      nombre: "Elena Teresa",
-      apellido: "Morales Campos",
-      email: "elena.morales@chile.edu.ve",
-      telefono: "0416-1234560",
-      direccion: "La Guardia, Sector El Palito",
-      nivel: "Primaria",
-      grado_asignado: "6to",
-      seccion_asignada: "A",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-    {
-      id: "DOC-PRI-12",
-      ci: "V-13.654.789",
-      nombre: "Fernando Javier",
-      apellido: "Torres Alfonzo",
-      email: "fernando.torres@chile.edu.ve",
-      telefono: "0412-2345671",
-      direccion: "El Espinal Centro, Calle Nueva #3",
-      nivel: "Primaria",
-      grado_asignado: "6to",
-      seccion_asignada: "B",
-      especialidad: "Educación Integral",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales"]
-    },
-
-    // --- SECUNDARIA ---
-    {
-      id: "DOC-SEC-01",
-      ci: "V-11.874.521",
-      nombre: "Ricardo Andrés",
-      apellido: "Velásquez Marval",
-      email: "ricardo.velasquez@chile.edu.ve",
-      telefono: "0414-3456782",
-      direccion: "Porlamar, Urb. Costa Azul Edif. Coral",
-      nivel: "Secundaria",
-      grado_asignado: "5to Año",
-      seccion_asignada: "A",
-      especialidad: "Matemáticas y Física",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Matemáticas", "Física"]
-    },
-    {
-      id: "DOC-SEC-02",
-      ci: "V-14.325.698",
-      nombre: "Verónica del Valle",
-      apellido: "Salazar Guerra",
-      email: "veronica.salazar@chile.edu.ve",
-      telefono: "0424-4567893",
-      direccion: "El Valle, Sector Toporo Casa #2",
-      nivel: "Secundaria",
-      grado_asignado: "4to Año",
-      seccion_asignada: "A",
-      especialidad: "Castellano y Literatura",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Castellano", "Orientación y Convivencia"]
-    },
-    {
-      id: "DOC-SEC-03",
-      ci: "V-15.987.123",
-      nombre: "Luis Alberto",
-      apellido: "Martínez Rivas",
-      email: "luis.martinez@chile.edu.ve",
-      telefono: "0416-5678904",
-      direccion: "Pampatar, Calle Maneiro #8",
-      nivel: "Secundaria",
-      grado_asignado: "3er Año",
-      seccion_asignada: "A",
-      especialidad: "Biología y Química",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Biología", "Química", "Ciencias Naturales"]
-    },
-    {
-      id: "DOC-SEC-04",
-      ci: "V-16.541.236",
-      nombre: "Sandra Carolina",
-      apellido: "Marcano Cedeño",
-      email: "sandra.marcano@chile.edu.ve",
-      telefono: "0412-6789015",
-      direccion: "El Espinal, Sector Los Cocos #18",
-      nivel: "Secundaria",
-      grado_asignado: "2do Año",
-      seccion_asignada: "A",
-      especialidad: "Ciencias Sociales y GHC",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Geografía, Historia y Ciudadanía", "Formación para la Soberanía"]
-    },
-    {
-      id: "DOC-SEC-05",
-      ci: "V-18.741.258",
-      nombre: "Diego Alejandro",
-      apellido: "Vargas Millán",
-      email: "diego.vargas@chile.edu.ve",
-      telefono: "0414-7890126",
-      direccion: "San Juan Bautista, Calle El Pozo",
-      nivel: "Secundaria",
-      grado_asignado: "1er Año",
-      seccion_asignada: "A",
-      especialidad: "Inglés y Lenguas Extranjeras",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Inglés y Otras Lenguas"]
-    },
-    {
-      id: "DOC-SEC-06",
-      ci: "V-13.258.741",
-      nombre: "Héctor Ramón",
-      apellido: "Romero Patiño",
-      email: "hector.romero@chile.edu.ve",
-      telefono: "0424-8901237",
-      direccion: "Los Robles, Calle Principal #40",
-      nivel: "Secundaria",
-      grado_asignado: "5to Año",
-      seccion_asignada: "B",
-      especialidad: "Educación Física y Deporte",
-      es_especialista: 0,
-      estatus: "Activo",
-      materias: ["Educación Física"]
-    },
-
-    // --- AULA ESPECIAL ---
-    {
-      id: "DOC-ESP-01",
-      ci: "V-15.123.456",
-      nombre: "Yelitza Josefina",
-      apellido: "Marín Fermín",
-      email: "yelitza.marin@chile.edu.ve",
-      telefono: "0414-9012348",
-      direccion: "El Espinal, Sector Sabana Grande #11",
-      nivel: "Primaria",
-      grado_asignado: "Aula Especial",
-      seccion_asignada: "U",
-      especialidad: "Dificultades del Aprendizaje",
-      es_especialista: 1,
-      estatus: "Activo",
-      materias: ["Atención Psicopedagógica Integral", "Desarrollo de Habilidades"]
     }
   ],
 
@@ -500,8 +154,8 @@ const SEED_DATA = {
       telefono_habitacion: "0295-2879900",
       email: "ana.rondon@gmail.com",
       direccion: "El Espinal, Sector Las Casitas #30",
-      ocupacion: "Docente de Primaria",
-      lugar_trabajo: "U.E. Bolivariana El Valle",
+      ocupacion: "Analista de Recursos Humanos",
+      lugar_trabajo: "Alcaldía del Municipio Díaz",
       observaciones: "Mantiene comunicación constante vía WhatsApp."
     },
     {
@@ -667,12 +321,10 @@ async function run() {
 
   // 1. Limpieza de tablas dependientes manteniendo pensum_materias y usuarios
   console.log("Limpiando tablas para carga limpia de pruebas...");
-  await mysqlDb.pool.query("DELETE FROM asignaciones_docentes");
   await mysqlDb.pool.query("DELETE FROM evaluaciones_individuales");
   await mysqlDb.pool.query("DELETE FROM registro_notas_seccion");
   await mysqlDb.pool.query("DELETE FROM estudiantes");
   await mysqlDb.pool.query("DELETE FROM representantes");
-  await mysqlDb.pool.query("DELETE FROM docentes");
   await mysqlDb.pool.query("DELETE FROM documentos_institucionales");
 
   // 2. Insertar Configuración Institucional
@@ -729,23 +381,7 @@ async function run() {
     ]);
   }
 
-  // 5. Insertar Docentes
-  console.log("Registrando Docentes y Profesores...");
-  for (const d of SEED_DATA.docentes) {
-    await mysqlDb.pool.query(`
-      INSERT INTO docentes (
-        id, usuario_id, ci, nombre, apellido, email, telefono, direccion,
-        nivel, grado_asignado, seccion_asignada, especialidad, es_especialista,
-        estatus, materias_json
-      ) VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [
-      d.id, d.ci, d.nombre, d.apellido, d.email, d.telefono, d.direccion,
-      d.nivel, d.grado_asignado, d.seccion_asignada, d.especialidad, d.es_especialista,
-      d.estatus, JSON.stringify(d.materias)
-    ]);
-  }
-
-  // 6. Generar Estudiantes
+  // 5. Generar Estudiantes
   console.log("Generando y Registrando Estudiantes...");
   const mockStudents = [];
   const statusOptions = ["Inscrito", "Inscrito", "Inscrito", "Inscrito", "Pendiente", "Retirado"];
@@ -815,7 +451,6 @@ async function run() {
       periodo_escolar: periodoEscolar,
       estatus: estatus,
       fecha_ingreso: `${periodoEscolar.split('-')[0]}-09-16`,
-      docente_guia: 'Prof. Carmen Elena Rodríguez',
       colegio_procedencia: 'U.E. República de Chile',
       codigo_dea_procedencia: 'OD01461703',
       repite_grado: 'No',
@@ -853,20 +488,20 @@ async function run() {
         id, ci, id_escolar, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
         nombre_completo, fecha_nacimiento, edad, genero, lugar_nacimiento, entidad_nacimiento,
         pais_nacimiento, direccion, municipio, parroquia, sector, email,
-        nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso, docente_guia,
+        nivel, grado, seccion, periodo_escolar, estatus, fecha_ingreso,
         colegio_procedencia, codigo_dea_procedencia, repite_grado, grupo_sanguineo,
         estatura, peso, talla_camisa, talla_pantalon, talla_calzado, alergias, condicion_medica,
         representante_id, rep_nombre, rep_ci, rep_telefono, rep_parentesco,
         madre_nombre, madre_ci, madre_telefono, padre_nombre, padre_ci, padre_telefono,
         obs_personal, obs_familiar, obs_salud, observaciones, foto_estudiante, foto_representante,
         archivos_inscripcion, archivos_traslado
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, Object.values(studentRow));
 
     mockStudents.push(studentRow);
   }
 
-  // 7. Clonar Pensum para 2026-2027 si aún no está
+  // 6. Clonar Pensum para 2026-2027 si aún no está
   console.log("Verificando Pensum para 2026-2027...");
   const [pensumDest] = await mysqlDb.pool.query("SELECT COUNT(*) as c FROM pensum_materias WHERE periodo = '2026-2027'");
   if (pensumDest[0].c === 0) {
@@ -874,26 +509,9 @@ async function run() {
     await mysqlDb.clonarPensumPeriodo('2025-2026', '2026-2027');
   }
 
-  // 8. Crear Asignaciones Docentes
-  console.log("Creando Asignaciones Docentes a Secciones y Materias...");
-  const [materiasPensum] = await mysqlDb.pool.query("SELECT id, nombre, grado, nivel, periodo FROM pensum_materias WHERE periodo = '2026-2027'");
-  for (const doc of SEED_DATA.docentes) {
-    if (doc.materias && doc.materias.length > 0) {
-      for (const matNombre of doc.materias) {
-        const mat = materiasPensum.find(m => m.grado === doc.grado_asignado && m.nombre.toLowerCase().includes(matNombre.toLowerCase()));
-        if (mat) {
-          const asigId = `asig_${doc.id}_${mat.id}_${doc.seccion_asignada}`;
-          await mysqlDb.pool.query(`
-            INSERT INTO asignaciones_docentes (id, docente_id, materia_id, materia_nombre, grado, seccion, periodo)
-            VALUES (?, ?, ?, ?, ?, ?, '2026-2027')
-            ON DUPLICATE KEY UPDATE materia_nombre = VALUES(materia_nombre)
-          `, [asigId, doc.id, mat.id, mat.nombre, doc.grado_asignado, doc.seccion_asignada]);
-        }
-      }
-    }
-  }
+  const [materiasPensum] = await mysqlDb.pool.query("SELECT id, codigo, nombre, grado, nivel, periodo FROM pensum_materias WHERE periodo = '2026-2027'");
 
-  // 9. Crear Registros de Notas para Secciones Clave
+  // 7. Crear Registros de Notas para Secciones Clave
   console.log("Generando Calificaciones y Planificaciones de Notas...");
   const sampleSections = [
     { seccionId: "1ero-A-Primaria", grado: "1ero", seccion: "A", nivel: "Primaria", materia: "Aula Regular" },
@@ -974,7 +592,6 @@ async function run() {
         fecha: d.creado_en.toISOString().split('T')[0]
       }))
     },
-    docentes: SEED_DATA.docentes,
     representantes: SEED_DATA.representantes,
     estudiantes: mockStudents.map(e => ({
       ...e,
@@ -1001,7 +618,6 @@ async function run() {
       placeOfBirth: e.lugar_nacimiento,
       entity: e.entidad_nacimiento,
       country: e.pais_nacimiento,
-      guideTeacher: e.docente_guia,
       previousSchool: e.colegio_procedencia,
       deaCode: e.codigo_dea_procedencia,
       repeatsYear: e.repite_grado,

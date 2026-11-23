@@ -8,7 +8,7 @@ import {
   ArrowLeft, Plus, Trash2, CheckCircle,
   ChevronLeft,
   Calendar, Settings2, ListChecks,
-  FileText, UserCheck, TrendingUp,
+  FileText, TrendingUp,
   AlertTriangle, Clock, FileDown
 } from "lucide-react";
 
@@ -16,7 +16,7 @@ interface CustomElectron {
   obtenerMaterias: () => Promise<any[]>;
   getPensum?: () => Promise<any[]>;
   getStudents: () => Promise<any[]>;
-  getDocentes: () => Promise<any[]>; 
+  getConfig?: () => Promise<any>;
   obtenerDistribucion: () => Promise<any[]>; 
   actualizarConfiguracionLapsos: (datos: any) => Promise<{ success: boolean }>;
   guardarNotasSeccion: (datos: any) => Promise<{ success: boolean }>;
@@ -77,7 +77,6 @@ const Notas: React.FC = () => {
   const [evaluacionesPorLapso, setEvaluacionesPorLapso] = useState<Record<number, any[]>>(DEFAULT_EVALUACIONES);
   const [distribucion, setDistribucion] = useState<any[]>([]);
   const [estudiantes, setEstudiantes] = useState<any[]>([]);
-  const [docentes, setDocentes] = useState<any[]>([]);
   const [pensumMaterias, setPensumMaterias] = useState<any[]>([]);
   const [periodoActivo, setPeriodoActivo] = useState<string>(() => localStorage.getItem("sistema_periodo_activo") || "2025-2026");
   
@@ -101,11 +100,9 @@ const Notas: React.FC = () => {
         if (!electronApi) return;
 
         const sts = await electronApi.getStudents();
-        const docs = await electronApi.getDocentes();
         if (!isMounted) return;
 
         setEstudiantes(sts || []);
-        setDocentes(docs || []);
 
         if (electronApi.getConfig) {
           try {
@@ -434,17 +431,18 @@ const Notas: React.FC = () => {
     }));
   };
 
-  const getDocenteAsignado = (materia: string | null) => {
-    if (!materia || !seccionSel) return "Sin Asignar";
-    const secLetra = seccionSel.seccion || seccionSel.nombre?.replace("Sección ", "").trim() || "A";
-
-    const doc = docentes.find(d => 
-      nivel === "Primaria" 
-      ? (d.grado_asignado === seccionSel.año && (d.seccion_asignada === secLetra || !d.seccion_asignada))
-      : (Array.isArray(d.materiasAsignadas) && d.materiasAsignadas.some((m: any) => 
-          m.materia === materia && m.grado === seccionSel.año && (m.seccion === secLetra || !m.seccion)))
+  const getCodigoMateria = (materia: string | null) => {
+    if (!materia || !seccionSel) return "S/C";
+    const found = pensumMaterias.find(
+      (m: any) => m.nombre?.toLowerCase().trim() === materia.toLowerCase().trim() && m.grado === seccionSel.año
     );
-    return doc ? `${doc.nombre} ${doc.apellido}` : "Sin Asignar";
+    if (found && (found.codigo || found.id)) {
+      return (found.codigo || found.id).toUpperCase();
+    }
+    const cleanName = materia.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Z0-9]/g, "");
+    const prefix = cleanName.substring(0, 3) || "MAT";
+    const gradClean = (seccionSel.año || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "").toUpperCase();
+    return `${prefix}-${gradClean}`;
   };
 
   // Lista de materias para el año seleccionado
@@ -519,7 +517,7 @@ const Notas: React.FC = () => {
         nivel={nivel}
         calcularNotaFinalLapso={calcularNotaFinalLapso}
         calcularPromedioCiclo={calcularPromedioCiclo}
-        getDocenteAsignado={getDocenteAsignado}
+        codigoMateria={getCodigoMateria(materiaSel)}
         periodo={periodoActivo}
       />
 
@@ -617,7 +615,7 @@ const Notas: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {materiasDisponibles.map((materia) => (
                 <button 
-                  key={materia} 
+                  key={getCodigoMateria(materia)} 
                   type="button"
                   onClick={() => { setMateriaSel(materia); setPaso("estudiantes"); }} 
                   className="p-6 bg-white rounded-3xl border border-gray-100 hover:border-[#5564eb] hover:shadow-lg shadow-sm transition-all text-left flex flex-col justify-between h-40 group"
@@ -627,9 +625,9 @@ const Notas: React.FC = () => {
                       <BookOpen size={22} />
                     </div>
                     <div className="text-right">
-                      <p className="text-[9px] font-black text-gray-400 uppercase mb-0.5">Docente</p>
-                      <p className="text-xs font-black text-[#5564eb] uppercase truncate max-w-[130px] italic">
-                        {getDocenteAsignado(materia)}
+                      <p className="text-[9px] font-black text-gray-400 uppercase mb-0.5">Código Único</p>
+                      <p className="text-xs font-mono font-black text-[#5564eb] bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-100 uppercase">
+                        {getCodigoMateria(materia)}
                       </p>
                     </div>
                   </div>
@@ -685,12 +683,12 @@ const Notas: React.FC = () => {
 
                   <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center justify-between border border-gray-100">
                     <div>
-                      <p className="text-[10px] font-black text-gray-400 uppercase mb-1 tracking-wider">Docente Responsable</p>
-                      <p className="text-sm font-black text-gray-700 uppercase truncate max-w-[160px] italic">
-                        {getDocenteAsignado(materiaSel)}
+                      <p className="text-[10px] font-black text-gray-400 uppercase mb-1 tracking-wider">Código Único de Materia</p>
+                      <p className="text-lg font-mono font-black text-[#5564eb] uppercase">
+                        {getCodigoMateria(materiaSel)}
                       </p>
                     </div>
-                    <UserCheck className="text-blue-300" size={32}/>
+                    <BookOpen className="text-blue-300" size={32}/>
                   </div>
                 </div>
 
@@ -712,8 +710,8 @@ const Notas: React.FC = () => {
                           {seccionSel?.año} - {seccionSel?.nombre} 
                           <span className="text-[#5564eb] ml-2 font-black">| {materiaSel}</span>
                         </h2>
-                        <p className="text-xs font-bold text-gray-400 uppercase mt-1 tracking-wider italic">
-                          {getDocenteAsignado(materiaSel)}
+                        <p className="text-xs font-mono font-bold text-gray-400 uppercase mt-1 tracking-wider">
+                          Código: {getCodigoMateria(materiaSel)}
                         </p>
                       </div>
                     </div>
