@@ -9,6 +9,30 @@ import {
 
 // PLAN DE ESTUDIOS DE RESPALDO CON CÓDIGO ÚNICO POR MATERIA
 const PLAN_ESTUDIOS_FALLBACK: Record<string, { codigo: string; nombre: string; horas: number; area: string }[]> = {
+  "Maternal": [
+    { codigo: "FPS-MAT", nombre: "Formación Personal, Social y Comunicación", horas: 6, area: "Desarrollo Personal" },
+    { codigo: "RCA-MAT", nombre: "Relación entre los Componentes del Ambiente", horas: 6, area: "Ciencias Naturales y Salud" },
+    { codigo: "EPC-MAT", nombre: "Expresión Plástica, Corporal y Musical", horas: 4, area: "Arte y Patrimonio" },
+    { codigo: "EFM-MAT", nombre: "Educación Física y Recreación Motriz", horas: 4, area: "Educación Física y Deporte" }
+  ],
+  "1er Grupo": [
+    { codigo: "FPS-1GR", nombre: "Formación Personal, Social y Comunicación", horas: 6, area: "Desarrollo Personal" },
+    { codigo: "RCA-1GR", nombre: "Relación entre los Componentes del Ambiente", horas: 6, area: "Ciencias Naturales y Salud" },
+    { codigo: "EPC-1GR", nombre: "Expresión Plástica, Corporal y Musical", horas: 4, area: "Arte y Patrimonio" },
+    { codigo: "EFM-1GR", nombre: "Educación Física y Recreación Motriz", horas: 4, area: "Educación Física y Deporte" }
+  ],
+  "2do Grupo": [
+    { codigo: "FPS-2GR", nombre: "Formación Personal, Social y Comunicación", horas: 6, area: "Desarrollo Personal" },
+    { codigo: "RCA-2GR", nombre: "Relación entre los Componentes del Ambiente", horas: 6, area: "Ciencias Naturales y Salud" },
+    { codigo: "EPC-2GR", nombre: "Expresión Plástica, Corporal y Musical", horas: 4, area: "Arte y Patrimonio" },
+    { codigo: "EFM-2GR", nombre: "Educación Física y Recreación Motriz", horas: 4, area: "Educación Física y Deporte" }
+  ],
+  "3er Grupo": [
+    { codigo: "FPS-3GR", nombre: "Formación Personal, Social y Comunicación", horas: 6, area: "Desarrollo Personal" },
+    { codigo: "RCA-3GR", nombre: "Relación entre los Componentes del Ambiente", horas: 6, area: "Ciencias Naturales y Salud" },
+    { codigo: "EPC-3GR", nombre: "Expresión Plástica, Corporal y Musical", horas: 4, area: "Arte y Patrimonio" },
+    { codigo: "EFM-3GR", nombre: "Educación Física y Recreación Motriz", horas: 4, area: "Educación Física y Deporte" }
+  ],
   "1ero": [
     { codigo: "CAS-1ERO", nombre: "Castellano y Literatura", horas: 6, area: "Lengua y Comunicación" },
     { codigo: "MAT-1ERO", nombre: "Matemáticas para la Vida", horas: 6, area: "Ciencias y Matemáticas" },
@@ -125,7 +149,7 @@ const DistribucionAcademica = () => {
   const location = useLocation();
   const [estudiantes, setEstudiantes] = useState<any[]>([]);
   const [pensumMaterias, setPensumMaterias] = useState<any[]>([]);
-  const [filtroNivel, setFiltroNivel] = useState<"Primaria" | "Secundaria">("Primaria");
+  const [filtroNivel, setFiltroNivel] = useState<"Inicial" | "Primaria" | "Secundaria">("Primaria");
   const [modalOpen, setModalOpen] = useState(false);
   const [seccionSeleccionada, setSeccionSeleccionada] = useState<any>(null);
 
@@ -148,7 +172,7 @@ const DistribucionAcademica = () => {
   useEffect(() => {
     if (location.state) {
       const { autoOpenLevel } = location.state as any;
-      if (autoOpenLevel && (autoOpenLevel === "Primaria" || autoOpenLevel === "Secundaria")) {
+      if (autoOpenLevel && (autoOpenLevel === "Inicial" || autoOpenLevel === "Primaria" || autoOpenLevel === "Secundaria")) {
         setFiltroNivel(autoOpenLevel);
       }
     }
@@ -156,7 +180,9 @@ const DistribucionAcademica = () => {
 
   const gradosOrganizados = useMemo(() => {
     const estructura: any = {};
-    const listaGrados = filtroNivel === "Primaria" 
+    const listaGrados = filtroNivel === "Inicial"
+      ? ["Maternal", "1er Grupo", "2do Grupo", "3er Grupo"]
+      : filtroNivel === "Primaria" 
       ? ["1ero", "2do", "3ero", "4to", "5to", "6to"]
       : ["1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
 
@@ -212,8 +238,8 @@ const DistribucionAcademica = () => {
           <h1 className="text-4xl font-black text-[#5564eb] uppercase tracking-tighter">Distribución Académica</h1>
         </div>
         <div className="flex bg-white p-1.5 rounded-2xl shadow-sm border border-gray-100">
-          {(["Primaria", "Secundaria"] as const).map((nivel) => (
-            <button key={nivel} onClick={() => { setFiltroNivel(nivel); setSeccionSeleccionada(null); }} className={`px-8 py-2.5 rounded-xl text-xs font-black uppercase transition-all ${filtroNivel === nivel ? "bg-[#5564eb] text-white shadow-md shadow-blue-200" : "text-gray-400 hover:text-gray-600"}`}>
+          {(["Inicial", "Primaria", "Secundaria"] as const).map((nivel) => (
+            <button key={nivel} onClick={() => { setFiltroNivel(nivel); setSeccionSeleccionada(null); }} className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase transition-all ${filtroNivel === nivel ? "bg-[#5564eb] text-white shadow-md shadow-blue-200" : "text-gray-400 hover:text-gray-600"}`}>
               {nivel}
             </button>
           ))}

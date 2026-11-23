@@ -2,16 +2,119 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Printer, ArrowLeft, GraduationCap, 
-  School, Eye
+  School, Eye, FileDown
 } from "lucide-react";
 
-const PLAN_ESTUDIOS: Record<string, string[]> = {
-  "Primaria": ["Aula Regular"], 
-  "1er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia"],
-  "2do Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia"],
-  "3er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía"],
-  "4to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía"],
-  "5to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Ciencias de la Tierra", "Geografía, Historia y Ciudadanía"]
+const PLAN_ESTUDIOS_FALLBACK: Record<string, { codigo: string; nombre: string }[]> = {
+  "1ero": [
+    { codigo: "CAS-1ERO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-1ERO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-1ERO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-1ERO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-1ERO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-1ERO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "2do": [
+    { codigo: "CAS-2DO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-2DO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-2DO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-2DO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-2DO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-2DO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "3ero": [
+    { codigo: "CAS-3ERO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-3ERO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-3ERO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-3ERO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-3ERO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-3ERO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "4to": [
+    { codigo: "CAS-4TO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-4TO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-4TO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-4TO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-4TO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-4TO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "5to": [
+    { codigo: "CAS-5TO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-5TO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-5TO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-5TO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-5TO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-5TO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "6to": [
+    { codigo: "CAS-6TO", nombre: "Castellano y Literatura" },
+    { codigo: "MAT-6TO", nombre: "Matemáticas para la Vida" },
+    { codigo: "NAT-6TO", nombre: "Ciencias Naturales y Salud" },
+    { codigo: "SOC-6TO", nombre: "Ciencias Sociales, Identidad y Soberanía" },
+    { codigo: "EST-6TO", nombre: "Educación Estética y Cultura" },
+    { codigo: "EDF-6TO", nombre: "Educación Física, Deporte y Recreación" }
+  ],
+  "1er Año": [
+    { codigo: "CAS-1ERANO", nombre: "Castellano" },
+    { codigo: "ING-1ERANO", nombre: "Inglés y Otras Lenguas" },
+    { codigo: "MAT-1ERANO", nombre: "Matemáticas" },
+    { codigo: "EDF-1ERANO", nombre: "Educación Física" },
+    { codigo: "ART-1ERANO", nombre: "Arte y Patrimonio" },
+    { codigo: "NAT-1ERANO", nombre: "Ciencias Naturales" },
+    { codigo: "GHC-1ERANO", nombre: "Geografía, Historia y Ciudadanía" },
+    { codigo: "ORI-1ERANO", nombre: "Orientación y Convivencia" },
+    { codigo: "CRP-1ERANO", nombre: "Grupos de Creación, Recreación y Producción" }
+  ],
+  "2do Año": [
+    { codigo: "CAS-2DOANO", nombre: "Castellano" },
+    { codigo: "ING-2DOANO", nombre: "Inglés y Otras Lenguas" },
+    { codigo: "MAT-2DOANO", nombre: "Matemáticas" },
+    { codigo: "EDF-2DOANO", nombre: "Educación Física" },
+    { codigo: "ART-2DOANO", nombre: "Arte y Patrimonio" },
+    { codigo: "NAT-2DOANO", nombre: "Ciencias Naturales" },
+    { codigo: "GHC-2DOANO", nombre: "Geografía, Historia y Ciudadanía" },
+    { codigo: "ORI-2DOANO", nombre: "Orientación y Convivencia" },
+    { codigo: "CRP-2DOANO", nombre: "Grupos de Creación, Recreación y Producción" }
+  ],
+  "3er Año": [
+    { codigo: "CAS-3ANO", nombre: "Castellano" },
+    { codigo: "ING-3ANO", nombre: "Inglés y Otras Lenguas" },
+    { codigo: "MAT-3ANO", nombre: "Matemáticas" },
+    { codigo: "EDF-3ANO", nombre: "Educación Física" },
+    { codigo: "FIS-3ANO", nombre: "Física" },
+    { codigo: "QUI-3ANO", nombre: "Química" },
+    { codigo: "BIO-3ANO", nombre: "Biología" },
+    { codigo: "GHC-3ANO", nombre: "Geografía, Historia y Ciudadanía" },
+    { codigo: "ORI-3ANO", nombre: "Orientación y Convivencia" },
+    { codigo: "CRP-3ANO", nombre: "Grupos de Creación, Recreación y Producción" }
+  ],
+  "4to Año": [
+    { codigo: "CAS-4TOANO", nombre: "Castellano" },
+    { codigo: "ING-4TOANO", nombre: "Inglés y Otras Lenguas" },
+    { codigo: "MAT-4TOANO", nombre: "Matemáticas" },
+    { codigo: "EDF-4TOANO", nombre: "Educación Física" },
+    { codigo: "FIS-4TOANO", nombre: "Física" },
+    { codigo: "QUI-4TOANO", nombre: "Química" },
+    { codigo: "BIO-4TOANO", nombre: "Biología" },
+    { codigo: "GHC-4TOANO", nombre: "Geografía, Historia y Ciudadanía" },
+    { codigo: "FSN-4TOANO", nombre: "Formación para la Soberanía Nacional" },
+    { codigo: "ORI-4TOANO", nombre: "Orientación y Convivencia" },
+    { codigo: "CRP-4TOANO", nombre: "Grupos de Creación, Recreación y Producción" }
+  ],
+  "5to Año": [
+    { codigo: "CAS-5TOANO", nombre: "Castellano" },
+    { codigo: "ING-5TOANO", nombre: "Inglés y Otras Lenguas" },
+    { codigo: "MAT-5TOANO", nombre: "Matemáticas" },
+    { codigo: "EDF-5TOANO", nombre: "Educación Física" },
+    { codigo: "FIS-5TOANO", nombre: "Física" },
+    { codigo: "QUI-5TOANO", nombre: "Química" },
+    { codigo: "BIO-5TOANO", nombre: "Biología" },
+    { codigo: "CIE-5TOANO", nombre: "Ciencias de la Tierra" },
+    { codigo: "GHC-5TOANO", nombre: "Geografía, Historia y Ciudadanía" },
+    { codigo: "FSN-5TOANO", nombre: "Formación para la Soberanía Nacional" },
+    { codigo: "ORI-5TOANO", nombre: "Orientación y Convivencia" },
+    { codigo: "CRP-5TOANO", nombre: "Grupos de Creación, Recreación y Producción" }
+  ]
 };
 
 const Reportes = () => {
@@ -20,10 +123,10 @@ const Reportes = () => {
   const [gradoSel, setGradoSel] = useState<string | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<any>(null);
   const [estudiantes, setEstudiantes] = useState<any[]>([]);
-  const [notasEstudiante, setNotasEstudiante] = useState<Record<string, any>>({});
-  const [dataPrimaria, setDataPrimaria] = useState<any[]>([]); 
+  const [pensumMaterias, setPensumMaterias] = useState<any[]>([]);
+  const [notasEstudiante, setNotasEstudiante] = useState<Record<string, { codigo: string; L1: any; L2: any; L3: any }>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [periodoActivo, setPeriodoActivo] = useState<string>(() => localStorage.getItem("sistema_periodo_activo") || "2025-2026");
+  const [periodoActivo, setPeriodoActivo] = useState<string>(() => localStorage.getItem("sistema_periodo_activo") || "2026-2027");
 
   const [membrete, setMembrete] = useState({
     linea1: "REPÚBLICA BOLIVARIANA DE VENEZUELA",
@@ -34,26 +137,25 @@ const Reportes = () => {
   });
 
   useEffect(() => {
-    const cargarEstudiantes = async () => {
+    const cargarDatosIniciales = async () => {
       try {
-        const ests = await (window as any).electron.getStudents();
+        const electron = (window as any).electron;
+        const [ests, cfg, pensum] = await Promise.all([
+          electron?.getStudents?.() || [],
+          electron?.getConfig?.() || null,
+          electron?.getPensum?.() || []
+        ]);
         setEstudiantes(ests || []);
-      } catch (e) { console.error(e); }
-    };
-    cargarEstudiantes();
-
-    const cargarConfig = async () => {
-      try {
-        const cfg = await (window as any).electron?.getConfig?.();
+        if (Array.isArray(pensum)) setPensumMaterias(pensum);
         if (cfg?.periodo) {
           setPeriodoActivo(cfg.periodo);
           localStorage.setItem("sistema_periodo_activo", cfg.periodo);
         }
       } catch (e) {
-        console.error("Error al cargar config en reportes:", e);
+        console.error("Error cargando datos en reportes:", e);
       }
     };
-    cargarConfig();
+    cargarDatosIniciales();
 
     const saved = localStorage.getItem("membrete_institucional");
     if (saved) {
@@ -63,70 +165,81 @@ const Reportes = () => {
     }
   }, []);
 
+  const obtenerMateriasDelGrado = (grado: string, niv: string) => {
+    const fromDb = pensumMaterias.filter(m => m.grado === grado && m.nivel === niv);
+    if (fromDb.length > 0) {
+      return fromDb.map(m => ({ codigo: m.codigo || m.id, nombre: m.nombre }));
+    }
+    return PLAN_ESTUDIOS_FALLBACK[grado] || [];
+  };
+
   const cargarNotasReales = async (est: any) => {
     setIsLoading(true);
-    const materiasPlan = nivel === "Primaria" ? ["Aula Regular"] : (PLAN_ESTUDIOS[est.grade] || []);
-    const mapaNotas: Record<string, any> = {};
-    const actividadesPrimaria: any[] = [];
+    const nivEst = est.nivel || nivel;
+    const materiasPlan = obtenerMateriasDelGrado(est.grade, nivEst);
+    const mapaNotas: Record<string, { codigo: string; L1: any; L2: any; L3: any }> = {};
 
     try {
-      for (const materia of materiasPlan) {
-        const seccionId = `${est.grade}-${est.section}-${est.nivel || nivel}`;
-        const data = await (window as any).electron.obtenerNotasSeccion(seccionId, materia);
-        
-        if (data && data.planificacion) {
-          if (nivel === "Primaria") {
-            // ✅ MAPEO DE ACTIVIDADES CON NOTAS POR LAPSO
-            const allEvs = new Set<string>();
-            [1, 2, 3].forEach(l => {
-              (data.planificacion[l] || []).forEach((ev: any) => allEvs.add(ev.nombre));
-            });
-
-            Array.from(allEvs).forEach(nombreEv => {
-              const lapsosNotas: any = { L1: "-", L2: "-", L3: "-" };
-              [1, 2, 3].forEach(l => {
-                const evMatch = data.planificacion[l]?.find((e: any) => e.nombre === nombreEv);
-                if (evMatch) {
-                  const nRaw = data.notas?.[est.id]?.[evMatch.id];
-                  if (typeof nRaw === "string" && ["A", "B", "C", "D", "E"].includes(nRaw.toUpperCase().trim())) {
-                    lapsosNotas[`L${l}`] = nRaw.toUpperCase().trim();
-                  } else if (nRaw === 20 || nRaw === "20") {
-                    lapsosNotas[`L${l}`] = "A";
-                  } else if (nRaw === 16 || nRaw === "16") {
-                    lapsosNotas[`L${l}`] = "B";
-                  } else if (nRaw === 12 || nRaw === "12") {
-                    lapsosNotas[`L${l}`] = "C";
-                  } else if (nRaw === 8 || nRaw === "8") {
-                    lapsosNotas[`L${l}`] = "D";
-                  } else if (nRaw === 4 || nRaw === "4") {
-                    lapsosNotas[`L${l}`] = "E";
-                  } else {
-                    lapsosNotas[`L${l}`] = nRaw ? String(nRaw) : "-";
-                  }
-                }
-              });
-              actividadesPrimaria.push({ nombre: nombreEv, ...lapsosNotas });
-            });
+      const seccionId = `${est.grade}-${est.section}-${nivEst}`;
+      await Promise.all(
+        materiasPlan.map(async (mat) => {
+          const data = await (window as any).electron.obtenerNotasSeccion(seccionId, mat.nombre);
+          if (data && data.planificacion) {
+            if (nivEst === "Primaria") {
+              const equiv: Record<string, number> = { A: 20, B: 16, C: 12, D: 8, E: 4 };
+              const calcLapsoLiteral = (l: number) => {
+                const evs = data.planificacion[l] || [];
+                if (evs.length === 0) return "-";
+                let acum = 0;
+                evs.forEach((ev: any) => {
+                  const raw = String(data.notas?.[est.id]?.[ev.id] || "").toUpperCase().trim();
+                  const pt = equiv[raw] || (Number(raw) || 0);
+                  acum += pt * ((Number(ev.peso) || 0) / 100);
+                });
+                if (acum >= 18) return "A";
+                if (acum >= 14) return "B";
+                if (acum >= 10) return "C";
+                if (acum >= 6) return "D";
+                if (acum > 0) return "E";
+                return "-";
+              };
+              mapaNotas[mat.nombre] = {
+                codigo: mat.codigo,
+                L1: calcLapsoLiteral(1),
+                L2: calcLapsoLiteral(2),
+                L3: calcLapsoLiteral(3)
+              };
+            } else {
+              const calcularLapsoNum = (l: number) => {
+                const evs = data.planificacion[l] || [];
+                if (evs.length === 0) return "-";
+                const acumulado = evs.reduce((acc: number, ev: any) => {
+                  const val = parseFloat(String(data.notas?.[est.id]?.[ev.id] || "0").replace(",", "."));
+                  return acc + ((isNaN(val) ? 0 : val) * ((Number(ev.peso) || 0) / 100));
+                }, 0);
+                return acumulado > 0 ? parseFloat(acumulado.toFixed(1)) : "-";
+              };
+              mapaNotas[mat.nombre] = {
+                codigo: mat.codigo,
+                L1: calcularLapsoNum(1),
+                L2: calcularLapsoNum(2),
+                L3: calcularLapsoNum(3)
+              };
+            }
           } else {
-            const calcularLapso = (l: number) => {
-              const evs = data.planificacion[l] || [];
-              if (evs.length === 0) return "-";
-              const acumulado = evs.reduce((acc: number, ev: any) => acc + ((data.notas?.[est.id]?.[ev.id] || 0) * ((ev.peso || 0) / 100)), 0);
-              return acumulado > 0 ? parseFloat(acumulado.toFixed(1)) : "-";
-            };
-            mapaNotas[materia] = { L1: calcularLapso(1), L2: calcularLapso(2), L3: calcularLapso(3) };
+            mapaNotas[mat.nombre] = { codigo: mat.codigo, L1: "-", L2: "-", L3: "-" };
           }
-        }
-      }
-      
-      if (nivel === "Primaria") {
-        setDataPrimaria(actividadesPrimaria);
-      } else {
-        setNotasEstudiante(mapaNotas);
-      }
+        })
+      );
+
+      setNotasEstudiante(mapaNotas);
       setSelectedStudent(est);
       setPaso("preview");
-    } catch (e) { console.error(e); } finally { setIsLoading(false); }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const listaGrados = nivel === "Primaria" 
@@ -134,16 +247,42 @@ const Reportes = () => {
     : ["1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
 
   const seccionesDelGrado = useMemo(() => {
-    const filtrados = estudiantes.filter(e => e.nivel === nivel && e.grade === gradoSel);
-    const unicas = Array.from(new Set(filtrados.map(e => e.section)));
-    return unicas.map(s => ({ nombre: s, alumnos: filtrados.filter(e => e.section === s).sort((a,b) => a.lastName.localeCompare(b.lastName)) }));
+    const filtrados = estudiantes.filter(e => (e.nivel || e.level) === nivel && e.grade === gradoSel);
+    const unicas = Array.from(new Set(filtrados.map(e => e.section))).sort();
+    return unicas.map(s => ({
+      nombre: s,
+      alumnos: filtrados.filter(e => e.section === s).sort((a, b) => (a.lastName || "").localeCompare(b.lastName || ""))
+    }));
   }, [estudiantes, nivel, gradoSel]);
 
-  const BoletinPreview = () => {
-    const alumnosSeccion = estudiantes.filter(e => e.grade === selectedStudent.grade && e.section === selectedStudent.section).sort((a,b) => a.lastName.localeCompare(b.lastName));
-    const noLista = alumnosSeccion.findIndex(e => e.id === selectedStudent.id) + 1;
+  const handleDescargarPDF = async () => {
+    const electron = (window as any).electron;
+    if (electron?.guardarDocumentoPdf && selectedStudent) {
+      await electron.guardarDocumentoPdf({
+        filename: `Boletin_${selectedStudent.lastName}_${selectedStudent.firstName}_${selectedStudent.grade}_${selectedStudent.section}`,
+        pageSize: "Carta"
+      });
+    } else {
+      window.print();
+    }
+  };
 
-    // ✅ LÓGICA DE PROMEDIO CUALITATIVO PARA LA TABLA DE PRIMARIA
+  const handleImprimirBoletin = async () => {
+    const electron = (window as any).electron;
+    if (electron?.imprimirDocumentoDirecto) {
+      await electron.imprimirDocumentoDirecto({ pageSize: "Carta" });
+    } else {
+      window.print();
+    }
+  };
+
+  const BoletinPreview = () => {
+    const alumnosSeccion = estudiantes
+      .filter(e => e.grade === selectedStudent.grade && e.section === selectedStudent.section)
+      .sort((a, b) => (a.lastName || "").localeCompare(b.lastName || ""));
+    const noLista = alumnosSeccion.findIndex(e => e.id === selectedStudent.id) + 1;
+    const materiasGrado = obtenerMateriasDelGrado(selectedStudent.grade, selectedStudent.nivel || nivel);
+
     const promediarLiterales = (l1: string, l2: string, l3: string) => {
       const equiv: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
       const pts = [l1, l2, l3].map(v => equiv[v] || 0).filter(p => p > 0);
@@ -152,9 +291,38 @@ const Reportes = () => {
       return Object.keys(equiv).find(k => equiv[k] === prom) || "-";
     };
 
+    // Promedio general cuantitativo o cualitativo
+    const resumenGeneral = (() => {
+      if (nivel === "Primaria") {
+        const defs = materiasGrado.map(m => {
+          const n = notasEstudiante[m.nombre] || { L1: "-", L2: "-", L3: "-" };
+          return promediarLiterales(n.L1, n.L2, n.L3);
+        });
+        const equiv: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
+        const pts = defs.map(v => equiv[v] || 0).filter(p => p > 0);
+        if (pts.length === 0) return "—";
+        const prom = Math.round(pts.reduce((a, b) => a + b, 0) / pts.length);
+        return `Literal ${Object.keys(equiv).find(k => equiv[k] === prom) || "A"}`;
+      } else {
+        const proms: number[] = [];
+        materiasGrado.forEach(m => {
+          const n = notasEstudiante[m.nombre];
+          if (n && typeof n.L1 === "number" && typeof n.L2 === "number" && typeof n.L3 === "number") {
+            proms.push((n.L1 + n.L2 + n.L3) / 3);
+          }
+        });
+        if (proms.length === 0) return "—";
+        return `${(proms.reduce((a, b) => a + b, 0) / proms.length).toFixed(1)} / 20 pts`;
+      }
+    })();
+
     return (
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-10 shadow-2xl max-w-[21.59cm] mx-auto border border-gray-300 min-h-[27.94cm] flex flex-col font-serif text-black relative text-[10px]">
-        
+      <motion.div
+        id="boletin-print-area"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="bg-white p-10 shadow-2xl max-w-[21.59cm] mx-auto border border-gray-300 min-h-[27.94cm] flex flex-col font-serif text-black relative text-[10px]"
+      >
         <div className="flex items-start justify-between border-b border-black pb-2 mb-4 text-left">
           <div className="flex items-center gap-3 text-left">
             <img src="./logo.png" className="w-14 h-14 object-contain grayscale" alt="Logo" />
@@ -179,90 +347,74 @@ const Reportes = () => {
           <div className="text-center">C.I: <span className="underline ml-1">{selectedStudent.ci || '---'}</span></div>
           <div className="text-right">Sección: <span className="underline ml-1">"{selectedStudent.section}"</span></div>
           <div className="col-span-2">Año o Grado: <span className="underline ml-1">{selectedStudent.grade}</span></div>
-          <div className="text-center text-left">Posición: <span className="underline ml-1">{noLista} / {alumnosSeccion.length}</span></div>
+          <div className="text-center">Posición: <span className="underline ml-1">{noLista} / {alumnosSeccion.length}</span></div>
           <div className="text-right">Momento: <span className="underline ml-1">Anual</span></div>
         </div>
 
         <div className="flex gap-4">
-            <div className="flex-1">
-                {nivel === "Primaria" ? (
-                  // ✅ TABLA DE PRIMARIA CON LAPSOS Y DEFINITIVA
-                  <table className="w-full border-collapse border border-black text-left">
-                    <thead>
-                      <tr className="bg-gray-100 font-bold uppercase text-[8px]">
-                        <th className="border border-black p-1 text-left">Actividades de Aprendizaje</th>
-                        <th className="border border-black p-1 w-12 text-center">Lap 1</th>
-                        <th className="border border-black p-1 w-12 text-center">Lap 2</th>
-                        <th className="border border-black p-1 w-12 text-center">Lap 3</th>
-                        <th className="border border-black p-1 w-14 text-center bg-gray-200">Definit.</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dataPrimaria.map((act, i) => (
-                        <tr key={i} className="h-7">
-                          <td className="border border-black px-2 font-bold uppercase text-[8px]">{act.nombre}</td>
-                          <td className="border border-black text-center font-bold">{act.L1}</td>
-                          <td className="border border-black text-center font-bold">{act.L2}</td>
-                          <td className="border border-black text-center font-bold">{act.L3}</td>
-                          <td className="border border-black text-center font-black bg-gray-50">
-                            {promediarLiterales(act.L1, act.L2, act.L3)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  <table className="w-full border-collapse border border-black text-left">
-                    <thead>
-                      <tr className="bg-gray-100 font-bold uppercase text-[8px]">
-                        <th className="border border-black p-1 text-left">Áreas de Formación</th>
-                        <th className="border border-black p-1 w-10 text-center">Mom. 1</th>
-                        <th className="border border-black p-1 w-10 text-center">Mom. 2</th>
-                        <th className="border border-black p-1 w-10 text-center">Mom. 3</th>
-                        <th className="border border-black p-1 w-10 text-center bg-gray-200">Definit.</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {PLAN_ESTUDIOS[selectedStudent.grade]?.map(materia => {
-                        const n = notasEstudiante[materia] || { L1: "-", L2: "-", L3: "-" };
-                        const def = (typeof n.L1 === 'number' && typeof n.L2 === 'number' && typeof n.L3 === 'number') 
-                            ? ((n.L1 + n.L2 + n.L3) / 3).toFixed(1) : (typeof n.L1 === 'number' ? n.L1 : "-");
-                        return (
-                          <tr key={materia} className="h-6">
-                            <td className="border border-black px-2 font-bold text-[8px] uppercase">{materia}</td>
-                            <td className="border border-black text-center font-bold">{n.L1}</td>
-                            <td className="border border-black text-center font-bold">{n.L2}</td>
-                            <td className="border border-black text-center font-bold">{n.L3}</td>
-                            <td className="border border-black text-center font-black bg-gray-50">{def}</td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                )}
-            </div>
+          <div className="flex-1">
+            <table className="w-full border-collapse border border-black text-left">
+              <thead>
+                <tr className="bg-gray-100 font-bold uppercase text-[8px]">
+                  <th className="border border-black p-1.5 w-20 text-center">Código (PK)</th>
+                  <th className="border border-black p-1.5 text-left">Área de Formación / Asignatura</th>
+                  <th className="border border-black p-1.5 w-12 text-center">Lap 1</th>
+                  <th className="border border-black p-1.5 w-12 text-center">Lap 2</th>
+                  <th className="border border-black p-1.5 w-12 text-center">Lap 3</th>
+                  <th className="border border-black p-1.5 w-14 text-center bg-gray-200">Definit.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {materiasGrado.map((mat) => {
+                  const n = notasEstudiante[mat.nombre] || { codigo: mat.codigo, L1: "-", L2: "-", L3: "-" };
+                  const def = nivel === "Primaria"
+                    ? promediarLiterales(n.L1, n.L2, n.L3)
+                    : (typeof n.L1 === "number" && typeof n.L2 === "number" && typeof n.L3 === "number")
+                    ? ((n.L1 + n.L2 + n.L3) / 3).toFixed(1)
+                    : (typeof n.L1 === "number" ? n.L1 : "-");
 
-            <div className="w-40 space-y-4">
-                <div className="border border-black p-2 rounded-sm text-left">
-                    <p className="font-bold text-[8px] border-b border-black mb-1 uppercase">Estado Académico</p>
-                    <p className="text-[7px] italic text-gray-500 text-center py-2">Evaluación {nivel === "Primaria" ? "Cualitativa" : "Cuantitativa"}</p>
-                </div>
-                <div className="border border-black p-2 h-32 flex flex-col items-center justify-center text-center text-gray-300 opacity-30 text-[7px] font-bold italic">
-                    <div className="w-16 h-16 border border-black border-dashed rounded-full flex items-center justify-center">Sello</div>
-                </div>
+                  return (
+                    <tr key={mat.codigo} className="h-7">
+                      <td className="border border-black px-1.5 text-center font-mono font-bold text-[8px]">{mat.codigo}</td>
+                      <td className="border border-black px-2 font-bold uppercase text-[8px]">{mat.nombre}</td>
+                      <td className="border border-black text-center font-bold">{n.L1}</td>
+                      <td className="border border-black text-center font-bold">{n.L2}</td>
+                      <td className="border border-black text-center font-bold">{n.L3}</td>
+                      <td className="border border-black text-center font-black bg-gray-50">{def}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="w-44 space-y-4">
+            <div className="border border-black p-2.5 rounded-sm text-left">
+              <p className="font-bold text-[8px] border-b border-black pb-1 mb-1.5 uppercase">Resumen Académico</p>
+              <p className="text-[7px] uppercase text-gray-600 font-bold">Modalidad:</p>
+              <p className="text-[8px] font-black mb-2">Evaluación {nivel === "Primaria" ? "Cualitativa" : "Cuantitativa"}</p>
+              <p className="text-[7px] uppercase text-gray-600 font-bold">Promedio Anual:</p>
+              <p className="text-[10px] font-black text-black">{resumenGeneral}</p>
             </div>
+            <div className="border border-black p-2 h-32 flex flex-col items-center justify-center text-center text-gray-400 text-[7px] font-bold italic">
+              <div className="w-16 h-16 border border-black border-dashed rounded-full flex items-center justify-center">Sello del Plantel</div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 border border-black p-3 flex-1 text-left">
-            <p className="font-black border-b border-black mb-2 uppercase text-[9px]">Observaciones y Recomendaciones:</p>
-            <div className="h-24 border-b border-black border-dotted mb-2"></div>
-            <div className="h-10 border-b border-black border-dotted"></div>
+          <p className="font-black border-b border-black pb-1 mb-2 uppercase text-[9px]">Observaciones y Recomendaciones:</p>
+          <p className="text-[9px] italic text-gray-800 mb-3">
+            {selectedStudent.observations || "El (la) estudiante ha cumplido satisfactoriamente con las competencias y evaluaciones programadas durante el período escolar."}
+          </p>
+          <div className="h-12 border-b border-black border-dotted mb-2"></div>
+          <div className="h-8 border-b border-black border-dotted"></div>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 gap-32 pt-16 text-center text-[9px] font-bold italic uppercase px-10">
+        <div className="mt-8 grid grid-cols-2 gap-24 pt-14 text-center text-[9px] font-bold italic uppercase px-10">
           <div className="border-t border-black pt-1">Coordinación de Control de Estudios</div>
-          <div className="border-t border-black pt-1 text-right flex flex-col items-end">
-            <span>Fecha de Emisión: {new Date().toLocaleDateString()}</span>
+          <div className="border-t border-black pt-1">
+            Dirección del Plantel ({new Date().toLocaleDateString()})
           </div>
         </div>
       </motion.div>
@@ -291,23 +443,27 @@ const Reportes = () => {
              <button onClick={() => { setNivel("Primaria"); setPaso("grados"); }} className="group p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm hover:border-green-500 hover:shadow-2xl transition-all text-left">
                 <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-green-600 group-hover:bg-green-600 group-hover:text-white transition-all mb-6 shadow-inner text-left"><School size={32}/></div>
                 <h3 className="text-2xl font-black text-gray-800 uppercase italic">Educación Primaria</h3>
-                <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest leading-none">Evaluación cualitativa por actividades</p>
+                <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest leading-none">Evaluación cualitativa por asignaturas (1ero a 6to)</p>
              </button>
-             <button onClick={() => { setNivel("Secundaria"); setPaso("grados"); }} className="group p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm hover:border-blue-500 hover:shadow-2xl transition-all text-left text-left">
+             <button onClick={() => { setNivel("Secundaria"); setPaso("grados"); }} className="group p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm hover:border-blue-500 hover:shadow-2xl transition-all text-left">
                 <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all mb-6 shadow-inner text-left"><GraduationCap size={32}/></div>
                 <h3 className="text-2xl font-black text-gray-800 uppercase italic">Media General</h3>
-                <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest leading-none">Evaluación cuantitativa por áreas</p>
+                <p className="text-[10px] font-bold text-gray-400 mt-1 uppercase tracking-widest leading-none">Evaluación cuantitativa por áreas (1er a 5to Año)</p>
              </button>
           </motion.div>
         )}
 
         {paso === "grados" && (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {listaGrados.map(g => (
-              <button key={g} onClick={() => { setGradoSel(g); setPaso("secciones"); }} className="p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-green-400 transition-all text-left group">
-                <h4 className="text-lg font-black text-gray-700 uppercase italic leading-none">{g}</h4>
-              </button>
-            ))}
+            {listaGrados.map(g => {
+              const count = estudiantes.filter(e => (e.nivel || e.level) === nivel && e.grade === g).length;
+              return (
+                <button key={g} onClick={() => { setGradoSel(g); setPaso("secciones"); }} className="p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-green-400 transition-all text-left group">
+                  <h4 className="text-xl font-black text-gray-800 uppercase italic leading-none mb-2">{g}</h4>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{count} Estudiantes</p>
+                </button>
+              );
+            })}
           </motion.div>
         )}
 
@@ -316,12 +472,17 @@ const Reportes = () => {
             {seccionesDelGrado.map(sec => (
                 <div key={sec.nombre} className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
                   <div className="px-10 py-5 bg-gray-50 border-b border-gray-100 flex justify-between items-center text-left">
-                    <h3 className="font-black text-gray-700 uppercase italic tracking-tighter">Sección "{sec.nombre}"</h3>
+                    <h3 className="font-black text-gray-700 uppercase italic tracking-tighter">
+                      {gradoSel} — Sección "{sec.nombre}" ({sec.alumnos.length} Estudiantes)
+                    </h3>
                   </div>
                   <div className="p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {sec.alumnos.map(est => (
                       <div key={est.id} onClick={() => cargarNotasReales(est)} className="p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-green-400 hover:bg-white cursor-pointer transition-all flex items-center justify-between group">
-                        <p className="text-xs font-black text-gray-700 uppercase">{est.lastName}, {est.firstName}</p>
+                        <div>
+                          <p className="text-xs font-black text-gray-700 uppercase">{est.lastName}, {est.firstName}</p>
+                          <p className="text-[10px] font-mono text-gray-400">{est.ci}</p>
+                        </div>
                         {isLoading && selectedStudent?.id === est.id ? <div className="w-4 h-4 border-2 border-green-600 border-t-transparent rounded-full animate-spin text-left" /> : <Eye size={16} className="text-gray-300 group-hover:text-green-600" />}
                       </div>
                     ))}
@@ -333,9 +494,16 @@ const Reportes = () => {
 
         {paso === "preview" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
-            <div className="flex justify-between items-center no-print">
-               <button onClick={() => setPaso("secciones")} className="px-8 py-4 bg-white text-gray-400 font-black text-[11px] uppercase rounded-2xl border border-gray-200 hover:text-green-600 shadow-sm transition-all flex items-center gap-3 text-left"><ArrowLeft size={18}/> Regresar</button>
-               <button onClick={() => window.print()} className="px-12 py-4 bg-green-600 text-white font-black text-[11px] uppercase rounded-2xl shadow-xl shadow-green-700 transition-all flex items-center gap-3 text-left"><Printer size={20}/> Imprimir Boletín</button>
+            <div className="flex flex-wrap justify-between items-center gap-4 no-print">
+               <button onClick={() => setPaso("secciones")} className="px-8 py-4 bg-white text-gray-500 font-black text-[11px] uppercase rounded-2xl border border-gray-200 hover:text-green-600 shadow-sm transition-all flex items-center gap-3"><ArrowLeft size={18}/> Regresar a la Sección</button>
+               <div className="flex items-center gap-3">
+                 <button onClick={handleDescargarPDF} className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-black text-[11px] uppercase rounded-2xl shadow-lg transition-all flex items-center gap-2">
+                   <FileDown size={18}/> Guardar PDF
+                 </button>
+                 <button onClick={handleImprimirBoletin} className="px-10 py-4 bg-green-600 hover:bg-green-700 text-white font-black text-[11px] uppercase rounded-2xl shadow-xl transition-all flex items-center gap-3">
+                   <Printer size={18}/> Imprimir Boletín
+                 </button>
+               </div>
             </div>
             <BoletinPreview />
           </motion.div>
@@ -346,8 +514,8 @@ const Reportes = () => {
         @media print {
           body * { visibility: hidden !important; background: white !important; }
           .no-print { display: none !important; }
-          .bg-white { position: absolute; left: 0; top: 0; width: 100%; visibility: visible !important; padding: 0 !important; border: none !important; }
-          .bg-white * { visibility: visible !important; }
+          #boletin-print-area, #boletin-print-area * { visibility: visible !important; }
+          #boletin-print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 0 !important; border: none !important; box-shadow: none !important; }
         }
       `}</style>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Plus, RefreshCw, Download, ArrowLeft } from "lucide-react";
@@ -31,6 +31,8 @@ export const StudentAdministration: React.FC = () => {
   // Filtros y búsqueda
   const [searchTerm, setSearchTerm] = useState("");
   const [filterLevel, setFilterLevel] = useState("");
+  const [filterGrade, setFilterGrade] = useState("");
+  const [filterSection, setFilterSection] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [filterYear, setFilterYear] = useState("");
   const [auditFilter, setAuditFilter] = useState<"all" | "complete" | "incomplete">("all");
@@ -200,33 +202,47 @@ export const StudentAdministration: React.FC = () => {
     }
   };
 
-  const filteredStudents = students.filter((student) => {
+  const filteredStudents = useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
-    const studentStatus = (student.status || (student as any).estatus || "").toString().toLowerCase();
     const filterStatusLower = filterStatus.toLowerCase();
-    const studentLevel = student.level || (student as any).nivel;
-    const studentYear = student.schoolYear || (student as any).periodo;
 
-    const matchesSearch =
-      student.firstName?.toLowerCase().includes(searchLower) ||
-      student.lastName?.toLowerCase().includes(searchLower) ||
-      student.ci?.includes(searchLower) ||
-      student.id?.toLowerCase().includes(searchLower) ||
-      student.repCI?.includes(searchLower);
+    return students.filter((student) => {
+      const studentStatus = (student.status || (student as any).estatus || "").toString().toLowerCase();
+      const studentLevel = student.level || (student as any).nivel;
+      const studentYear = student.schoolYear || (student as any).periodo;
 
-    const matchesLevel = filterLevel ? studentLevel === filterLevel : true;
-    const matchesStatus = filterStatus ? studentStatus === filterStatusLower : true;
-    const matchesYear = filterYear ? studentYear === filterYear : true;
+      const matchesSearch =
+        !searchLower ||
+        student.firstName?.toLowerCase().includes(searchLower) ||
+        student.lastName?.toLowerCase().includes(searchLower) ||
+        student.ci?.toLowerCase().includes(searchLower) ||
+        student.id?.toLowerCase().includes(searchLower) ||
+        student.repCI?.toLowerCase().includes(searchLower);
 
-    const hasMissingDocs = DOCS_OBLIGATORIOS_IDS.some(
-      (docId) => !student.inscriptionFiles?.some((f) => f.path.toLowerCase().includes(docId.toLowerCase()))
-    );
+      const matchesLevel = filterLevel ? studentLevel === filterLevel : true;
+      const matchesGrade = filterGrade ? student.grade === filterGrade : true;
+      const matchesSection = filterSection ? student.section === filterSection : true;
+      const matchesStatus = filterStatus ? studentStatus === filterStatusLower : true;
+      const matchesYear = filterYear ? studentYear === filterYear : true;
 
-    const matchesAudit =
-      auditFilter === "all" ? true : auditFilter === "complete" ? !hasMissingDocs : hasMissingDocs;
+      const hasMissingDocs = DOCS_OBLIGATORIOS_IDS.some(
+        (docId) => !student.inscriptionFiles?.some((f) => f.path.toLowerCase().includes(docId.toLowerCase()))
+      );
 
-    return matchesSearch && matchesLevel && matchesStatus && matchesYear && matchesAudit;
-  });
+      const matchesAudit =
+        auditFilter === "all" ? true : auditFilter === "complete" ? !hasMissingDocs : hasMissingDocs;
+
+      return (
+        matchesSearch &&
+        matchesLevel &&
+        matchesGrade &&
+        matchesSection &&
+        matchesStatus &&
+        matchesYear &&
+        matchesAudit
+      );
+    });
+  }, [students, searchTerm, filterLevel, filterGrade, filterSection, filterStatus, filterYear, auditFilter]);
 
   const handleDelete = async () => {
     if (!studentToDelete) return;
@@ -427,6 +443,10 @@ export const StudentAdministration: React.FC = () => {
         setSearchTerm={setSearchTerm}
         filterLevel={filterLevel}
         setFilterLevel={setFilterLevel}
+        filterGrade={filterGrade}
+        setFilterGrade={setFilterGrade}
+        filterSection={filterSection}
+        setFilterSection={setFilterSection}
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
         filterYear={filterYear}

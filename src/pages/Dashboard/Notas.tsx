@@ -24,17 +24,17 @@ interface CustomElectron {
 }
 
 const PLAN_ESTUDIOS_FALLBACK: Record<string, string[]> = {
-  "1er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "2do Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "3er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "4to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "5to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Ciencias de la Tierra", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía", "Orientación y Convivencia", "Grupos de Creación y Producción"],
-  "1ero": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
-  "2do": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
-  "3ero": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
-  "4to": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
-  "5to": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
-  "6to": ["Castellano", "Matemáticas", "Ciencias Naturales", "Ciencias Sociales", "Estética", "Educación Física"],
+  "1er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
+  "2do Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Arte y Patrimonio", "Ciencias Naturales", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
+  "3er Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
+  "4to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía Nacional", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
+  "5to Año": ["Castellano", "Inglés y Otras Lenguas", "Matemáticas", "Educación Física", "Física", "Química", "Biología", "Ciencias de la Tierra", "Geografía, Historia y Ciudadanía", "Formación para la Soberanía Nacional", "Orientación y Convivencia", "Grupos de Creación, Recreación y Producción"],
+  "1ero": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
+  "2do": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
+  "3ero": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
+  "4to": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
+  "5to": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
+  "6to": ["Castellano y Literatura", "Matemáticas para la Vida", "Ciencias Naturales y Salud", "Ciencias Sociales, Identidad y Soberanía", "Educación Estética y Cultura", "Educación Física, Deporte y Recreación"],
 };
 
 const DEFAULT_EVALUACIONES: Record<number, any[]> = {
@@ -162,7 +162,15 @@ const Notas: React.FC = () => {
           });
         }
 
-        setDistribucion(Array.from(seccionesMap.values()));
+        const ORDEN_GRADOS = ["1ero", "2do", "3ero", "4to", "5to", "6to", "1er Año", "2do Año", "3er Año", "4to Año", "5to Año"];
+        const listaOrdenada = Array.from(seccionesMap.values()).sort((a, b) => {
+          const idxA = ORDEN_GRADOS.indexOf(a.año);
+          const idxB = ORDEN_GRADOS.indexOf(b.año);
+          if (idxA !== idxB) return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+          return String(a.seccion).localeCompare(String(b.seccion));
+        });
+
+        setDistribucion(listaOrdenada);
       } catch (e) {
         console.error("Error al cargar datos en Notas:", e);
       }

@@ -63,28 +63,31 @@ function guardarArchivoFisico(base64Data, nombreBase, subcarpeta = "") {
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1280,
+    height: 820,
     minWidth: 960,
     minHeight: 640,
+    show: false,
     transparent: false,
     frame: false,
     resizable: true,
     hasShadow: true,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f8fafc",
     webPreferences: {
       preload: path.join(__dirname, "preload.cjs"),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: false,
-      webSecurity: true 
+      webSecurity: true,
+      backgroundThrottling: false
     },
   });
 
   mainWindow.loadFile(path.join(__dirname, "dist", "index.html"));
 
-  // Abrir herramientas de desarrollo para ver errores y consola
-  mainWindow.webContents.openDevTools({ mode: "detach" });
+  if (process.env.OPEN_DEVTOOLS === "true") {
+    mainWindow.webContents.openDevTools({ mode: "detach" });
+  }
 
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useNavigate } from "react-router-dom"; 
 import { 
@@ -106,12 +106,12 @@ const GestionRepresentantes = () => {
     setRepresentantes(Object.values(mapaRepresentantes));
   };
 
-  // ✅ Al abrir el editor, separamos el prefijo del cuerpo del teléfono
+  // ✅ Al abrir el editor, separamos el prefijo del cuerpo del teléfono limpiando guiones o espacios
   const abrirEditor = (rep: any) => {
-    const fullPhone = rep.telefono || "";
-    if (fullPhone.length >= 4) {
-      setPhonePrefix(fullPhone.substring(0, 4));
-      setPhoneBody(fullPhone.substring(4));
+    const cleanPhone = (rep.telefono || "").replace(/\D/g, "");
+    if (cleanPhone.length >= 4) {
+      setPhonePrefix(cleanPhone.substring(0, 4));
+      setPhoneBody(cleanPhone.substring(4, 11));
     } else {
       setPhonePrefix("0424");
       setPhoneBody("");
@@ -169,10 +169,15 @@ const GestionRepresentantes = () => {
     navigate("/dashboard/estudiantes/administracion"); 
   };
 
-  const datosFiltrados = representantes.filter(r => 
-    (r.nombreCompleto || r.nombre || `${r.nombres} ${r.apellidos}`)?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    r.cedula?.toString().includes(searchTerm)
-  );
+  const datosFiltrados = useMemo(() => {
+    const q = searchTerm.toLowerCase().trim();
+    if (!q) return representantes;
+    return representantes.filter(r => 
+      (r.nombreCompleto || r.nombre || `${r.nombres} ${r.apellidos}`)?.toLowerCase().includes(q) || 
+      r.cedula?.toString().toLowerCase().includes(q) ||
+      r.telefono?.toString().includes(q)
+    );
+  }, [representantes, searchTerm]);
 
   return (
     <motion.div className="p-6 md:p-10 max-w-7xl mx-auto text-left min-h-screen bg-[#f4f6fb]" variants={fadeIn} initial="hidden" animate="visible">

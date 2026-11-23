@@ -289,7 +289,15 @@ class MySQLDatabase {
   async obtenerEstudiantes() {
     if (!this.isConnected) return [];
     try {
-      const [rows] = await this.pool.query("SELECT * FROM estudiantes ORDER BY creado_en DESC");
+      const [rows] = await this.pool.query(`
+        SELECT * FROM estudiantes
+        ORDER BY
+          FIELD(nivel, 'Inicial', 'Primaria', 'Secundaria'),
+          FIELD(grado, 'Maternal', '1er Grupo', '2do Grupo', '3er Grupo', '1ero', '2do', '3ero', '4to', '5to', '6to', '1er Año', '2do Año', '3er Año', '4to Año', '5to Año'),
+          seccion ASC,
+          primer_apellido ASC,
+          primer_nombre ASC
+      `);
       return rows.map(r => this.formatearEstudianteFrontend(r));
     } catch (e) {
       console.error("Error en obtenerEstudiantes MySQL:", e);
