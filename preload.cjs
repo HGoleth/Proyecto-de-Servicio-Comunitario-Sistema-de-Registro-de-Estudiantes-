@@ -42,6 +42,11 @@ contextBridge.exposeInMainWorld('electron', {
     ipcRenderer.on('window-maximized-state', handler);
     return () => ipcRenderer.removeListener('window-maximized-state', handler);
   },
+  onToggleUserManual: (callback) => {
+    const handler = () => callback();
+    ipcRenderer.on('toggle-user-manual', handler);
+    return () => ipcRenderer.removeListener('toggle-user-manual', handler);
+  },
   setClickThrough: (ignore) => ipcRenderer.invoke('set-click-through', ignore),
 
    // Subir y eliminar Archivos en distribucion

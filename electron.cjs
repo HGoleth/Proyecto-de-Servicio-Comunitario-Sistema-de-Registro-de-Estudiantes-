@@ -91,6 +91,7 @@ const createWindow = () => {
   }
 
   // Permitir abrir/cerrar las herramientas de desarrollador (Modo Dev) con F12 o Ctrl+Shift+I
+  // y abrir/cerrar el Manual de Usuario Oficial con F10
   mainWindow.webContents.on("before-input-event", (event, input) => {
     if (
       input.type === "keyDown" &&
@@ -99,6 +100,14 @@ const createWindow = () => {
       event.preventDefault();
       if (mainWindow && !mainWindow.isDestroyed()) {
         mainWindow.webContents.toggleDevTools();
+      }
+      return;
+    }
+
+    if (input.type === "keyDown" && input.key === "F10") {
+      event.preventDefault();
+      if (mainWindow && !mainWindow.isDestroyed() && mainWindow.webContents) {
+        mainWindow.webContents.send("toggle-user-manual");
       }
     }
   });

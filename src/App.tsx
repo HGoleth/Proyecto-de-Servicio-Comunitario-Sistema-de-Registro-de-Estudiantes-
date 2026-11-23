@@ -6,6 +6,7 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Dashboard from "./pages/Dashboard";
 import Loader from "./components/Loader";
+import UserManualModal from "./components/common/UserManualModal";
 
 // Páginas del Dashboard diferidas (Code Splitting / Lazy Loading)
 const DashboardHome = lazy(() => import("./pages/Dashboard/DashboardHome"));
@@ -90,6 +91,8 @@ function App() {
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
+        {/* MANUAL DE USUARIO GLOBAL (ACTIVADO CON F10) */}
+        <UserManualModal />
       </div>
     </HashRouter>
   );
