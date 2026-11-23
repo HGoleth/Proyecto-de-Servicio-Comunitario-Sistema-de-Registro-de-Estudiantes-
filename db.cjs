@@ -543,13 +543,24 @@ async obtenerPensum(filtro = {}) {
     if (rows && rows.length > 0) return rows;
   }
   if (!this.data) this.init();
-  if (!this.data.pensum) this.data.pensum = this.generarPensumBase('2025-2026');
+  if (!this.data.pensum) this.data.pensum = this.generarPensumBase('2026-2027');
 
-  let resultado = [...this.data.pensum];
-
-  if (filtro.periodo) {
-    resultado = resultado.filter(m => m.periodo === filtro.periodo);
+  // Deduplicar por código único (PK)
+  const mapUnico = new Map();
+  for (const m of this.data.pensum) {
+    const cod = (m.codigo || m.id || '').trim().toUpperCase();
+    if (cod && !mapUnico.has(cod)) {
+      mapUnico.set(cod, {
+        ...m,
+        id: cod,
+        codigo: cod,
+        periodo: filtro.periodo || m.periodo || '2026-2027'
+      });
+    }
   }
+
+  let resultado = Array.from(mapUnico.values());
+
   if (filtro.nivel) {
     resultado = resultado.filter(m => m.nivel === filtro.nivel);
   }
@@ -785,6 +796,110 @@ resetearPlantillasDefecto() {
   this.data.plantillas = this.generarPlantillasBase();
   this.guardarEnDisco();
   return { success: true, total: this.data.plantillas.length };
+}
+
+// ==========================================
+// RESPALDO Y RESTAURACIÓN COMPLETA (.JSON)
+// ==========================================
+async exportarRespaldoCompleto() {
+  if (!this.data) await this.init();
+
+  const configuracion = await this.getConfig();
+  const estudiantes = await this.obtenerEstudiantes();
+  const pensum = await this.obtenerPensum({});
+  const plantillas = await this.obtenerPlantillas();
+  const representantes = (this.mysql.isConnected && typeof this.mysql.obtenerRepresentantes === 'function')
+    ? await this.mysql.obtenerRepresentantes()
+    : (this.data.representantes || []);
+  const registro_notas = (this.mysql.isConnected && typeof this.mysql.obtenerTodasNotasSecciones === 'function')
+    ? await this.mysql.obtenerTodasNotasSecciones()
+    : (this.data.registro_notas || []);
+
+  const payload = {
+    meta: {
+      sistema: "Sistema de Registro de Estudiantes SC",
+      version: "2.0.0",
+      fecha_respaldo: new Date().toISOString(),
+      periodo_activo: configuracion.periodo || "2026-2027",
+      estadisticas: {
+        total_estudiantes: estudiantes.length,
+        total_representantes: representantes.length,
+        total_materias: pensum.length,
+        total_secciones_notas: registro_notas.length,
+        total_plantillas: plantillas.length
+      }
+    },
+    configuracion,
+    usuarios: this.data.usuarios || [],
+    representantes,
+    estudiantes,
+    pensum,
+    materias: pensum,
+    registro_notas,
+    plantillas
+  };
+
+  this.data = {
+    ...this.data,
+    ...payload
+  };
+  this.guardarEnDisco(this.data);
+  return payload;
+}
+
+async restaurarRespaldoCompleto(backupData) {
+  if (!backupData || typeof backupData !== 'object') {
+    return { success: false, message: "Archivo de respaldo JSON inválido." };
+  }
+
+  const tieneDatosValidos =
+    Array.isArray(backupData.estudiantes) ||
+    Array.isArray(backupData.pensum) ||
+    Array.isArray(backupData.materias) ||
+    Boolean(backupData.configuracion);
+
+  if (!tieneDatosValidos) {
+    return { success: false, message: "El archivo JSON no contiene estructuras válidas del sistema escolar." };
+  }
+
+  if (!this.data) await this.init();
+
+  const materiasRestauradas = (backupData.pensum || backupData.materias || this.data.pensum || []).map(m => {
+    const cod = (m.codigo || m.id || 'MAT').trim().toUpperCase();
+    return { ...m, id: cod, codigo: cod };
+  });
+
+  this.data = {
+    meta: backupData.meta || {
+      sistema: "Sistema de Registro de Estudiantes SC",
+      fecha_restauracion: new Date().toISOString()
+    },
+    configuracion: backupData.configuracion || this.data.configuracion || {},
+    usuarios: Array.isArray(backupData.usuarios) && backupData.usuarios.length > 0 ? backupData.usuarios : (this.data.usuarios || []),
+    representantes: Array.isArray(backupData.representantes) ? backupData.representantes : (this.data.representantes || []),
+    estudiantes: Array.isArray(backupData.estudiantes) ? backupData.estudiantes : (this.data.estudiantes || []),
+    pensum: materiasRestauradas,
+    materias: materiasRestauradas,
+    registro_notas: Array.isArray(backupData.registro_notas) ? backupData.registro_notas : (this.data.registro_notas || []),
+    plantillas: Array.isArray(backupData.plantillas) && backupData.plantillas.length > 0 ? backupData.plantillas : (this.data.plantillas || this.generarPlantillasBase())
+  };
+
+  if (this.data.docentes) delete this.data.docentes;
+  this.guardarEnDisco(this.data);
+
+  if (this.mysql.isConnected && typeof this.mysql.restaurarRespaldoMySQL === 'function') {
+    await this.mysql.restaurarRespaldoMySQL(this.data);
+  }
+
+  return {
+    success: true,
+    stats: {
+      estudiantes: this.data.estudiantes.length,
+      representantes: this.data.representantes.length,
+      materias: this.data.pensum.length,
+      notas: this.data.registro_notas.length
+    }
+  };
 }
 
 }

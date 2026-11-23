@@ -42,16 +42,33 @@ class MySQLDatabase {
       const [rows] = await this.pool.query("SELECT * FROM configuracion WHERE id = 1 LIMIT 1");
       if (rows.length === 0) return null;
       const r = rows[0];
+      let docs = [];
+      try {
+        const [docRows] = await this.pool.query("SELECT * FROM documentos_institucionales ORDER BY creado_en DESC");
+        docs = docRows.map(d => ({
+          id: d.id,
+          nombre: d.nombre,
+          tipo: d.tipo || 'PDF',
+          categoria: d.categoria || 'Fundamental',
+          ruta: d.ruta_archivo,
+          tamano: d.tamano || '',
+          fecha: d.creado_en ? (d.creado_en.toISOString ? d.creado_en.toISOString().split('T')[0] : String(d.creado_en).split('T')[0]) : new Date().toISOString().split('T')[0]
+        }));
+      } catch {}
+
       return {
         nombre_colegio: r.nombre_colegio,
-        codigo_dea: r.codigo_dea,
+        codigo_dea: r.codigo_dea || 'OD01461703',
+        codigo_plantel: r.codigo_dea || 'OD01461703',
         periodo: r.periodo,
         direccion: r.direccion || '',
         telefono: r.telefono || '',
         email: r.email || '',
-        director: r.director_nombre || 'Lic. Dirección del Plantel',
-        director_ci: r.director_ci || '',
-        lapsos: typeof r.lapsos_config === 'string' ? JSON.parse(r.lapsos_config) : (r.lapsos_config || { lapso1: 30, lapso2: 30, lapso3: 40 })
+        director: r.director_nombre || 'Dr. Alejandro José Marcano Salazar',
+        director_nombre: r.director_nombre || 'Dr. Alejandro José Marcano Salazar',
+        director_ci: r.director_ci || 'V-12.458.963',
+        lapsos: typeof r.lapsos_config === 'string' ? JSON.parse(r.lapsos_config) : (r.lapsos_config || { lapso1: 30, lapso2: 30, lapso3: 40 }),
+        documentos_fundamentales: docs
       };
     } catch (e) {
       console.error("Error en getConfig MySQL:", e);
@@ -64,10 +81,12 @@ class MySQLDatabase {
     try {
       const current = await this.getConfig() || {};
       const merged = { ...current, ...nuevosDatos };
+      const codigoDea = nuevosDatos.codigo_dea || nuevosDatos.codigo_plantel || current.codigo_dea || 'OD01461703';
+      const directorNombre = nuevosDatos.director || nuevosDatos.director_nombre || current.director || 'Dr. Alejandro José Marcano Salazar';
       await this.pool.query(`
         INSERT INTO configuracion (
-          id, nombre_colegio, codigo_dea, periodo, direccion, telefono, email, director_nombre, lapsos_config
-        ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?)
+          id, nombre_colegio, codigo_dea, periodo, direccion, telefono, email, director_nombre, director_ci, lapsos_config
+        ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
           nombre_colegio = VALUES(nombre_colegio),
           codigo_dea = VALUES(codigo_dea),
@@ -76,15 +95,17 @@ class MySQLDatabase {
           telefono = VALUES(telefono),
           email = VALUES(email),
           director_nombre = VALUES(director_nombre),
+          director_ci = VALUES(director_ci),
           lapsos_config = VALUES(lapsos_config)
       `, [
-        merged.nombre_colegio || 'Unidad Educativa República de Chile',
-        merged.codigo_dea || 'OD01461703',
-        merged.periodo || '2025-2026',
+        merged.nombre_colegio || 'Complejo Educativo U.E. "República de Chile"',
+        codigoDea,
+        merged.periodo || '2026-2027',
         merged.direccion || '',
         merged.telefono || '',
         merged.email || '',
-        merged.director || 'Lic. Dirección del Plantel',
+        directorNombre,
+        merged.director_ci || 'V-12.458.963',
         JSON.stringify(merged.lapsos || { lapso1: 30, lapso2: 30, lapso3: 40 })
       ]);
       return { success: true };
@@ -302,7 +323,13 @@ class MySQLDatabase {
       const relationship = est.relationship || 'Representante';
 
       if (repCI || est.repName || est.repFirstName) {
-        repId = repCI ? `REP-${repCI.replace(/\D/g, '')}` : `REP-${est.id}`;
+        repId = est.representante_id || (repCI ? `REP-${repCI.replace(/\D/g, '')}` : `REP-${est.id}`);
+        if (repCI) {
+          const [existingRep] = await this.pool.query("SELECT id FROM representantes WHERE ci = ? LIMIT 1", [repCI]);
+          if (existingRep.length > 0) {
+            repId = existingRep[0].id;
+          }
+        }
         await this.pool.query(`
           INSERT INTO representantes (
             id, ci, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
@@ -508,10 +535,6 @@ class MySQLDatabase {
       const clauses = [];
       const values = [];
 
-      if (filtro.periodo) {
-        clauses.push("periodo = ?");
-        values.push(filtro.periodo);
-      }
       if (filtro.nivel) {
         clauses.push("nivel = ?");
         values.push(filtro.nivel);
@@ -524,10 +547,15 @@ class MySQLDatabase {
       if (clauses.length > 0) {
         query += " WHERE " + clauses.join(" AND ");
       }
-      query += " ORDER BY grado ASC, nombre ASC";
+      query += " ORDER BY grado ASC, codigo ASC";
 
       const [rows] = await this.pool.query(query, values);
-      return rows;
+      return rows.map(r => ({
+        ...r,
+        id: r.codigo || r.id,
+        codigo: r.codigo || r.id,
+        periodo: filtro.periodo || r.periodo || '2026-2027'
+      }));
     } catch (e) {
       console.error("Error en obtenerPensum MySQL:", e);
       return [];
@@ -753,6 +781,192 @@ class MySQLDatabase {
       return { success: res.affectedRows > 0 };
     } catch (e) {
       console.error("Error en eliminarPlantilla MySQL:", e);
+      return { success: false, error: e.message };
+    }
+  }
+
+  async obtenerRepresentantes() {
+    if (!this.isConnected) return [];
+    try {
+      const [rows] = await this.pool.query("SELECT * FROM representantes ORDER BY nombre_completo ASC");
+      return rows;
+    } catch (e) {
+      console.error("Error en obtenerRepresentantes MySQL:", e);
+      return [];
+    }
+  }
+
+  async obtenerTodasNotasSecciones() {
+    if (!this.isConnected) return [];
+    try {
+      const [rows] = await this.pool.query("SELECT * FROM registro_notas_seccion ORDER BY seccion_id ASC, materia ASC");
+      return rows.map(r => ({
+        id: r.id,
+        seccionId: r.seccion_id,
+        materia: r.materia,
+        planificacion: typeof r.planificacion_json === 'string' ? JSON.parse(r.planificacion_json) : r.planificacion_json,
+        notas: typeof r.notas_json === 'string' ? JSON.parse(r.notas_json) : r.notas_json,
+        ultima_modificacion: r.ultima_modificacion
+      }));
+    } catch (e) {
+      console.error("Error en obtenerTodasNotasSecciones MySQL:", e);
+      return [];
+    }
+  }
+
+  async restaurarRespaldoMySQL(backupData) {
+    if (!this.isConnected || !backupData) return { success: false };
+    try {
+      // 1. Restaurar Configuración
+      if (backupData.configuracion) {
+        await this.updateConfig(backupData.configuracion);
+        if (Array.isArray(backupData.configuracion.documentos_fundamentales)) {
+          await this.pool.query("DELETE FROM documentos_institucionales");
+          for (const doc of backupData.configuracion.documentos_fundamentales) {
+            await this.pool.query(`
+              INSERT INTO documentos_institucionales (id, nombre, tipo, categoria, ruta_archivo, tamano, creado_en)
+              VALUES (?, ?, ?, ?, ?, ?, ?)
+              ON DUPLICATE KEY UPDATE nombre = VALUES(nombre), ruta_archivo = VALUES(ruta_archivo)
+            `, [
+              String(doc.id || `DOC-${Date.now()}`),
+              doc.nombre || 'Documento Institucional',
+              doc.tipo || 'PDF',
+              doc.categoria || 'Fundamental',
+              doc.ruta || doc.ruta_archivo || '',
+              parseInt(doc.tamano, 10) || 1500000,
+              new Date()
+            ]);
+          }
+        }
+      }
+
+      // 2. Restaurar Materias / Pensum (usando código como clave única)
+      const listaMaterias = backupData.pensum || backupData.materias || [];
+      if (Array.isArray(listaMaterias) && listaMaterias.length > 0) {
+        await this.pool.query("DELETE FROM pensum_materias");
+        for (const m of listaMaterias) {
+          await this.guardarMateriaPensum(m);
+        }
+      }
+
+      // 3. Restaurar Representantes y Estudiantes
+      if (Array.isArray(backupData.estudiantes)) {
+        await this.pool.query("DELETE FROM estudiantes");
+      }
+      if (Array.isArray(backupData.representantes) && backupData.representantes.length > 0) {
+        await this.pool.query("DELETE FROM representantes");
+        for (const r of backupData.representantes) {
+          await this.pool.query(`
+            INSERT INTO representantes (
+              id, ci, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+              nombre_completo, parentesco, telefono, telefono_habitacion, email, direccion,
+              ocupacion, lugar_trabajo, foto_url, observaciones
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+              nombre_completo = VALUES(nombre_completo),
+              telefono = VALUES(telefono),
+              direccion = VALUES(direccion)
+          `, [
+            r.id || `REP-${(r.ci || '').replace(/\D/g, '')}`,
+            r.ci || r.cedula || '',
+            r.primer_nombre || (r.nombre_completo || r.nombre || '').split(' ')[0] || 'Representante',
+            r.segundo_nombre || null,
+            r.primer_apellido || (r.nombre_completo || r.nombre || '').split(' ').slice(1).join(' ') || 'Legal',
+            r.segundo_apellido || null,
+            r.nombre_completo || r.nombre || 'Representante Legal',
+            r.parentesco || 'Representante',
+            r.telefono || '',
+            r.telefono_habitacion || null,
+            r.email || null,
+            r.direccion || '',
+            r.ocupacion || null,
+            r.lugar_trabajo || null,
+            r.foto_url || r.foto || '',
+            r.observaciones || null
+          ]);
+        }
+      }
+
+      if (Array.isArray(backupData.estudiantes)) {
+        for (const est of backupData.estudiantes) {
+          await this.guardarEstudiante({
+            ...est,
+            firstName: est.firstName || est.primer_nombre,
+            secondName: est.secondName || est.segundo_nombre,
+            lastName: est.lastName || est.primer_apellido,
+            secondLastName: est.secondLastName || est.segundo_apellido,
+            birthDate: est.birthDate || est.fecha_nacimiento,
+            age: est.age || est.edad,
+            gender: est.gender || est.genero,
+            placeOfBirth: est.placeOfBirth || est.lugar_nacimiento,
+            entity: est.entity || est.entidad_nacimiento,
+            country: est.country || est.pais_nacimiento,
+            address: est.address || est.direccion,
+            municipality: est.municipality || est.municipio,
+            parish: est.parish || est.parroquia,
+            sector: est.sector,
+            level: est.level || est.nivel,
+            nivel: est.nivel || est.level,
+            grade: est.grade || est.grado,
+            section: est.section || est.seccion,
+            schoolYear: est.schoolYear || est.periodo_escolar || est.periodo,
+            status: est.status || est.estatus,
+            admissionDate: est.admissionDate || est.fecha_ingreso,
+            previousSchool: est.previousSchool || est.colegio_procedencia,
+            deaCode: est.deaCode || est.codigo_dea_procedencia,
+            repeatsYear: est.repeatsYear || est.repite_grado,
+            bloodType: est.bloodType || est.grupo_sanguineo,
+            height: est.height || est.estatura,
+            weight: est.weight || est.peso,
+            shirtSize: est.shirtSize || est.talla_camisa,
+            pantsSize: est.pantsSize || est.talla_pantalon,
+            shoeSize: est.shoeSize || est.talla_calzado,
+            allergies: est.allergies || est.alergias,
+            medicalCondition: est.medicalCondition || est.condicion_medica,
+            repName: est.repName || est.rep_nombre,
+            repCI: est.repCI || est.rep_ci,
+            repPhone: est.repPhone || est.rep_telefono,
+            relationship: est.relationship || est.rep_parentesco,
+            motherName: est.motherName || est.madre_nombre,
+            motherCI: est.motherCI || est.madre_ci,
+            motherPhone: est.motherPhone || est.madre_telefono,
+            fatherName: est.fatherName || est.padre_nombre,
+            fatherCI: est.fatherCI || est.padre_ci,
+            fatherPhone: est.fatherPhone || est.padre_telefono,
+            obsPersonal: est.obsPersonal || est.obs_personal,
+            obsFamiliar: est.obsFamiliar || est.obs_familiar,
+            obsSalud: est.obsSalud || est.obs_salud,
+            observations: est.observations || est.observaciones,
+            inscriptionFiles: Array.isArray(est.inscriptionFiles)
+              ? est.inscriptionFiles
+              : (typeof est.archivos_inscripcion === 'string' ? JSON.parse(est.archivos_inscripcion) : [])
+          });
+        }
+      }
+
+      // 4. Restaurar Registros de Notas por Sección
+      if (Array.isArray(backupData.registro_notas)) {
+        await this.pool.query("DELETE FROM registro_notas_seccion");
+        for (const rn of backupData.registro_notas) {
+          await this.guardarNotasSeccion({
+            seccionId: rn.seccionId || rn.seccion_id,
+            materia: rn.materia,
+            planificacion: rn.planificacion || (typeof rn.planificacion_json === 'string' ? JSON.parse(rn.planificacion_json) : {}),
+            notas: rn.notas || (typeof rn.notas_json === 'string' ? JSON.parse(rn.notas_json) : {})
+          });
+        }
+      }
+
+      // 5. Restaurar Plantillas
+      if (Array.isArray(backupData.plantillas) && backupData.plantillas.length > 0) {
+        for (const tpl of backupData.plantillas) {
+          await this.guardarPlantilla(tpl);
+        }
+      }
+
+      return { success: true };
+    } catch (e) {
+      console.error("Error en restaurarRespaldoMySQL:", e);
       return { success: false, error: e.message };
     }
   }

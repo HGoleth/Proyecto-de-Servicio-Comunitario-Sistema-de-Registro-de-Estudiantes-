@@ -124,9 +124,54 @@ const ConfigSistema = () => {
   const handleBackup = async () => {
     const res = await (window as any).electron.createBackup();
     if (res.success) {
-      showNotification("success", "Respaldo Creado", `Copia de seguridad guardada en: ${res.path}`);
+      const statsMsg = res.stats
+        ? ` (${res.stats.total_estudiantes || 0} estudiantes, ${res.stats.total_representantes || 0} representantes, ${res.stats.total_materias || 0} materias)`
+        : "";
+      showNotification("success", "Respaldo Creado", `Copia de seguridad guardada en: ${res.path}${statsMsg}`);
     } else {
       showNotification("error", "Error de Respaldo", "No se pudo generar la copia de seguridad.");
+    }
+  };
+
+  const handleRestoreBackup = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setLoadingFile(true);
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      const res = await (window as any).electron.restoreBackup(parsed);
+
+      if (res && res.success) {
+        await fetchInitialData();
+        if (parsed.configuracion?.periodo) {
+          localStorage.setItem("sistema_periodo_activo", parsed.configuracion.periodo);
+        }
+        try {
+          if (parsed.configuracion) {
+            localStorage.setItem("sistema_config", JSON.stringify(parsed.configuracion));
+            window.dispatchEvent(new CustomEvent("config_updated", { detail: parsed.configuracion }));
+          }
+          window.dispatchEvent(new Event("storage"));
+        } catch (storageErr) {
+          console.error("Error actualizando storage local:", storageErr);
+        }
+
+        const st = res.stats || {};
+        showNotification(
+          "success",
+          "¡Restauración Exitosa!",
+          `Datos restaurados correctamente: ${st.estudiantes || 0} estudiantes, ${st.representantes || 0} representantes, ${st.materias || 0} materias y ${st.notas || 0} registros de notas.`
+        );
+      } else {
+        showNotification("error", "Error de Restauración", res?.message || "No se pudo restaurar el archivo JSON.");
+      }
+    } catch {
+      showNotification("error", "Archivo JSON Inválido", "El archivo seleccionado no tiene un formato JSON válido.");
+    } finally {
+      setLoadingFile(false);
+      if (backupInputRef.current) backupInputRef.current.value = "";
     }
   };
 
@@ -326,7 +371,7 @@ const ConfigSistema = () => {
                       <p className="text-sm text-gray-500 mb-8">Seleccione un archivo de respaldo previo para sobrescribir los datos actuales.</p>
                     </div>
                     <div className="space-y-3">
-                       <input type="file" ref={backupInputRef} className="hidden" accept=".json" onChange={() => showNotification("warning", "Atención", "⚠️ ESTA ACCIÓN REEMPLAZARÁ TODOS LOS DATOS ACTUALES.")} />
+                       <input type="file" ref={backupInputRef} className="hidden" accept=".json" onChange={handleRestoreBackup} />
                        {/* Botón de Restauración con Framer Motion */}
                        <motion.button 
                          whileHover={{ scale: 1.02 }}

@@ -212,15 +212,58 @@ ipcMain.handle('update-config', async (event, data) => db.updateConfig(data));
 
 ipcMain.handle('create-backup', async () => {
   try {
-    const source = path.join(app.getPath('userData'), 'sistema_escolar_db.json');
+    const payload = await db.exportarRespaldoCompleto();
+    const jsonStr = JSON.stringify(payload, null, 2);
+
     const backupDir = path.join(app.getPath('userData'), 'backups');
     if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
-    
-    const dest = path.join(backupDir, `backup_${Date.now()}.json`);
-    fs.copyFileSync(source, dest);
-    return { success: true, path: dest };
+
+    const defaultFileName = `respaldo_sistema_escolar_${new Date().toISOString().split('T')[0]}.json`;
+    const localBackupPath = path.join(backupDir, `backup_${Date.now()}.json`);
+    fs.writeFileSync(localBackupPath, jsonStr, 'utf-8');
+
+    // Guardar también copia directa en la carpeta del proyecto
+    const projectBackupPath = path.join(__dirname, 'respaldo_sistema_escolar.json');
+    try {
+      fs.writeFileSync(projectBackupPath, jsonStr, 'utf-8');
+    } catch {}
+
+    const { canceled, filePath } = await dialog.showSaveDialog({
+      title: 'Guardar Respaldo del Sistema (.JSON)',
+      defaultPath: path.join(__dirname, defaultFileName),
+      filters: [{ name: 'Respaldo JSON (*.json)', extensions: ['json'] }]
+    });
+
+    if (!canceled && filePath) {
+      fs.writeFileSync(filePath, jsonStr, 'utf-8');
+      try {
+        shell.showItemInFolder(filePath);
+      } catch {}
+      return {
+        success: true,
+        path: filePath,
+        stats: payload.meta?.estadisticas
+      };
+    }
+
+    return {
+      success: true,
+      path: projectBackupPath,
+      stats: payload.meta?.estadisticas
+    };
   } catch (error) {
-    return { success: false };
+    console.error("Error creando respaldo:", error);
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('restore-backup', async (event, backupData) => {
+  try {
+    const parsed = typeof backupData === 'string' ? JSON.parse(backupData) : backupData;
+    return await db.restaurarRespaldoCompleto(parsed);
+  } catch (error) {
+    console.error("Error restaurando respaldo:", error);
+    return { success: false, message: error.message };
   }
 });
 

@@ -30,6 +30,7 @@ contextBridge.exposeInMainWorld('electron', {
   getConfig: () => ipcRenderer.invoke('get-config'),
   updateConfig: (data) => ipcRenderer.invoke('update-config', data),
   createBackup: () => ipcRenderer.invoke('create-backup'),
+  restoreBackup: (data) => ipcRenderer.invoke('restore-backup', data),
 
   // Control de Ventana
   minimize: () => ipcRenderer.invoke('window-minimize'),
