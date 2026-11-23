@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom"; 
 import { 
   ArrowLeft, ArrowRight, CheckCircle, CameraIcon, X, 
-  UploadCloud, FileText, GraduationCap, ShieldCheck 
+  UploadCloud, FileText, GraduationCap, ShieldCheck, AlertTriangle 
 } from "lucide-react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { fileToBase64 } from "../../utils/fileHelpers";
@@ -50,6 +50,12 @@ const StudentRegistrationForm: React.FC<StudentRegistrationFormProps> = ({ nivel
   
   const [cropModal, setCropModal] = useState<{ open: boolean; type: "student" | "rep" | null; src: string }>({ open: false, type: null, src: "" });
   const [notification, setNotification] = useState<ToastNotificationState>({ show: false, type: "", msg: "" });
+  const [confirmAdvanceModal, setConfirmAdvanceModal] = useState<{
+    open: boolean;
+    message: string;
+    action: "next" | "jump" | "submit";
+    targetStep?: number;
+  }>({ open: false, message: "", action: "next" });
 
   const initialForm = {
     nivel: nivel,
@@ -290,41 +296,69 @@ const validateStep = (currentStep: number) => {
   const handleNextStep = () => {
     const error = validateStep(step);
     if (error) {
-        showToast("error", error);
-        return;
+      setConfirmAdvanceModal({
+        open: true,
+        message: error,
+        action: "next",
+        targetStep: step + 1
+      });
+      return;
     }
     setStep((prev) => prev + 1);
     scrollToTop();
   };
 
   const handlePrevStep = () => {
-      setStep((prev) => prev - 1);
-      scrollToTop();
+    setStep((prev) => prev - 1);
+    scrollToTop();
   };
 
   const handleJumpToStep = (targetStep: number) => {
-      if (targetStep < step) {
-          setStep(targetStep);
-          scrollToTop();
-      } else if (targetStep > step) {
-          const error = validateStep(step);
-          if (!error) {
-              setStep(targetStep); 
-              scrollToTop();
-          } else {
-              showToast("error", error);
-          }
+    if (targetStep < step) {
+      setStep(targetStep);
+      scrollToTop();
+    } else if (targetStep > step) {
+      const error = validateStep(step);
+      if (!error) {
+        setStep(targetStep);
+        scrollToTop();
+      } else {
+        setConfirmAdvanceModal({
+          open: true,
+          message: error,
+          action: "jump",
+          targetStep
+        });
       }
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const error = validateStep(4);
     if (error) {
-        showToast("error", error);
-        return;
+      setConfirmAdvanceModal({
+        open: true,
+        message: error,
+        action: "submit"
+      });
+      return;
     }
     setPreviewModalOpen(true);
+  };
+
+  const handleProceedAnyway = () => {
+    const { action, targetStep } = confirmAdvanceModal;
+    setConfirmAdvanceModal({ open: false, message: "", action: "next" });
+    if (action === "next") {
+      setStep((prev) => prev + 1);
+      scrollToTop();
+    } else if (action === "jump" && targetStep) {
+      setStep(targetStep);
+      scrollToTop();
+    } else if (action === "submit") {
+      setPreviewModalOpen(true);
+    }
   };
 
   const handleConfirm = async () => {
@@ -373,10 +407,15 @@ const validateStep = (currentStep: number) => {
             }))
         );
 
-        // 5. Preparación del objeto final (con la CI definitiva procesada)
+        // 5. Preparación del objeto final (con la CI definitiva procesada y valores seguros si se omitió algún campo)
+        const defaultGrade = (GRADES_BY_LEVEL[nivel as AcademicLevel] || ["1ero"])[0];
         const studentDataToSave = {
             ...form,
-            ci: finalCI, //  Guardamos la CI real o la escolar (con guion si es hermano)
+            firstName: form.firstName.trim() || "Sin Nombre",
+            lastName: form.lastName.trim() || "Sin Apellido",
+            grade: form.grade || defaultGrade,
+            section: form.section || "A",
+            ci: finalCI,
             inscriptionFiles: inscriptionFilesB64,
             transferFiles: transferFilesB64,
             studentPhoto: studentPhotoB64,
@@ -1642,6 +1681,55 @@ const validateStep = (currentStep: number) => {
     </DialogPanel>
   </Dialog>
 )}
+      {/* ----------------------- MODAL CONFIRMAR AVANCE SIN VALIDACIÓN ----------------------- */}
+      <AnimatePresence>
+        {confirmAdvanceModal.open && (
+          <Dialog
+            open={true}
+            onClose={() => setConfirmAdvanceModal(prev => ({ ...prev, open: false }))}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 15 }}
+              className="bg-white rounded-3xl p-8 text-center shadow-2xl max-w-md w-full mx-4 relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-2 bg-amber-500" />
+              <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertTriangle size={32} />
+              </div>
+              <h3 className="text-xl font-extrabold text-gray-800 mb-2">
+                ¿Está seguro de que desea avanzar?
+              </h3>
+              <p className="text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 text-xs font-bold mb-3">
+                {confirmAdvanceModal.message}
+              </p>
+              <p className="text-gray-500 text-xs mb-6 leading-relaxed">
+                Faltan datos recomendados en esta sección. ¿Desea continuar al siguiente paso de todas formas?
+              </p>
+
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setConfirmAdvanceModal(prev => ({ ...prev, open: false }))}
+                  className="flex-1 py-3 rounded-xl bg-gray-100 text-gray-700 font-bold text-xs uppercase tracking-wider hover:bg-gray-200 transition"
+                >
+                  Revisar Datos
+                </button>
+                <button
+                  type="button"
+                  onClick={handleProceedAnyway}
+                  className="flex-1 py-3 rounded-xl bg-[#5564eb] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4352d4] transition shadow-lg shadow-blue-200 flex items-center justify-center gap-1.5"
+                >
+                  Sí, Avanzar <ArrowRight size={15} />
+                </button>
+              </div>
+            </motion.div>
+          </Dialog>
+        )}
+      </AnimatePresence>
+
       {/* ----------------------- MODAL ÉXITO ----------------------- */}
       <AnimatePresence>
         {successModalOpen && (
