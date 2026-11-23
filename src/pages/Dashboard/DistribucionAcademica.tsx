@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { 
-  ArrowLeft, Users, X, 
+  ArrowLeft, Users, 
   Contact2, BookOpen, Clock, CheckCircle
 } from "lucide-react";
 
@@ -282,7 +282,6 @@ const DistribucionAcademica = () => {
                   <h3 className="text-3xl font-black text-gray-800 uppercase tracking-tighter">{seccionSeleccionada.grado} <span className="text-[#5564eb] italic">Sección "{seccionSeleccionada.nombre}"</span></h3>
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mt-1">Plan de Estudios y Matrícula del Grupo</p>
                 </div>
-                <button onClick={() => setModalOpen(false)} className="p-3 bg-white shadow-sm border border-gray-100 rounded-2xl text-gray-400 hover:text-red-500 transition-all active:scale-95"><X size={24}/></button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12 custom-scrollbar">
