@@ -342,6 +342,46 @@ const Reportes = () => {
       }
     })();
 
+    // Condición final después de tener todas las notas de los 3 lapsos
+    const condicionFinalBoletin = (() => {
+      if (materiasGrado.length === 0) return { estado: "EN_CURSO", etiqueta: "En Curso (Faltan Notas)" };
+      const todasCompletas = materiasGrado.every(m => {
+        const n = notasEstudiante[m.nombre];
+        if (!n) return false;
+        return n.L1 !== "-" && n.L2 !== "-" && n.L3 !== "-" && n.L1 !== "" && n.L2 !== "" && n.L3 !== "";
+      });
+      if (!todasCompletas) {
+        return { estado: "EN_CURSO", etiqueta: "En Curso (Faltan Notas)" };
+      }
+
+      if (nivel === "Primaria" || nivel === "Inicial") {
+        const equiv: Record<string, number> = { A: 5, B: 4, C: 3, D: 2, E: 1 };
+        const defs = materiasGrado.map(m => {
+          const n = notasEstudiante[m.nombre];
+          return promediarLiterales(n.L1, n.L2, n.L3);
+        });
+        const pts = defs.map(v => equiv[v] || 0).filter(p => p > 0);
+        const prom = pts.length > 0 ? Math.round(pts.reduce((a, b) => a + b, 0) / pts.length) : 0;
+        const litFinal = Object.keys(equiv).find(k => equiv[k] === prom) || "E";
+        const aprobo = ["A", "B", "C"].includes(litFinal);
+        return aprobo
+          ? { estado: "PROMOVIDO", etiqueta: "PASÓ DE GRADO (PROMOVIDO)" }
+          : { estado: "REPITIENTE", etiqueta: "REPITIENTE" };
+      } else {
+        const proms: number[] = [];
+        materiasGrado.forEach(m => {
+          const n = notasEstudiante[m.nombre];
+          if (n && typeof n.L1 === "number" && typeof n.L2 === "number" && typeof n.L3 === "number") {
+            proms.push((n.L1 + n.L2 + n.L3) / 3);
+          }
+        });
+        const promGeneral = proms.length > 0 ? proms.reduce((a, b) => a + b, 0) / proms.length : 0;
+        return promGeneral >= 10
+          ? { estado: "PROMOVIDO", etiqueta: "PASÓ DE AÑO (PROMOVIDO)" }
+          : { estado: "REPITIENTE", etiqueta: "REPITIENTE" };
+      }
+    })();
+
     return (
       <motion.div
         id="boletin-print-area"
@@ -420,7 +460,17 @@ const Reportes = () => {
               <p className="text-[7px] uppercase text-gray-600 font-bold">Modalidad:</p>
               <p className="text-[8px] font-black mb-2">Evaluación {(nivel === "Primaria" || nivel === "Inicial") ? "Cualitativa" : "Cuantitativa"}</p>
               <p className="text-[7px] uppercase text-gray-600 font-bold">Promedio Anual:</p>
-              <p className="text-[10px] font-black text-black">{resumenGeneral}</p>
+              <p className="text-[10px] font-black text-black mb-2">{resumenGeneral}</p>
+              <p className="text-[7px] uppercase text-gray-600 font-bold">Condición Final:</p>
+              <p className={`text-[8px] font-black uppercase ${
+                condicionFinalBoletin.estado === "PROMOVIDO"
+                  ? "text-emerald-700"
+                  : condicionFinalBoletin.estado === "REPITIENTE"
+                  ? "text-red-700"
+                  : "text-amber-700"
+              }`}>
+                {condicionFinalBoletin.etiqueta}
+              </p>
             </div>
             <div className="border border-black p-2 h-32 flex flex-col items-center justify-center text-center text-gray-400 text-[7px] font-bold italic">
               <div className="w-16 h-16 border border-black border-dashed rounded-full flex items-center justify-center">Sello del Plantel</div>

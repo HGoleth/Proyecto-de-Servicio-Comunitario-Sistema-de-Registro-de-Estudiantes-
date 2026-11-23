@@ -16,6 +16,7 @@ interface CustomElectron {
   obtenerMaterias: () => Promise<any[]>;
   getPensum?: () => Promise<any[]>;
   getStudents: () => Promise<any[]>;
+  updateStudent?: (data: any) => Promise<any>;
   getConfig?: () => Promise<any>;
   obtenerDistribucion: () => Promise<any[]>; 
   actualizarConfiguracionLapsos: (datos: any) => Promise<{ success: boolean }>;
@@ -270,6 +271,27 @@ const Notas: React.FC = () => {
       const electronApi = (window as any).electron as CustomElectron;
       const res = await electronApi.guardarNotasSeccion(datosParaGuardar);
       if (res && res.success) {
+        // Actualizar condición de promoción o repitencia en el expediente de cada estudiante que ya tenga todas sus notas cargadas
+        if (electronApi.updateStudent) {
+          for (const est of estudiantesFiltrados) {
+            const cond = evaluarCondicionEstudiante(est.id);
+            if (cond.estado === "PROMOVIDO" || cond.estado === "REPITIENTE") {
+              const prom = calcularPromedioCiclo(est.id);
+              const esRepitiente = cond.estado === "REPITIENTE" ? "Sí" : "No";
+              const obsTexto =
+                cond.estado === "REPITIENTE"
+                  ? `CONDICIÓN FINAL: REPITIENTE EN ${seccionSel.año} (${materiaSel}: ${prom})`
+                  : `CONDICIÓN FINAL: PASÓ DE AÑO/GRADO EN ${seccionSel.año} (${materiaSel}: ${prom})`;
+              await electronApi.updateStudent({
+                ...est,
+                repeatsYear: esRepitiente,
+                lastRepeatedGrade: cond.estado === "REPITIENTE" ? seccionSel.año : (est.lastRepeatedGrade || ""),
+                lastRepeatedTerm: cond.estado === "REPITIENTE" ? "3er Lapso" : (est.lastRepeatedTerm || ""),
+                observations: obsTexto
+              });
+            }
+          }
+        }
         setUltimaSincronizacion(ahora);
         setShowSuccessModal(true);
       }
@@ -423,6 +445,51 @@ const Notas: React.FC = () => {
     }
   };
 
+  // Verifica si el estudiante ya tiene cargadas TODAS las evaluaciones de los 3 lapsos
+  const tieneTodasLasNotas = (estId: string): boolean => {
+    const notas = notasAlumnos[estId] || {};
+    for (const l of [1, 2, 3]) {
+      const evs = evaluacionesPorLapso[l] || [];
+      if (evs.length === 0) return false;
+      for (const ev of evs) {
+        const val = notas[ev.id];
+        if (val === undefined || val === null || String(val).trim() === "" || String(val) === "—") {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  // Evalúa la condición final del estudiante una vez subidas todas sus notas (Pasó de Año/Grado o Repitiente)
+  const evaluarCondicionEstudiante = (
+    estId: string
+  ): { estado: "PROMOVIDO" | "REPITIENTE" | "EN_CURSO"; label: string } => {
+    if (!tieneTodasLasNotas(estId)) {
+      return { estado: "EN_CURSO", label: "Faltan Notas" };
+    }
+
+    const prom = calcularPromedioCiclo(estId);
+    if (prom === "—" || prom === "-") {
+      return { estado: "EN_CURSO", label: "Faltan Notas" };
+    }
+
+    if (nivel === "Primaria" || nivel === "Inicial") {
+      // Escala cualitativa: A, B y C aprueban y pasan de grado; D y E quedan como repitientes
+      if (["A", "B", "C"].includes(prom.toUpperCase())) {
+        return { estado: "PROMOVIDO", label: "Pasó de Grado" };
+      }
+      return { estado: "REPITIENTE", label: "Repitiente" };
+    } else {
+      // Escala cuantitativa (0-20): >= 10 puntos aprueba y pasa de año; < 10 queda como repitiente
+      const num = parseFloat(prom);
+      if (!isNaN(num) && num >= 10) {
+        return { estado: "PROMOVIDO", label: "Pasó de Año" };
+      }
+      return { estado: "REPITIENTE", label: "Repitiente" };
+    }
+  };
+
   const actualizarEvaluacion = (id: number, campo: string, valor: any) => {
     let v = valor;
     if (campo === "peso") {
@@ -532,6 +599,7 @@ const Notas: React.FC = () => {
         nivel={nivel}
         calcularNotaFinalLapso={calcularNotaFinalLapso}
         calcularPromedioCiclo={calcularPromedioCiclo}
+        evaluarCondicionEstudiante={evaluarCondicionEstudiante}
         codigoMateria={getCodigoMateria(materiaSel)}
         periodo={periodoActivo}
       />
@@ -677,7 +745,7 @@ const Notas: React.FC = () => {
             ) : (
               <>
                 {/* Métricas Resumen */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="bg-white p-5 rounded-2xl shadow-sm flex items-center justify-between border border-gray-100">
                     <div>
                       <p className="text-[10px] font-black text-gray-400 uppercase mb-1 tracking-wider">Puntos Lapso {lapsoActivo}</p>
@@ -718,6 +786,36 @@ const Notas: React.FC = () => {
                       </p>
                     </div>
                     <BookOpen className="text-blue-300" size={32}/>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-2xl shadow-sm flex flex-col justify-center border border-gray-100">
+                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-wider">Condición de la Sección</p>
+                    {(() => {
+                      let promovidos = 0;
+                      let repitientes = 0;
+                      let enCurso = 0;
+                      estudiantesFiltrados.forEach(est => {
+                        const c = evaluarCondicionEstudiante(est.id);
+                        if (c.estado === "PROMOVIDO") promovidos++;
+                        else if (c.estado === "REPITIENTE") repitientes++;
+                        else enCurso++;
+                      });
+                      return (
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="px-2.5 py-1 rounded-lg bg-green-50 text-green-700 border border-green-200 text-[10px] font-black uppercase">
+                            Pasaron: {promovidos}
+                          </span>
+                          <span className="px-2.5 py-1 rounded-lg bg-red-50 text-red-600 border border-red-200 text-[10px] font-black uppercase">
+                            Repitientes: {repitientes}
+                          </span>
+                          {enCurso > 0 && (
+                            <span className="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-black uppercase">
+                              Faltan: {enCurso}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
 
@@ -893,6 +991,10 @@ const Notas: React.FC = () => {
                           <th className="p-2 text-center bg-[#3948b8] text-white text-xs font-black uppercase w-[85px] min-w-[85px] border-l border-blue-900 leading-none">
                             Prom.<br/>Ciclo
                           </th>
+
+                          <th className="p-2 text-center bg-[#2d3a9e] text-white text-xs font-black uppercase w-[135px] min-w-[135px] border-l border-blue-900 leading-none">
+                            Condición<br/>Final
+                          </th>
                         </tr>
 
                         {/* Fila 2 de Encabezados (Subcolumnas por Evaluación) */}
@@ -928,6 +1030,10 @@ const Notas: React.FC = () => {
 
                           <th className="p-2 bg-blue-100/60 text-center text-[10px] font-black text-blue-950 border-l border-blue-300">
                             Definitiva
+                          </th>
+
+                          <th className="p-2 bg-blue-100/80 text-center text-[10px] font-black text-blue-950 border-l border-blue-300">
+                            Estado Anual
                           </th>
                         </tr>
                       </thead>
@@ -1010,6 +1116,32 @@ const Notas: React.FC = () => {
                               {/* Promedio General del Ciclo */}
                               <td className="p-1 border-l border-blue-200 bg-blue-50/70 text-center font-black text-xs text-blue-900 italic">
                                 {calcularPromedioCiclo(est.id)}
+                              </td>
+
+                              {/* Condición Final: Pasó de Año/Grado vs Repitiente */}
+                              <td className="p-1.5 border-l border-blue-200 bg-white text-center">
+                                {(() => {
+                                  const cond = evaluarCondicionEstudiante(est.id);
+                                  if (cond.estado === "PROMOVIDO") {
+                                    return (
+                                      <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-green-100 text-green-700 border border-green-200 text-[9px] font-black uppercase tracking-wider shadow-sm">
+                                        <CheckCircle size={11} /> {cond.label}
+                                      </span>
+                                    );
+                                  }
+                                  if (cond.estado === "REPITIENTE") {
+                                    return (
+                                      <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-red-100 text-red-700 border border-red-200 text-[9px] font-black uppercase tracking-wider shadow-sm">
+                                        <AlertTriangle size={11} /> {cond.label}
+                                      </span>
+                                    );
+                                  }
+                                  return (
+                                    <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[9px] font-bold uppercase tracking-wider">
+                                      <Clock size={11} /> {cond.label}
+                                    </span>
+                                  );
+                                })()}
                               </td>
                             </tr>
                           ))
