@@ -79,7 +79,8 @@ const createWindow = () => {
       nodeIntegration: false,
       sandbox: false,
       webSecurity: true,
-      backgroundThrottling: false
+      backgroundThrottling: false,
+      devTools: true
     },
   });
 
@@ -88,6 +89,19 @@ const createWindow = () => {
   if (process.env.OPEN_DEVTOOLS === "true") {
     mainWindow.webContents.openDevTools({ mode: "detach" });
   }
+
+  // Permitir abrir/cerrar las herramientas de desarrollador (Modo Dev) con F12 o Ctrl+Shift+I
+  mainWindow.webContents.on("before-input-event", (event, input) => {
+    if (
+      input.type === "keyDown" &&
+      (input.key === "F12" || (input.control && input.shift && input.key.toLowerCase() === "i"))
+    ) {
+      event.preventDefault();
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.toggleDevTools();
+      }
+    }
+  });
 
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
